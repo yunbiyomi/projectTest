@@ -1,0 +1,120 @@
+{
+  "request": {
+    "variables": [],
+    "datasets": [
+      {
+        "name": "dsCSLoginInput",
+        "description": "사용자가 입력한 ID/PASSWORD",
+        "items": [
+          {
+            "name": "CONSULTANTID",
+            "type": "STRING",
+            "datasize": 100,
+            "description": "상담원 ID",
+            "tableName": "CONSULTANT"
+          },
+          {
+            "name": "CONSULTANTPWD",
+            "type": "STRING",
+            "datasize": 100,
+            "description": "상담원 PWD",
+            "tableName": "CONSULTANT"
+          }
+        ],
+        "datasource": "cs_system"
+      }
+    ]
+  },
+  "localVariables": {
+    "variables": [],
+    "datasets": []
+  },
+  "workflow": {
+    "name": "svcCSLogin",
+    "start": {
+      "next": "checkLogin",
+      "name": "start",
+      "description": "로직의 시작",
+      "alias": "start",
+      "type": "Start"
+    },
+    "project": "git_test",
+    "description": "CS System의 로그인",
+    "end": {
+      "name": "end",
+      "description": "로직의 종료",
+      "alias": "end",
+      "type": "End"
+    },
+    "checkLogin": {
+      "next": "end",
+      "onBeforeEvent": "",
+      "onAfterEvent": "",
+      "description": "로그인 유효성 검사",
+      "onBeginEvent": "",
+      "type": "SQL",
+      "target": "",
+      "sql": "SELECT \n  CASE WHEN EXISTS (\n    SELECT \n      1 \n    FROM \n      CONSULTANT \n    WHERE \n      CONSULTANTID = #dsCSLoginInput.CONSULTANTID# \n      AND CONSULTANTPWD = #dsCSLoginInput.CONSULTANTPWD#) \n  THEN (\n    SELECT \n      CONSULTANTID \n    FROM \n      CONSULTANT \n    WHERE \n      CONSULTANTID = #dsCSLoginInput.CONSULTANTID# \n      AND CONSULTANTPWD = #dsCSLoginInput.CONSULTANTPWD#) \n  ELSE NULL \nEND AS loginResult;",
+      "output": "dsCSLogin",
+      "sqlType": "select",
+      "datasource": "cs_system",
+      "name": "checkLogin",
+      "onEndEvent": "",
+      "alias": "checkLogin"
+    }
+  },
+  "datasources": [
+    {
+      "database": "cs_system",
+      "password": "",
+      "port": "",
+      "datasource": "cs_system",
+      "productType": "H2",
+      "url": "jdbc:h2:file:${LOCAL_DATABASE}/datasource/cs_system",
+      "username": "sa"
+    }
+  ],
+  "response": {
+    "variables": [
+      {
+        "name": "errorCode",
+        "description": "에러코드",
+        "type": "Integer"
+      },
+      {
+        "name": "errorMessage",
+        "description": "에러메시지",
+        "type": "String"
+      }
+    ],
+    "datasets": [
+      {
+        "name": "dsCSLogin",
+        "description": "ID/PWD 유효성 검사",
+        "items": [
+          {
+            "name": "loginResult",
+            "description": "로그인 결과",
+            "datasize": 100,
+            "type": "STRING",
+            "insConstant": false
+          }
+        ]
+      }
+    ]
+  },
+  "clientInfo": {
+    "start": {
+      "x": "600",
+      "y": "150"
+    },
+    "end": {
+      "x": "600",
+      "y": "450"
+    },
+    "checkLogin": {
+      "x": "600",
+      "y": "300"
+    }
+  }
+}

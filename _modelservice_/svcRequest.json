@@ -1,0 +1,313 @@
+{
+  "request": {
+    "variables": [],
+    "datasets": [
+      {
+        "name": "dsRequestSearch",
+        "description": "검색조건",
+        "items": [
+          {
+            "name": "startDate",
+            "description": "조회 시작일",
+            "datasize": 100,
+            "type": "STRING",
+            "insConstant": false
+          },
+          {
+            "name": "endDate",
+            "description": "조회 종료일",
+            "datasize": 100,
+            "type": "STRING",
+            "insConstant": false
+          },
+          {
+            "name": "REQUESTCATEGORY",
+            "type": "STRING",
+            "datasize": 100,
+            "description": "접수 유형",
+            "tableName": "REQUEST"
+          },
+          {
+            "name": "REQUESTTYPE",
+            "type": "STRING",
+            "datasize": 100,
+            "description": "처리 유형",
+            "tableName": "REQUEST"
+          },
+          {
+            "name": "CUSTOMERID",
+            "type": "STRING",
+            "datasize": 100,
+            "description": "고객 ID",
+            "tableName": "REQUEST"
+          },
+          {
+            "name": "CUSTOMERNAME",
+            "type": "STRING",
+            "datasize": 100,
+            "description": "고객 이름",
+            "tableName": "REQUEST"
+          },
+          {
+            "name": "REQUESTTITLE",
+            "type": "STRING",
+            "datasize": 100,
+            "description": "문의 제목",
+            "tableName": "REQUEST"
+          },
+          {
+            "name": "REQUESTCONTENT",
+            "type": "STRING",
+            "datasize": 100,
+            "description": "문의 내용",
+            "tableName": "REQUEST"
+          }
+        ],
+        "datasource": "cs_system"
+      }
+    ]
+  },
+  "localVariables": {
+    "variables": [],
+    "datasets": []
+  },
+  "workflow": {
+    "getFilterRequest": {
+      "next": "end",
+      "onBeforeEvent": "",
+      "onAfterEvent": "",
+      "description": "문의 내역 조회 SQL",
+      "onBeginEvent": "",
+      "type": "SQL",
+      "target": "",
+      "sql": "SELECT \n  RECEIVEDDATE, \n  PROCESSINGDATE, \n  REQUESTID, \n  REQUESTCATEGORY, \n  GROUPNAME, \n  CONSULTANTID, \n  REQUESTTITLE, \n  REQUESTCONTENT, \n  CUSTOMERID, \n  CUSTOMERNAME, \n  CUSTOMEREMAIL, \n  CUSTOMERPHONE, \n  REQUESTTYPE, \n  REQUESTRESULT \nFROM \n  REQUEST \nWHERE \n  (REQUESTCATEGORY = #dsRequestSearch.REQUESTCATEGORY# OR #dsRequestSearch.REQUESTCATEGORY# IS NULL) \n    AND (REQUESTTYPE = #dsRequestSearch.REQUESTTYPE# OR #dsRequestSearch.REQUESTTYPE# IS NULL) \n    AND (CUSTOMERID REGEXP #dsRequestSearch.CUSTOMERID# OR #dsRequestSearch.CUSTOMERID# IS NULL) \n    AND (CUSTOMERNAME REGEXP #dsRequestSearch.CUSTOMERNAME# OR #dsRequestSearch.CUSTOMERNAME# IS NULL) \n    AND (REQUESTTITLE REGEXP #dsRequestSearch.REQUESTTITLE# OR #dsRequestSearch.REQUESTTITLE# IS NULL) \n    AND (REQUESTCONTENT REGEXP #dsRequestSearch.REQUESTCONTENT# OR #dsRequestSearch.REQUESTCONTENT# IS NULL)\n    AND ((CAST(RECEIVEDDATE AS DATE) BETWEEN #dsRequestSearch.startDate# AND #dsRequestSearch.endDate#) OR #dsRequestSearch.startDate# IS NULL OR #dsRequestSearch.endDate# IS NULL)",
+      "output": "dsRequestList",
+      "sqlType": "select",
+      "datasource": "cs_system",
+      "name": "getFilterRequest",
+      "onEndEvent": "",
+      "alias": "getFilterRequest"
+    },
+    "If1": {
+      "isExpression": true,
+      "name": "If1",
+      "alias": "If",
+      "type": "If",
+      "conditions": [
+        {
+          "next": "getAllRequest",
+          "condition": "#dsRequestSearch[0].get('REQUESTCATEGORY')# == null \n&& #dsRequestSearch[0].get('REQUESTTYPE')# == null \n&& #dsRequestSearch[0].get('CUSTOMERID')# == null \n&& #dsRequestSearch[0].get('CUSTOMERNAME')# == null \n&& #dsRequestSearch[0].get('REQUESTTITLE')# == null \n&& #dsRequestSearch[0].get('REQUESTCONTENT')# == null\n&& #dsRequestSearch[0].get('startDate')# == null\n&& #dsRequestSearch[0].get('endDate')# == null",
+          "description": "",
+          "conditionType": "if"
+        },
+        {
+          "next": "getFilterRequest",
+          "condition": "",
+          "description": "",
+          "conditionType": "else"
+        }
+      ]
+    },
+    "name": "svcRequest",
+    "start": {
+      "next": "If1",
+      "name": "start",
+      "description": "로직의 시작",
+      "alias": "start",
+      "type": "Start"
+    },
+    "project": "git_test",
+    "description": "사용자가 설정한 조회 기간에 따라 문의 내역을 조회한다.",
+    "end": {
+      "name": "end",
+      "description": "로직의 종료",
+      "alias": "end",
+      "type": "End"
+    },
+    "getAllRequest": {
+      "next": "end",
+      "onBeforeEvent": "",
+      "onAfterEvent": "",
+      "description": "문의 내역 조회 SQL",
+      "onBeginEvent": "",
+      "type": "SQL",
+      "target": "",
+      "sql": "SELECT \n  RECEIVEDDATE, \n  PROCESSINGDATE, \n  REQUESTID, \n  REQUESTCATEGORY, \n  GROUPNAME, \n  CONSULTANTID, \n  REQUESTTITLE, \n  REQUESTCONTENT, \n  CUSTOMERID, \n  CUSTOMERNAME, \n  CUSTOMEREMAIL, \n  CUSTOMERPHONE, \n  REQUESTTYPE, \n  REQUESTRESULT \nFROM \n  REQUEST",
+      "output": "dsRequestList",
+      "sqlType": "select",
+      "datasource": "cs_system",
+      "name": "getAllRequest",
+      "onEndEvent": "",
+      "alias": "getAllRequest"
+    }
+  },
+  "datasources": [
+    {
+      "database": "cs_system",
+      "password": "",
+      "port": "",
+      "datasource": "cs_system",
+      "productType": "H2",
+      "url": "jdbc:h2:file:${LOCAL_DATABASE}/datasource/cs_system",
+      "username": "sa"
+    },
+    {
+      "password": "tobe@0701!",
+      "database": "testdb",
+      "port": "50092",
+      "datasource": "marsTest1",
+      "host": "172.10.12.92",
+      "productType": "mariadb",
+      "username": "mars"
+    }
+  ],
+  "response": {
+    "variables": [
+      {
+        "name": "errorCode",
+        "description": "에러코드",
+        "type": "Integer"
+      },
+      {
+        "name": "errorMessage",
+        "description": "에러메시지",
+        "type": "String"
+      }
+    ],
+    "datasets": [
+      {
+        "name": "dsRequestList",
+        "description": "문의 내역 목록",
+        "items": [
+          {
+            "name": "receivedDate",
+            "description": "접수일",
+            "datasize": 100,
+            "type": "STRING",
+            "insConstant": false
+          },
+          {
+            "name": "processingDate",
+            "description": "처리일",
+            "datasize": 100,
+            "type": "STRING",
+            "insConstant": false
+          },
+          {
+            "name": "requestId",
+            "description": "문의 ID",
+            "datasize": 100,
+            "type": "STRING",
+            "insConstant": false
+          },
+          {
+            "name": "requestCategory",
+            "description": "접수 유형",
+            "datasize": 100,
+            "type": "STRING",
+            "insConstant": false
+          },
+          {
+            "name": "groupName",
+            "description": "그룹명",
+            "datasize": 100,
+            "type": "STRING",
+            "insConstant": false
+          },
+          {
+            "name": "requestTitle",
+            "description": "문의 제목",
+            "datasize": 100,
+            "type": "STRING",
+            "insConstant": false
+          },
+          {
+            "name": "requestContent",
+            "description": "문의 내용",
+            "datasize": 100,
+            "type": "STRING",
+            "insConstant": false
+          },
+          {
+            "name": "customerID",
+            "description": "고객 ID",
+            "datasize": 100,
+            "type": "STRING",
+            "insConstant": false
+          },
+          {
+            "name": "customerName",
+            "description": "고객 이름",
+            "datasize": 100,
+            "type": "STRING",
+            "insConstant": false
+          },
+          {
+            "name": "customerEmail",
+            "description": "고객 이메일",
+            "datasize": 100,
+            "type": "STRING",
+            "insConstant": false
+          },
+          {
+            "name": "customerPhone",
+            "description": "고객 전화번호",
+            "datasize": 100,
+            "type": "STRING",
+            "insConstant": false
+          },
+          {
+            "name": "requestType",
+            "description": "처리 상황",
+            "datasize": 100,
+            "type": "STRING",
+            "insConstant": false
+          },
+          {
+            "name": "requestResult",
+            "description": "처리 결과",
+            "datasize": 100,
+            "type": "STRING",
+            "insConstant": false
+          },
+          {
+            "name": "consultantID",
+            "description": "상담원 ID",
+            "datasize": 100,
+            "type": "STRING",
+            "insConstant": false
+          },
+          {
+            "name": "consultantName",
+            "description": "상담원 이름",
+            "datasize": 100,
+            "type": "STRING",
+            "insConstant": false
+          }
+        ]
+      }
+    ]
+  },
+  "clientInfo": {
+    "getFilterRequest": {
+      "x": "750",
+      "y": "450"
+    },
+    "If1": {
+      "x": "600",
+      "y": "300"
+    },
+    "start": {
+      "x": "600",
+      "y": "150"
+    },
+    "end": {
+      "x": "600",
+      "y": "600"
+    },
+    "getAllRequest": {
+      "x": "450",
+      "y": "450"
+    }
+  }
+}

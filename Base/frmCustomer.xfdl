@@ -1,0 +1,357 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="frmCustormer" width="1070" height="772" titletext="고객 리스트">
+    <Layouts>
+      <Layout height="772" horizontalgap="0" mobileorientation="landscape" spacing="0px" tabletemplate="1* / 1*" verticalgap="0" width="1070">
+        <View id="viewFilterCustomer" taborder="1" viewdataset="viewdataset" left="10" top="10" height="50" right="10" viewtype="Search">
+          <Layouts>
+            <Layout>
+              <Static id="stBg" left="0" top="0" right="0" bottom="0" cssclass="sta_searchbox"/>
+              <Button id="btnSearch" top="10" width="100" height="30" right="10" cssclass="btn_search" text="조 회"/>
+              <Static id="staCustomernameLabel" left="10" top="10" width="86" height="26" text="고객 이름" cssclass="sta_label"/>
+              <Edit id="edtCustomername" left="96" top="10" width="115" height="26" cssclass=""/>
+              <Static id="staCustomergenderLabel" left="211" top="10" width="86" height="26" text="고객 성별" cssclass="sta_label"/>
+              <Combo id="cmbCustomergender" left="297" top="10" width="115" height="26" cssclass="" innerdataset="innerdatasetCustomergender" codecolumn="code" datacolumn="data"/>
+              <Static id="staMembertypeLabel" left="412" top="10" width="86" height="26" text="회원 유형" cssclass="sta_label"/>
+              <Combo id="cmbMembertype" left="498" top="10" width="115" height="26" cssclass="" innerdataset="innerdatasetMembertype" codecolumn="code" datacolumn="data"/>
+            </Layout>
+          </Layouts>
+          <Objects>
+            <Dataset id="viewdataset">
+              <ColumnInfo>
+                <Column id="CUSTOMERNAME" type="STRING" size="100" description="고객 이름"/>
+                <Column id="CUSTOMERGENDER" type="STRING" size="100" description="고객 성별"/>
+                <Column id="MEMBERTYPE" type="STRING" size="100" description="회원 유형"/>
+              </ColumnInfo>
+              <Rows>
+                <Row/>
+              </Rows>
+            </Dataset>
+            <Dataset id="innerdatasetCustomergender">
+              <ColumnInfo>
+                <Column id="code" type="STRING" size="256"/>
+                <Column id="data" type="STRING" size="256"/>
+              </ColumnInfo>
+              <Rows>
+                <Row>
+                  <Col id="code">01</Col>
+                  <Col id="data">여자</Col>
+                </Row>
+                <Row>
+                  <Col id="code">02</Col>
+                  <Col id="data">남자</Col>
+                </Row>
+              </Rows>
+            </Dataset>
+            <Dataset id="innerdatasetMembertype">
+              <ColumnInfo>
+                <Column id="code" type="STRING" size="256"/>
+                <Column id="data" type="STRING" size="256"/>
+              </ColumnInfo>
+              <Rows>
+                <Row>
+                  <Col id="code">01</Col>
+                  <Col id="data">일반</Col>
+                </Row>
+                <Row>
+                  <Col id="code">02</Col>
+                  <Col id="data">기업</Col>
+                </Row>
+                <Row>
+                  <Col id="code">03</Col>
+                  <Col id="data">임직원</Col>
+                </Row>
+              </Rows>
+            </Dataset>
+          </Objects>
+          <Bind>
+            <BindItem id="bind_edtCustomername" compid="edtCustomername" propid="value" datasetid="viewdataset" columnid="CUSTOMERNAME"/>
+            <BindItem id="bind_cmbCustomergender" compid="cmbCustomergender" propid="value" datasetid="viewdataset" columnid="CUSTOMERGENDER"/>
+            <BindItem id="bind_cmbMembertype" compid="cmbMembertype" propid="value" datasetid="viewdataset" columnid="MEMBERTYPE"/>
+          </Bind>
+          <ModelInfo modelserviceid="modelservice" serviceid="svcCustomer" modelid="dsCustomerSearch" filepath="_models_\svcCustomer.xmodel">
+            <Fields>
+              <Field id="CUSTOMERNAME" label="고객 이름" uselabel="true"/>
+              <Field id="CUSTOMERGENDER" label="고객 성별" uselabel="true"/>
+              <Field id="MEMBERTYPE" label="회원 유형" uselabel="true"/>
+            </Fields>
+            <Components>
+              <Component id="_viewcomp" fields="stBg"/>
+              <Component id="_viewcomp" fields="btnSearch"/>
+              <Component id="CUSTOMERNAME" fields="staCustomernameLabel,edtCustomername"/>
+              <Component id="CUSTOMERGENDER" fields="staCustomergenderLabel,cmbCustomergender"/>
+              <Component id="MEMBERTYPE" fields="staMembertypeLabel,cmbMembertype"/>
+            </Components>
+          </ModelInfo>
+          <ViewTemplateInfo filepath="Asset\SearchViewTemplate.xviewgen">
+            <Attribute id="direction" value="horizontal"/>
+            <Attribute id="halign" value="left"/>
+            <Attribute id="valign" value="middle"/>
+            <Attribute id="searchbuttontype" value="middle"/>
+            <Attribute id="searchbuttontext" value="조 회"/>
+          </ViewTemplateInfo>
+        </View>
+        <View id="viewCustomerDetail" taborder="2" text="View00" viewdataset="viewdataset" top="viewFilterCustomer:10" right="10" width="28%" bottom="10" sourceview="viewCustomerGrid" viewtype="FreeForm">
+          <Layouts>
+            <Layout type="horizontal" flexwrap="wrap" horizontalgap="5" verticalgap="5" flexcrossaxisalign="start" flexcrossaxiswrapalign="start" flexmainaxisalign="start">
+              <Div id="divTitle" left="0" top="0" height="43" width="100%">
+                <Layouts>
+                  <Layout>
+                    <Static id="staTitle" left="0" top="0" height="43" width="100%" text="상세정보" fittocontents="width" cssclass="sta_subtitle"/>
+                  </Layout>
+                </Layouts>
+              </Div>
+              <Static id="staCustomerprofileimgLabel" left="0" top="42" width="100%" height="25" text="고객 프로필 이미지" cssclass="sta_label"/>
+              <ImageViewer id="imgCustomerprofileimg" left="299" top="42" width="100%" height="30" cssclass="" stretch="fixaspectratio"/>
+              <Static id="staCustomeridLabel" left="0" top="71" width="100%" height="25" text="고객 ID" cssclass="sta_label"/>
+              <Edit id="edtCustomerid" left="299" top="71" width="100%" height="30" cssclass=""/>
+              <Static id="staMembertypeLabel" left="0" top="100" width="100%" height="25" text="회원 유형" cssclass="sta_label"/>
+              <Combo id="cmbMembertype" left="299" top="100" width="100%" height="30" cssclass="" innerdataset="innerdatasetMembertype" codecolumn="code" datacolumn="data"/>
+              <Static id="staCustomernameLabel" left="0" top="129" width="100%" height="25" text="고객 이름" cssclass="sta_label"/>
+              <Edit id="edtCustomername" left="299" top="129" width="100%" height="30" cssclass=""/>
+              <Static id="staCustomeremailLabel" left="0" top="158" width="100%" height="25" text="고객 이메일" cssclass="sta_label"/>
+              <Edit id="edtCustomeremail" left="299" top="158" width="100%" height="30" cssclass=""/>
+              <Static id="staCustomeraddressLabel" left="0" top="187" width="100%" height="25" text="고객 주소" cssclass="sta_label"/>
+              <Edit id="edtCustomeraddress" left="299" top="187" width="100%" height="30" cssclass=""/>
+              <Static id="staCustomergenderLabel" left="0" top="216" width="100%" height="25" text="고객 성별" cssclass="sta_label"/>
+              <Combo id="cmbCustomergender" left="299" top="216" width="100%" height="30" cssclass="" innerdataset="innerdatasetCustomergender" codecolumn="code" datacolumn="data"/>
+            </Layout>
+          </Layouts>
+          <Objects>
+            <Dataset id="viewdataset">
+              <ColumnInfo>
+                <Column id="customerProfileImg" type="STRING" size="100" description="고객 프로필 이미지"/>
+                <Column id="customerID" type="STRING" size="100" description="고객 ID"/>
+                <Column id="memberType" type="STRING" size="100" description="회원 유형"/>
+                <Column id="customerName" type="STRING" size="100" description="고객 이름"/>
+                <Column id="customerEmail" type="STRING" size="100" description="고객 이메일"/>
+                <Column id="customerAddress" type="STRING" size="100" description="고객 주소"/>
+                <Column id="customerGender" type="STRING" size="100" description="고객 성별"/>
+              </ColumnInfo>
+              <Rows>
+                <Row/>
+              </Rows>
+            </Dataset>
+            <Dataset id="innerdatasetMembertype">
+              <ColumnInfo>
+                <Column id="code" type="STRING" size="256"/>
+                <Column id="data" type="STRING" size="256"/>
+              </ColumnInfo>
+              <Rows>
+                <Row>
+                  <Col id="code">01</Col>
+                  <Col id="data">일반</Col>
+                </Row>
+                <Row>
+                  <Col id="code">02</Col>
+                  <Col id="data">기업</Col>
+                </Row>
+                <Row>
+                  <Col id="code">03</Col>
+                  <Col id="data">임직원</Col>
+                </Row>
+              </Rows>
+            </Dataset>
+            <Dataset id="innerdatasetCustomergender">
+              <ColumnInfo>
+                <Column id="code" type="STRING" size="256"/>
+                <Column id="data" type="STRING" size="256"/>
+              </ColumnInfo>
+              <Rows>
+                <Row>
+                  <Col id="code">01</Col>
+                  <Col id="data">여자</Col>
+                </Row>
+                <Row>
+                  <Col id="code">02</Col>
+                  <Col id="data">남자</Col>
+                </Row>
+              </Rows>
+            </Dataset>
+          </Objects>
+          <Bind>
+            <BindItem id="bind_imgCustomerprofileimg" compid="imgCustomerprofileimg" propid="image" datasetid="viewdataset" columnid="customerProfileImg"/>
+            <BindItem id="bind_edtCustomerid" compid="edtCustomerid" propid="value" datasetid="viewdataset" columnid="customerID"/>
+            <BindItem id="bind_cmbMembertype" compid="cmbMembertype" propid="value" datasetid="viewdataset" columnid="memberType"/>
+            <BindItem id="bind_edtCustomername" compid="edtCustomername" propid="value" datasetid="viewdataset" columnid="customerName"/>
+            <BindItem id="bind_edtCustomeremail" compid="edtCustomeremail" propid="value" datasetid="viewdataset" columnid="customerEmail"/>
+            <BindItem id="bind_edtCustomeraddress" compid="edtCustomeraddress" propid="value" datasetid="viewdataset" columnid="customerAddress"/>
+            <BindItem id="bind_cmbCustomergender" compid="cmbCustomergender" propid="value" datasetid="viewdataset" columnid="customerGender"/>
+          </Bind>
+          <ModelInfo modelserviceid="modelservice" serviceid="svcCustomer" modelid="dsCustomerList" filepath="_models_\svcCustomer.xmodel">
+            <Fields>
+              <Field id="customerProfileImg" label="고객 프로필 이미지" uselabel="true"/>
+              <Field id="customerID" label="고객 ID" uselabel="true"/>
+              <Field id="memberType" label="회원 유형" uselabel="true"/>
+              <Field id="customerName" label="고객 이름" uselabel="true"/>
+              <Field id="customerEmail" label="고객 이메일" uselabel="true"/>
+              <Field id="customerAddress" label="고객 주소" uselabel="true"/>
+              <Field id="customerGender" label="고객 성별" uselabel="true"/>
+            </Fields>
+            <Components>
+              <Component id="_viewcomp" fields="divTitle"/>
+              <Component id="customerProfileImg" fields="staCustomerprofileimgLabel,imgCustomerprofileimg"/>
+              <Component id="customerID" fields="staCustomeridLabel,edtCustomerid"/>
+              <Component id="memberType" fields="staMembertypeLabel,cmbMembertype"/>
+              <Component id="customerName" fields="staCustomernameLabel,edtCustomername"/>
+              <Component id="customerEmail" fields="staCustomeremailLabel,edtCustomeremail"/>
+              <Component id="customerAddress" fields="staCustomeraddressLabel,edtCustomeraddress"/>
+              <Component id="customerGender" fields="staCustomergenderLabel,cmbCustomergender"/>
+            </Components>
+          </ModelInfo>
+          <ViewTemplateInfo filepath="Asset\FreeFormLayoutViewTemplate.xviewgen">
+            <Attribute id="titletext" value="상세정보"/>
+            <Attribute id="useexpandbutton" value="none"/>
+            <Attribute id="viewpadding" value=""/>
+            <Attribute id="horizontalgap" value="5"/>
+            <Attribute id="verticalgap" value="5"/>
+          </ViewTemplateInfo>
+        </View>
+        <View id="viewCustomerGrid" taborder="0" text="View00" viewdataset="viewdataset" left="10" top="viewFilterCustomer:10" bottom="10" right="viewCustomerDetail:10" viewtype="Grid">
+          <Layouts>
+            <Layout>
+              <Grid id="grdList" left="0" top="0" right="0" bottom="0" binddataset="viewdataset" autofittype="col" autosizingtype="row" extendsizetype="row">
+                <Formats>
+                  <Format id="default">
+                    <Columns>
+                      <Column size="80" band="body"/>
+                      <Column size="80" band="body"/>
+                      <Column size="80" band="body"/>
+                      <Column size="80" band="body"/>
+                      <Column size="80" band="body"/>
+                      <Column size="80" band="body"/>
+                      <Column size="80" band="body"/>
+                    </Columns>
+                    <Rows>
+                      <Row size="32" band="head"/>
+                      <Row size="32" band="body"/>
+                    </Rows>
+                    <Band id="head">
+                      <Cell id="cell_head_0_0_customerID" col="0" row="0" text="고객 ID" cssclass=""/>
+                      <Cell id="cell_head_1_0_customerName" col="1" row="0" text="고객 이름" cssclass=""/>
+                      <Cell id="cell_head_2_0_memberType" col="2" row="0" text="회원 유형" cssclass=""/>
+                      <Cell id="cell_head_3_0_customerPhone" col="3" row="0" text="고객 전화번호" cssclass=""/>
+                      <Cell id="cell_head_4_0_customerEmail" col="4" row="0" text="고객 이메일" cssclass=""/>
+                      <Cell id="cell_head_5_0_customerGender" col="5" row="0" text="고객 성별" cssclass=""/>
+                      <Cell id="cell_head_6_0_customerAddress" col="6" row="0" text="고객 주소" cssclass=""/>
+                    </Band>
+                    <Band id="body">
+                      <Cell id="cell_body_0_0_customerID" col="0" row="0" text="bind:customerID" displaytype="normal" edittype="none" cssclass="" autosizerow="limitmin"/>
+                      <Cell id="cell_body_1_0_customerName" col="1" row="0" text="bind:customerName" displaytype="normal" edittype="none" cssclass="" autosizerow="limitmin"/>
+                      <Cell id="cell_body_2_0_memberType" col="2" row="0" text="bind:memberType" displaytype="combotext" edittype="none" cssclass="" autosizerow="limitmin" combodataset="innerdatasetMembertype" combocodecol="code" combodatacol="data"/>
+                      <Cell id="cell_body_3_0_customerPhone" col="3" row="0" text="bind:customerPhone" displaytype="normal" edittype="none" cssclass="" autosizerow="limitmin"/>
+                      <Cell id="cell_body_4_0_customerEmail" col="4" row="0" text="bind:customerEmail" displaytype="normal" edittype="none" cssclass="" autosizerow="limitmin"/>
+                      <Cell id="cell_body_5_0_customerGender" col="5" row="0" text="bind:customerGender" displaytype="combotext" edittype="none" cssclass="" autosizerow="limitmin" combodataset="innerdatasetCustomergender" combocodecol="code" combodatacol="data"/>
+                      <Cell id="cell_body_6_0_customerAddress" col="6" row="0" text="bind:customerAddress" displaytype="normal" edittype="none" cssclass="" autosizerow="limitmin"/>
+                    </Band>
+                    <Band id="summary"/>
+                  </Format>
+                </Formats>
+              </Grid>
+            </Layout>
+          </Layouts>
+          <Objects>
+            <Dataset id="viewdataset">
+              <ColumnInfo>
+                <Column id="customerID" type="STRING" size="100" description="고객 ID"/>
+                <Column id="customerName" type="STRING" size="100" description="고객 이름"/>
+                <Column id="memberType" type="STRING" size="100" description="회원 유형"/>
+                <Column id="customerPhone" type="STRING" size="100" description="고객 전화번호"/>
+                <Column id="customerEmail" type="STRING" size="100" description="고객 이메일"/>
+                <Column id="customerGender" type="STRING" size="100" description="고객 성별"/>
+                <Column id="customerAddress" type="STRING" size="100" description="고객 주소"/>
+              </ColumnInfo>
+              <Rows/>
+            </Dataset>
+            <Dataset id="innerdatasetMembertype">
+              <ColumnInfo>
+                <Column id="code" type="STRING" size="256"/>
+                <Column id="data" type="STRING" size="256"/>
+              </ColumnInfo>
+              <Rows>
+                <Row>
+                  <Col id="code">01</Col>
+                  <Col id="data">일반</Col>
+                </Row>
+                <Row>
+                  <Col id="code">02</Col>
+                  <Col id="data">기업</Col>
+                </Row>
+                <Row>
+                  <Col id="code">03</Col>
+                  <Col id="data">임직원</Col>
+                </Row>
+              </Rows>
+            </Dataset>
+            <Dataset id="innerdatasetCustomergender">
+              <ColumnInfo>
+                <Column id="code" type="STRING" size="256"/>
+                <Column id="data" type="STRING" size="256"/>
+              </ColumnInfo>
+              <Rows>
+                <Row>
+                  <Col id="code">01</Col>
+                  <Col id="data">여자</Col>
+                </Row>
+                <Row>
+                  <Col id="code">02</Col>
+                  <Col id="data">남자</Col>
+                </Row>
+              </Rows>
+            </Dataset>
+          </Objects>
+          <ModelInfo modelserviceid="modelservice" serviceid="svcCustomer" modelid="dsCustomerList" filepath="_models_\svcCustomer.xmodel">
+            <Fields>
+              <Field id="customerID" label="고객 ID" uselabel="true"/>
+              <Field id="customerName" label="고객 이름" uselabel="true"/>
+              <Field id="memberType" label="회원 유형" uselabel="true"/>
+              <Field id="customerPhone" label="고객 전화번호" uselabel="true"/>
+              <Field id="customerEmail" label="고객 이메일" uselabel="true"/>
+              <Field id="customerGender" label="고객 성별" uselabel="true"/>
+              <Field id="customerAddress" label="고객 주소" uselabel="true"/>
+            </Fields>
+            <Components>
+              <Component id="customerID,customerName,memberType,customerPhone,customerEmail,customerGender,customerAddress" fields="grdList"/>
+            </Components>
+          </ModelInfo>
+          <ViewTemplateInfo filepath="Asset\GridViewTemplate.xviewgen">
+            <Attribute id="titletext" value=""/>
+            <Attribute id="fieldwidth" value="80"/>
+            <Attribute id="headbandsize" value="32"/>
+            <Attribute id="bodybandsize" value="32"/>
+            <Attribute id="summbandsize" value="-1"/>
+            <Attribute id="autofittype" value="col"/>
+            <Attribute id="suppress" value="false"/>
+          </ViewTemplateInfo>
+        </View>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <TransactionAction id="TransactionAction00" servicemodel="svcCustomer" serviceurl="https://dev-apps.tobedevops.link/serverpart/mars-server/server/execute" inputdatasets="dsCustomerSearch=viewFilterCustomer.form.viewdataset" outputdatasets="viewCustomerGrid.form.viewdataset=dsCustomerList" args="">
+        <Contents/>
+      </TransactionAction>
+    </Objects>
+    <Trigger>
+      <TriggerItem id="item0" triggertype="Click" triggerview="viewFilterCustomer" triggerobj="btnSearch" targetaction="TransactionAction00" condition=""/>
+      <TriggerItem id="item2" triggertype="Form Init" triggerview="frmCustormer" triggerobj="frmCustormer" targetaction="TransactionAction00" condition=""/>
+    </Trigger>
+    <Bind>
+      <BindItem id="bind_imgProfileimg" compid="imgProfileimg" propid="image" datasetid="viewdataset" columnid="profileImg"/>
+      <BindItem id="bind_edtName" compid="edtName" propid="value" datasetid="viewdataset" columnid="name"/>
+      <BindItem id="bind_edtPhone" compid="edtPhone" propid="value" datasetid="viewdataset" columnid="phone"/>
+      <BindItem id="bind_edtEmail" compid="edtEmail" propid="value" datasetid="viewdataset" columnid="email"/>
+    </Bind>
+    <Script type="xscript5.1"><![CDATA[/**
+*  @FileName 	frmCustormer.xfdl
+*  @Creator 	TOBESOFT
+*  @CreateDate 	2024/08/01
+*  @Desction   
+************** 소스 수정 이력 ***********************************************
+* Date					Modifier					Description
+*******************************************************************************
+* 2024/08/01			TOBESOFT					최초생성
+*******************************************************************************
+*/]]>
+    </Script>
+  </Form>
+</FDL>

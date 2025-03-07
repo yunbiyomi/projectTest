@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="frmDashboard" width="1070" height="772" titletext="대시보드">
+    <Layouts>
+      <Layout height="720" width="1280">
+        <View id="viewCountReq" taborder="0" viewdataset="viewdataset" left="20" top="20" height="150" right="20" fittocontents="none" viewtype="Grid">
+          <Layouts>
+            <Layout type="table" tabletemplate="50px 99px / 1* 1* 1* 1* 1*">
+              <Static id="staReqtotalcountBg" left="0" top="0" width="90%" height="150" cssclass="sta_Dashboard_card_fieldbox" tablecellarea="0 1/0 0"/>
+              <Static id="staReqtotalcountLabel" left="0" top="0" width="90%" height="50" text="문의 총합" cssclass="sta_Dashboard_card_label" tablecellarea="0 0/0 0"/>
+              <Panel left="0" top="50" width="90%" height="100%" type="horizontal" spacing="5px 5px 5px 5px" horizontalgap="5" verticalgap="5" tablecellarea="1 1/0 0" id="pnlReqtotalcount">
+                <Contents>
+                  <PanelItem id="PanelItem_mskReqtotalcount" componentid="mskReqtotalcount"/>
+                </Contents>
+              </Panel>
+              <MaskEdit id="mskReqtotalcount" left="0" top="0" width="100%" height="100%" cssclass="countbox_content" tablecellarea="1 1/0 0" readonly="true"/>
+              <Static id="staReqinprogressBg" left="196" top="0" width="90%" height="150" cssclass="sta_Dashboard_card_fieldbox" tablecellarea="0 1/1 1"/>
+              <Static id="staReqinprogressLabel" left="196" top="0" width="90%" height="50" text="처리된 문의" cssclass="sta_Dashboard_card_label" tablecellarea="0 0/1 1"/>
+              <Panel left="196" top="50" width="90%" height="100%" type="horizontal" spacing="5px 5px 5px 5px" horizontalgap="5" verticalgap="5" tablecellarea="1 1/1 1" id="pnlReqinprogress">
+                <Contents>
+                  <PanelItem id="PanelItem_mskReqinprogress" componentid="mskReqinprogress"/>
+                </Contents>
+              </Panel>
+              <MaskEdit id="mskReqinprogress" left="0" top="0" width="100%" height="100%" cssclass="countbox_content" tablecellarea="1 1/1 1" readonly="true"/>
+              <Static id="staReqdelayBg" left="392" top="0" width="90%" height="150" cssclass="sta_Dashboard_card_fieldbox" tablecellarea="0 1/2 2"/>
+              <Static id="staReqdelayLabel" left="392" top="0" width="90%" height="50" text="지연된 문의" cssclass="sta_Dashboard_card_label" tablecellarea="0 0/2 2"/>
+              <Panel left="392" top="50" width="90%" height="100%" type="horizontal" spacing="5px 5px 5px 5px" horizontalgap="5" verticalgap="5" tablecellarea="1 1/2 2" id="pnlReqdelay">
+                <Contents>
+                  <PanelItem id="PanelItem_mskReqdelay" componentid="mskReqdelay"/>
+                </Contents>
+              </Panel>
+              <MaskEdit id="mskReqdelay" left="0" top="0" width="100%" height="100%" cssclass="countbox_content" tablecellarea="1 1/2 2" readonly="true"/>
+              <Static id="staReqcompleteBg" left="588" top="0" width="90%" height="150" cssclass="sta_Dashboard_card_fieldbox" tablecellarea="0 1/3 3"/>
+              <Static id="staReqcompleteLabel" left="588" top="0" width="90%" height="50" text="완료된 문의" cssclass="sta_Dashboard_card_label" tablecellarea="0 0/3 3"/>
+              <Panel left="588" top="50" width="90%" height="100%" type="horizontal" spacing="5px 5px 5px 5px" horizontalgap="5" verticalgap="5" tablecellarea="1 1/3 3" id="pnlReqcomplete">
+                <Contents>
+                  <PanelItem id="PanelItem_mskReqcomplete" componentid="mskReqcomplete"/>
+                </Contents>
+              </Panel>
+              <MaskEdit id="mskReqcomplete" left="0" top="0" width="100%" height="100%" cssclass="countbox_content" tablecellarea="1 1/3 3" readonly="true"/>
+              <Static id="staReqpendingBg" left="784" top="0" width="90%" height="150" cssclass="sta_Dashboard_card_fieldbox" tablecellarea="0 1/4 4"/>
+              <Static id="staReqpendingLabel" left="784" top="0" width="90%" height="50" text="보류된 문의" cssclass="sta_Dashboard_card_label" tablecellarea="0 0/4 4"/>
+              <Panel left="784" top="50" width="90%" height="100%" type="horizontal" spacing="5px 5px 5px 5px" horizontalgap="5" verticalgap="5" tablecellarea="1 1/4 4" id="pnlReqpending">
+                <Contents>
+                  <PanelItem id="PanelItem_mskReqpending" componentid="mskReqpending"/>
+                </Contents>
+              </Panel>
+              <MaskEdit id="mskReqpending" left="0" top="0" width="100%" height="100%" cssclass="countbox_content" tablecellarea="1 1/4 4" readonly="true"/>
+            </Layout>
+          </Layouts>
+          <Objects>
+            <Dataset id="viewdataset">
+              <ColumnInfo>
+                <Column id="reqTotalCount" type="INT" size="100" description="문의 총합"/>
+                <Column id="reqInProgress" type="INT" size="100" description="처리된 문의"/>
+                <Column id="reqDelay" type="INT" size="100" description="지연된 문의"/>
+                <Column id="reqComplete" type="INT" size="100" description="완료된 문의"/>
+                <Column id="reqPending" type="INT" size="100" description="보류된 문의"/>
+              </ColumnInfo>
+              <Rows>
+                <Row/>
+              </Rows>
+            </Dataset>
+          </Objects>
+          <Bind>
+            <BindItem id="bind_mskReqtotalcount" compid="mskReqtotalcount" propid="value" datasetid="viewdataset" columnid="reqTotalCount"/>
+            <BindItem id="bind_mskReqinprogress" compid="mskReqinprogress" propid="value" datasetid="viewdataset" columnid="reqInProgress"/>
+            <BindItem id="bind_mskReqdelay" compid="mskReqdelay" propid="value" datasetid="viewdataset" columnid="reqDelay"/>
+            <BindItem id="bind_mskReqcomplete" compid="mskReqcomplete" propid="value" datasetid="viewdataset" columnid="reqComplete"/>
+            <BindItem id="bind_mskReqpending" compid="mskReqpending" propid="value" datasetid="viewdataset" columnid="reqPending"/>
+          </Bind>
+          <ModelInfo modelserviceid="modelservice" serviceid="svcRequestCount" modelid="dsRequestCount" filepath="_models_\svcRequestCount.xmodel">
+            <Fields>
+              <Field id="reqTotalCount" label="문의 총합" uselabel="true"/>
+              <Field id="reqInProgress" label="처리된 문의" uselabel="true"/>
+              <Field id="reqDelay" label="지연된 문의" uselabel="true"/>
+              <Field id="reqComplete" label="완료된 문의" uselabel="true"/>
+              <Field id="reqPending" label="보류된 문의" uselabel="true"/>
+            </Fields>
+            <Components>
+              <Component id="reqTotalCount" fields="staReqtotalcountBg,staReqtotalcountLabel,pnlReqtotalcount,mskReqtotalcount"/>
+              <Component id="reqInProgress" fields="staReqinprogressBg,staReqinprogressLabel,pnlReqinprogress,mskReqinprogress"/>
+              <Component id="reqDelay" fields="staReqdelayBg,staReqdelayLabel,pnlReqdelay,mskReqdelay"/>
+              <Component id="reqComplete" fields="staReqcompleteBg,staReqcompleteLabel,pnlReqcomplete,mskReqcomplete"/>
+              <Component id="reqPending" fields="staReqpendingBg,staReqpendingLabel,pnlReqpending,mskReqpending"/>
+            </Components>
+          </ModelInfo>
+          <ViewTemplateInfo filepath="Asset\DashboardCardListViewTemplate.xviewgen">
+            <Attribute id="titletext" value=""/>
+            <Attribute id="columncount" value="5"/>
+            <Attribute id="fieldheight" value="100px"/>
+            <Attribute id="labelsize" value="50"/>
+            <Attribute id="fieldposition" value="vertical"/>
+            <Attribute id="usefieldbox" value="true"/>
+            <Attribute id="viewpadding" value=""/>
+          </ViewTemplateInfo>
+        </View>
+        <View id="viewReqGrid" taborder="1" viewdataset="viewdataset" left="20" top="viewCountReq:20" width="50%" height="250" viewtype="Grid">
+          <Layouts>
+            <Layout>
+              <Div id="divTitle" left="0" top="0" height="43" right="0">
+                <Layouts>
+                  <Layout>
+                    <Static id="staTitle" left="0" top="0" height="43" width="150" text="최근 문의 리스트" fittocontents="width" cssclass="sta_subtitle" right="0"/>
+                  </Layout>
+                </Layouts>
+              </Div>
+              <Grid id="grdList" left="0" top="43" right="0" bottom="0" binddataset="viewdataset" autofittype="col" autosizingtype="row" extendsizetype="row">
+                <Formats>
+                  <Format id="default">
+                    <Columns>
+                      <Column size="80" band="body"/>
+                      <Column size="80" band="body"/>
+                      <Column size="80" band="body"/>
+                      <Column size="80" band="body"/>
+                    </Columns>
+                    <Rows>
+                      <Row size="36" band="head"/>
+                      <Row size="30" band="body"/>
+                    </Rows>
+                    <Band id="head">
+                      <Cell id="cell_head_0_0_requestId" col="0" row="0" text="문의 ID" cssclass=""/>
+                      <Cell id="cell_head_1_0_requestTitle" col="1" row="0" text="문의 제목" cssclass=""/>
+                      <Cell id="cell_head_2_0_customerName" col="2" row="0" text="고객 이름" cssclass=""/>
+                      <Cell id="cell_head_3_0_receivedDate" col="3" row="0" text="접수일" cssclass=""/>
+                    </Band>
+                    <Band id="body">
+                      <Cell id="cell_body_0_0_requestId" col="0" row="0" text="bind:requestId" displaytype="normal" edittype="none" cssclass="" autosizerow="limitmin"/>
+                      <Cell id="cell_body_1_0_requestTitle" col="1" row="0" text="bind:requestTitle" displaytype="normal" edittype="none" cssclass="" autosizerow="limitmin"/>
+                      <Cell id="cell_body_2_0_customerName" col="2" row="0" text="bind:customerName" displaytype="normal" edittype="none" cssclass="" autosizerow="limitmin"/>
+                      <Cell id="cell_body_3_0_receivedDate" col="3" row="0" text="bind:receivedDate" displaytype="date" edittype="none" cssclass="" autosizerow="limitmin" calendardisplaynulltype="none"/>
+                    </Band>
+                    <Band id="summary"/>
+                  </Format>
+                </Formats>
+              </Grid>
+            </Layout>
+          </Layouts>
+          <Objects>
+            <Dataset id="viewdataset">
+              <ColumnInfo>
+                <Column id="requestId" type="STRING" size="100" description="문의 ID"/>
+                <Column id="requestTitle" type="STRING" size="100" description="문의 제목"/>
+                <Column id="customerName" type="STRING" size="100" description="고객 이름"/>
+                <Column id="receivedDate" type="STRING" size="100" description="접수일"/>
+              </ColumnInfo>
+              <Rows/>
+            </Dataset>
+          </Objects>
+          <ModelInfo modelserviceid="modelservice" serviceid="svcGetRequest" modelid="dsRequestList" filepath="_models_\svcGetRequest.xmodel">
+            <Fields>
+              <Field id="requestId" label="문의 ID" uselabel="true"/>
+              <Field id="requestTitle" label="문의 제목" uselabel="true"/>
+              <Field id="customerName" label="고객 이름" uselabel="true"/>
+              <Field id="receivedDate" label="접수일" uselabel="true"/>
+            </Fields>
+            <Components>
+              <Component id="_viewcomp" fields="divTitle"/>
+              <Component id="requestId,requestTitle,customerName,receivedDate" fields="grdList"/>
+            </Components>
+          </ModelInfo>
+          <ViewTemplateInfo filepath="Asset\GridViewTemplate.xviewgen">
+            <Attribute id="titletext" value="최근 문의 리스트"/>
+            <Attribute id="fieldwidth" value="80"/>
+            <Attribute id="headbandsize" value="36"/>
+            <Attribute id="bodybandsize" value="30"/>
+            <Attribute id="summbandsize" value="-1"/>
+            <Attribute id="autofittype" value="col"/>
+            <Attribute id="suppress" value="false"/>
+          </ViewTemplateInfo>
+        </View>
+        <View id="viewChartTimeReq" taborder="2" viewdataset="viewdataset" left="viewReqGrid:20" top="viewCountReq:20" height="250" right="20" viewtype="Chart">
+          <Layouts>
+            <Layout>
+              <Div id="divTitle" left="0" top="0" height="43" right="0">
+                <Layouts>
+                  <Layout>
+                    <Static id="staTitle" left="0" top="0" height="43" width="150" text="응답시간" fittocontents="width" cssclass="sta_subtitle" right="0"/>
+                  </Layout>
+                </Layouts>
+              </Div>
+              <ChartJS id="chart" left="0" top="43" right="0" bottom="0"/>
+            </Layout>
+          </Layouts>
+          <Objects>
+            <Dataset id="viewdataset">
+              <ColumnInfo>
+                <Column id="responseDate" type="STRING" size="100" description="응답 날짜"/>
+                <Column id="responseTime" type="INT" size="100" description="응답 시간"/>
+              </ColumnInfo>
+              <Rows/>
+            </Dataset>
+          </Objects>
+          <Script><![CDATA[this.lfn_DXChart_form_onload = function(obj,e){this.viewdataset.addEventHandler('onload', this.lfn_DXChart_viewdataset_onload, this);this.viewdataset.addEventHandler('onrowsetchanged', this.lfn_DXChart_viewdataset_onrowsetchanged, this);this.viewdataset.addEventHandler('oncolumnchanged', this.lfn_DXChart_viewdataset_oncolumnchanged, this);};this.lfn_DXChart_viewdataset_onrowsetchanged = function(obj,e){this.lfn_SetDXChart(obj);};this.lfn_DXChart_viewdataset_onload = function(obj,e){this.lfn_SetDXChart(obj);};this.lfn_DXChart_viewdataset_oncolumnchanged = function(obj,e){this.lfn_SetDXChart(obj);};this.lfn_SetDXChart = function(){var chart = this.chart;var canvas = chart.getCanvas();var cvs = canvas.id;DxChart.reset(canvas);var column0 = new DxChartBar({id: cvs,elem : canvas,binddataset : this.viewdataset,data:['bind:responseTime'],options: {margin:{Inner:20,Left:60,Bottom:20},background:{GridBorder:false,GridVlines:false},xaxis:{Use:true,Color:'#d0d0d0',TitleColor:'#4c4c4c',TitleFontStyle:'bold 10px "Malgun Gothic", "Meiryo", "MS Gothic"',TitleValign:'top',LabelsColor:'#6f6f6f',LabelsFontStyle:'12px "Malgun Gothic", "Meiryo", "MS Gothic"',Tickmarks:false,Title:'',Labels:'bind:responseDate'},yaxis:{Use:true,Color:'#d0d0d0',TitleColor:'#4c4c4c',TitleFontStyle:'bold 10px "Malgun Gothic", "Meiryo", "MS Gothic"',TitleValign:'top',TitleHalign:'right',LabelsColor:'#6f6f6f',LabelsFontStyle:'12px "Malgun Gothic", "Meiryo", "MS Gothic"',Tickmarks:false,Scale:true,Title:''},colors:['#1f77b4','#ff7f0e','#2ca02c','#d62728','#9467bd','#8c564b','#e377c2','#7f7f7f','#bcbd22','#17becf'],tooltips:{Css:{fontSize:'12px',padding:'5px'},Data:'%{key}',FormattedKeyLabels:['응답 시간']}}}).drawAni();};this.addEventHandler('onload', this.lfn_DXChart_form_onload, this);]]>
+          </Script>
+          <ModelInfo modelserviceid="modelservice" serviceid="svcResponseTime" modelid="dsResponseTime" filepath="_models_\svcResponseTime.xmodel">
+            <Fields>
+              <Field id="responseDate" label="응답 날짜" uselabel="true"/>
+              <Field id="responseTime" label="응답 시간" uselabel="true"/>
+            </Fields>
+            <Components>
+              <Component id="_viewcomp" fields="divTitle"/>
+              <Component id="responseDate,responseTime" fields="chart"/>
+            </Components>
+          </ModelInfo>
+          <ViewTemplateInfo filepath="DXChart\BarChartViewTemplate.xviewgen">
+            <Attribute id="titletext" value="응답시간"/>
+            <Attribute id="chartthemetype" value="category10"/>
+            <Attribute id="legendposition" value="none"/>
+            <Attribute id="charttype" value="column"/>
+            <Attribute id="chartdisplay" value="grouped"/>
+            <Attribute id="display3d" value="false"/>
+            <Attribute id="categoryaxistitletext" value=""/>
+            <Attribute id="valueaxistitletext" value=""/>
+          </ViewTemplateInfo>
+        </View>
+        <View id="viewChartTotalReq" taborder="3" viewdataset="viewdataset" left="20" top="viewReqGrid:20" bottom="20" right="20" viewtype="Chart">
+          <Layouts>
+            <Layout>
+              <Div id="divTitle" left="0" top="0" height="43" right="0">
+                <Layouts>
+                  <Layout>
+                    <Static id="staTitle" left="0" top="0" height="43" width="150" text="금일현황" fittocontents="width" cssclass="sta_subtitle" right="0"/>
+                  </Layout>
+                </Layouts>
+              </Div>
+              <ChartJS id="chart" left="0" top="43" right="0" bottom="0"/>
+            </Layout>
+          </Layouts>
+          <Objects>
+            <Dataset id="viewdataset">
+              <ColumnInfo>
+                <Column id="reqHour" type="STRING" size="100" description="접수 시간"/>
+                <Column id="reqInProgress" type="INT" size="100" description="처리된 문의"/>
+                <Column id="reqDelay" type="INT" size="100" description="지연된 문의"/>
+                <Column id="reqComplete" type="INT" size="100" description="완료된 문의"/>
+                <Column id="reqPending" type="INT" size="100" description="보류된 문의"/>
+              </ColumnInfo>
+              <Rows/>
+            </Dataset>
+          </Objects>
+          <Script><![CDATA[this.lfn_DXChart_form_onload = function(obj,e){this.viewdataset.addEventHandler('onload', this.lfn_DXChart_viewdataset_onload, this);this.viewdataset.addEventHandler('onrowsetchanged', this.lfn_DXChart_viewdataset_onrowsetchanged, this);this.viewdataset.addEventHandler('oncolumnchanged', this.lfn_DXChart_viewdataset_oncolumnchanged, this);};this.lfn_DXChart_viewdataset_onrowsetchanged = function(obj,e){this.lfn_SetDXChart(obj);};this.lfn_DXChart_viewdataset_onload = function(obj,e){this.lfn_SetDXChart(obj);};this.lfn_DXChart_viewdataset_oncolumnchanged = function(obj,e){this.lfn_SetDXChart(obj);};this.lfn_SetDXChart = function(){var chart = this.chart;var canvas = chart.getCanvas();var cvs = canvas.id;DxChart.reset(canvas);var line0 = new DxChartLine({id: cvs,elem : canvas,binddataset : this.viewdataset,data:['bind:reqInProgress','bind:reqDelay','bind:reqComplete','bind:reqPending'],options: {margin:{Left:60,Bottom:53},background:{GridBorder:false,GridVlines:false},tickmarks:{Style:'filledcircle',Size:3},xaxis:{Use:true,Color:'#d0d0d0',TitleColor:'#4c4c4c',TitleFontStyle:'bold 10px "Malgun Gothic", "Meiryo", "MS Gothic"',TitleValign:'top',LabelsColor:'#6f6f6f',LabelsFontStyle:'12px "Malgun Gothic", "Meiryo", "MS Gothic"',Tickmarks:false,Title:'',Labels:'bind:reqHour'},yaxis:{Use:true,Color:'#d0d0d0',TitleColor:'#4c4c4c',TitleFontStyle:'bold 10px "Malgun Gothic", "Meiryo", "MS Gothic"',TitleValign:'top',TitleHalign:'right',LabelsColor:'#6f6f6f',LabelsFontStyle:'12px "Malgun Gothic", "Meiryo", "MS Gothic"',Tickmarks:false,Scale:true,Title:''},key:{Interactive:true,LabelsFontStyle:'12px "Malgun Gothic", "Meiryo", "MS Gothic"',Position:'margin',Halign:'center',Valign:'bottom',Data:['처리된 문의','지연된 문의','완료된 문의','보류된 문의'],PositionOffsetY:10},colors:['#9ed9bb','#7bcbc4','#23abd8','#417de0','#2c62ca','#234ea0','#6e40aa'],tooltips:{Css:{fontSize:'12px',padding:'5px'},Data:'%{key}',FormattedKeyLabels:['처리된 문의','지연된 문의','완료된 문의','보류된 문의']}}}).drawAni();};this.addEventHandler('onload', this.lfn_DXChart_form_onload, this);]]>
+          </Script>
+          <ModelInfo modelserviceid="modelservice" serviceid="svcTodayRequestTotal" modelid="dsTodayRequestTotal" filepath="_models_\svcTodayRequestTotal.xmodel">
+            <Fields>
+              <Field id="reqHour" label="접수 시간" uselabel="true"/>
+              <Field id="reqInProgress" label="처리된 문의" uselabel="true"/>
+              <Field id="reqDelay" label="지연된 문의" uselabel="true"/>
+              <Field id="reqComplete" label="완료된 문의" uselabel="true"/>
+              <Field id="reqPending" label="보류된 문의" uselabel="true"/>
+            </Fields>
+            <Components>
+              <Component id="_viewcomp" fields="divTitle"/>
+              <Component id="reqHour,reqInProgress,reqDelay,reqComplete,reqPending" fields="chart"/>
+            </Components>
+          </ModelInfo>
+          <ViewTemplateInfo filepath="DXChart\LineChartViewTemplate.xviewgen">
+            <Attribute id="titletext" value="금일현황"/>
+            <Attribute id="chartthemetype" value="blue"/>
+            <Attribute id="legendposition" value="bottom"/>
+            <Attribute id="charttype" value="line"/>
+            <Attribute id="linetype" value="segment"/>
+            <Attribute id="trendline" value="false"/>
+            <Attribute id="categoryaxistitletext" value=""/>
+            <Attribute id="valueaxistitletext" value=""/>
+          </ViewTemplateInfo>
+        </View>
+        <Static id="Static00" left="1086" top="21" width="289" height="49" text="svcRequestCount / dsRequestCount" visible="false"/>
+        <Static id="Static01" left="1086" top="190" width="289" height="90" text="svcGetRequest / dsRequestList&#10;svcResponseTime / dsResponseTime" visible="false"/>
+        <Static id="Static02" left="1086" top="461" width="289" height="49" text="svcTodayRequestTotal / dsTodayRequestTotal" visible="false"/>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <TransactionAction id="TransactionAction00" servicemodel="svcTodayRequestTotal" serviceurl="https://dev-apps.tobedevops.link/serverpart/mars-server/server/execute" outputdatasets="viewChartTotalReq.form.viewdataset=dsTodayRequestTotal" inputdatasets="" args="">
+        <Contents/>
+      </TransactionAction>
+      <TransactionAction id="TransactionAction01" servicemodel="svcResponseTime" serviceurl="https://dev-apps.tobedevops.link/serverpart/mars-server/server/execute" outputdatasets="viewChartTimeReq.form.viewdataset=dsResponseTime" inputdatasets="" args="">
+        <Contents/>
+      </TransactionAction>
+      <TransactionAction id="TransactionAction02" servicemodel="svcRequestCount" serviceurl="https://dev-apps.tobedevops.link/serverpart/mars-server/server/execute" outputdatasets="viewCountReq.form.viewdataset=dsRequestCount" inputdatasets="" args="">
+        <Contents/>
+      </TransactionAction>
+      <TransactionAction id="TransactionAction03" servicemodel="svcGetRequest" serviceurl="https://dev-apps.tobedevops.link/serverpart/mars-server/server/execute" inputdatasets="" outputdatasets="viewReqGrid.form.viewdataset=dsRequestList" args="">
+        <Contents/>
+      </TransactionAction>
+    </Objects>
+    <Trigger>
+      <TriggerItem id="item0" triggertype="Form Init" triggerview="frmDashboard" triggerobj="frmDashboard" targetaction="TransactionAction00" condition=""/>
+      <TriggerItem id="item1" triggertype="Action Success" triggerview="frmDashboard" triggerobj="TransactionAction00" targetaction="TransactionAction01" condition=""/>
+      <TriggerItem id="item2" triggertype="Action Success" triggerview="frmDashboard" triggerobj="TransactionAction01" targetaction="TransactionAction02" condition=""/>
+      <TriggerItem id="item3" triggertype="Action Success" triggerview="frmDashboard" triggerobj="TransactionAction02" targetaction="TransactionAction03" condition=""/>
+    </Trigger>
+    <Script type="xscript5.1"><![CDATA[/**
+*  @FileName 	frmDashboard.xfdl
+*  @Creator 	TOBESOFT
+*  @CreateDate 	2024/08/01
+*  @Desction   
+************** 소스 수정 이력 ***********************************************
+* Date					Modifier					Description
+*******************************************************************************
+* 2024/08/01			TOBESOFT					최초생성
+*******************************************************************************
+*/
+
+/**
+ * @description : '더보기' 버튼
+ */
+this.viewReqGrid_divTitle_btnMoreReqGrid_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this._gfnOpenMenu(10101003);
+};
+]]>
+    </Script>
+  </Form>
+</FDL>

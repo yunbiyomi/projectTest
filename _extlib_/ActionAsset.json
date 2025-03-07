@@ -1,0 +1,91 @@
+﻿{
+	"name": "ActionAsset",
+	"moduletype": "component",
+	"version": "2.0",
+	"minnexacroversion": "24.0.0.140",
+	"description": "TransactionAction 수정(BackendServer에서 Service 구분을 위한 필수 정보를 전달 기능 추가)",
+	"license": "",
+	"objInfo": [	
+    "ActionAsset/_metainfo_/CommonInfo.info",
+    "ActionAsset/_metainfo_/CommAction.info",
+    "ActionAsset/_metainfo_/ActionRunEventInfo.info",
+    "ActionAsset/_metainfo_/ActionSuccessEventInfo.info",
+    "ActionAsset/_metainfo_/ActionErrorEventInfo.info",
+    "ActionAsset/_metainfo_/TranAction.info",
+    "ActionAsset/_metainfo_/TranActionSuccessEventInfo.info",
+    "ActionAsset/_metainfo_/TranActionErrorEventInfo.info",
+    "ActionAsset/_metainfo_/MessageAction.info",
+    "ActionAsset/_metainfo_/PopupAction.info",
+    "ActionAsset/_metainfo_/PopupCloseAction.info",
+    "ActionAsset/_metainfo_/ExcelExportAction.info",
+    "ActionAsset/_metainfo_/ExcelImportAction.info",
+    "ActionAsset/_metainfo_/DsIsUpdatedAction.info",
+    "ActionAsset/_metainfo_/DsSetFirstCdAction.info",
+    "ActionAsset/_metainfo_/DsAddDataAction.info",
+    "ActionAsset/_metainfo_/DsInsertDataAction.info",
+    "ActionAsset/_metainfo_/DsDeleteDataAction.info",
+    "ActionAsset/_metainfo_/DsDeleteSelectDataAction.info",
+    "ActionAsset/_metainfo_/DsDeleteCheckedDataAction.info",
+    "ActionAsset/_metainfo_/DsDeleteAllDataAction.info",
+    "ActionAsset/_metainfo_/DsResetDataAction.info",
+    "ActionAsset/_metainfo_/DsCopyDataAction.info",
+    "ActionAsset/_metainfo_/DsCopyRowDataAction.info",
+    "ActionAsset/_metainfo_/DsFilterDataAction.info",
+    "ActionAsset/_metainfo_/TransactionAction.info",
+    "ActionAsset/_metainfo_/OpenBrowserAction.info",
+    "ActionAsset/_metainfo_/DsMoveRowDataAction.info",
+    "ActionAsset/_metainfo_/RestAPIAction.info"
+	],
+	"scripts": [
+    "ActionAsset/CommAction.js",
+    "ActionAsset/LibCommon.js",
+    "ActionAsset/LibAsset.js",
+    "ActionAsset/ActionRunEventInfo.js",
+    "ActionAsset/ActionSuccessEventInfo.js",
+    "ActionAsset/ActionErrorEventInfo.js",
+    "ActionAsset/TranAction.js",
+    "ActionAsset/TranActionSuccessEventInfo.js",
+    "ActionAsset/TranActionErrorEventInfo.js",
+    "ActionAsset/MessageAction.js",
+    "ActionAsset/PopupAction.js",
+    "ActionAsset/PopupCloseAction.js",
+    "ActionAsset/ExcelExportAction.js",
+    "ActionAsset/ExcelImportAction.js",
+    "ActionAsset/DsIsUpdatedAction.js",
+    "ActionAsset/DsSetFirstCdAction.js",
+    "ActionAsset/DsAddDataAction.js",
+    "ActionAsset/DsInsertDataAction.js",
+    "ActionAsset/DsDeleteDataAction.js",
+    "ActionAsset/DsDeleteSelectDataAction.js",
+    "ActionAsset/DsDeleteCheckedDataAction.js",
+    "ActionAsset/DsDeleteAllDataAction.js",
+    "ActionAsset/DsResetDataAction.js",
+    "ActionAsset/DsCopyDataAction.js",
+    "ActionAsset/DsCopyRowDataAction.js",
+    "ActionAsset/DsFilterDataAction.js",
+    "ActionAsset/TransactionAction.js",
+    "ActionAsset/OpenBrowserAction.js",
+    "ActionAsset/DsMoveRowDataAction.js",
+    "ActionAsset/RestAPIAction.js"
+	],
+	"scriptsfilter": [
+
+	],
+	"designscripts": [
+
+	],
+	"help": "",	
+	"xcss": "ActionAsset/_xcss_/ActionAssetProject.xcss",
+	"images": "",	
+	"licensefiles": "",
+	"icons": "",
+	"userfolder": [
+
+	],
+	"installinfo": {
+
+	},
+	"contentseditor": [
+
+	]
+}

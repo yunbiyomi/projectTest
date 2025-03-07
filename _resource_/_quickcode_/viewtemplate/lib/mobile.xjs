@@ -1,0 +1,209 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Script version="1.0" type="xscript5.1"><![CDATA[//--------------------------------------------------------------------------------------------------------
+// 타이틀 객체 관련 상수(ExpandButton + Title + TotalCount)
+//--------------------------------------------------------------------------------------------------------	
+// Title 영역 Height
+this.TITLE_AREA_HEIGHT_M				= 50;
+// Title 영역 컴포넌트 Gap
+this.TITLE_AREA_COMP_SPACE_M			= 0;
+
+// Title 높이
+this.TITLE_HEIGHT_M						= 50;
+// Title Default CSS Class
+this.TITLE_CSSCLASS_M					= "sta_subtitle";
+// Title Default CSS Class
+this.TITLE_NOICON_CSSCLASS_M			= "sta_subtitle_noicon";
+
+// TotalCount 높이
+this.TOT_COUNT_HEIGHT_M					= 50;
+// TotalCount 기본Text
+this.TOT_COUNT_TEXT_M					= "{0} Items";
+// TotalCount usedecorate
+this.TOT_COUNT_USEDECORATE_M			= "false";
+// TotalCount Default CSS Class
+this.TOT_COUNT_CSSCLASS_M				= "sta_total_count";
+
+// expand/collapse 버튼 사이즈(width, height)
+this.EXPAND_BUTTON_SIZE_M				= 50;
+
+// open 버튼 cssclass
+this.EXPAND_BUTTON_OPEN_CSSCLASS_M		= "btn_title_open";
+// close 버튼 cssclass
+this.EXPAND_BUTTON_CLOSE_CSSCLASS_M		= "btn_title_close";
+/*---------------------------------------------------------------------------------------------*
+ * Function     : lfn_MakeTitleAreaMobile
+ * Parameter    : 	sTitleText - titletext 속성값
+					sUseTotalCount - usetotalcount 속성값
+					sUseExpandButton - useexpandbutton 속성값
+					bFluidLayout - View객체 FluidLayout 여부
+					oOption - 그외 속성
+ * Return       : Title영역 높이
+ * Description  : 타이틀 영역 생성 함수
+ *---------------------------------------------------------------------------------------------*/
+this.lfn_MakeTitleAreaMobile = function(sTitleText, sUseTotalCount, sUseExpandButton, bFluidLayout, oOption)
+{
+	if (sTitleText == null)			return this.VIEW_PADDING_TOP;
+	if (sUseTotalCount == null)		sUseTotalCount = "false";
+	if (bFluidLayout == null)		bFluidLayout = false;
+
+	var oModel = this.oContents.View.Model;
+	var arrComponents	= new Array();
+	var oField;
+	var oComp;
+
+	var nCompTop		= 0;
+	var nCompLeft		= 0;
+	var nCompWidth		= 0;
+	var nCompHeight		= 0;
+	var nCompRight		= 0;
+	
+	var sCompId			= "";
+	var sText			= "";
+	var sCssClass		= "";
+	
+	var sHAlign				= "";
+	var nTitleAreaHeight	= this.TITLE_AREA_HEIGHT_M;
+	var sTitleCssClass		= this.TITLE_CSSCLASS_M;
+	
+	// 1) oOption값 처리
+	if (oOption != null)
+	{
+		// 1-1) 타이틀 영역 FluidLayout 적용
+		if (oOption["halign"])
+		{
+			sHAlign = this.lfn_Nvl(oOption["halign"],"left");
+		}
+		
+		// 1-2) Title영역 높이
+		if (oOption["height"])
+		{
+			nTitleAreaHeight = this.lfn_Nvl(oOption["height"]);
+		}
+		
+		// 1-3) Title영역 높이
+		if (oOption["titlecssclass"])
+		{
+			sTitleCssClass = this.lfn_Nvl(oOption["titlecssclass"]);
+		}
+	}
+	
+	// 2) ExpandButton 객체 생성
+	if (sUseExpandButton != "none")
+	{
+		var sViewNm = this.oContents.View.attribute.id;
+		
+		sCompId		= this.EXPAND_BUTTON_ID;
+		sCssClass	= sUseExpandButton == "close" ? this.EXPAND_BUTTON_OPEN_CSSCLASS_M : this.EXPAND_BUTTON_CLOSE_CSSCLASS_M;
+		
+		nCompWidth	= this.EXPAND_BUTTON_SIZE_M;
+		nCompHeight	= this.EXPAND_BUTTON_SIZE_M;
+		nCompTop	= nexacro.round((this.TITLE_AREA_HEIGHT_M - this.EXPAND_BUTTON_SIZE_M) / 2, 0);
+		
+		arrComponents.push({
+			"tag" : "Button",
+			"attribute" :
+			{
+				"id" : sCompId, "left" : nCompLeft, "top" : nCompTop, "height" : nCompHeight, "width" : nCompWidth
+				, "cssclass" : sCssClass
+				, "onclick" : sViewNm + ".form." + "lfn_Title_btnTitleOpenClose_onclick"
+				, "_openclose" : sUseExpandButton
+			}
+		});
+			
+		nCompLeft = nCompLeft + nCompWidth + this.TITLE_AREA_COMP_SPACE_M;
+	}
+	
+	// 3) Title 객체 생성
+	sCompId		= this.TITLE_ID;
+	sText		= sTitleText;
+	sCssClass	= sUseExpandButton == "none" ? sTitleCssClass : this.TITLE_NOICON_CSSCLASS_M;
+	
+	//nCompWidth	= 150;
+	nCompHeight	= this.TITLE_HEIGHT_M;
+	nCompTop	= 0;
+		
+	arrComponents.push({
+		"tag" : "Static",
+		"attribute" :
+		{
+			"id" : sCompId, "left" : nCompLeft, "top" : nCompTop, "height" : nCompHeight, "right" : 0,
+			"text" : sText, "fittocontents" : this.TITLE_FITTOCONTENTS,
+			"cssclass" : sCssClass
+		}
+	});
+	
+	// 4) TotalCount 객체 생성
+	if (sUseTotalCount == "true") {
+		sCompId		= this.TOT_COUNT_ID;
+		sText		= nexacro.replaceAll(this.TOT_COUNT_TEXT_M,"{0}","0");
+		sCssClass	= this.TOT_COUNT_CSSCLASS_M;
+		
+		nCompWidth	= 80;
+		nCompHeight	= this.TOT_COUNT_HEIGHT_M;
+		//nCompLeft	= this.TITLE_ID + ":5";
+	
+		arrComponents.push({
+			"tag" : "Static",
+			"attribute" :
+			{
+				"id" : sCompId, "top" : nCompTop, "height" : nCompHeight, "width" : nCompWidth, "right" : nCompRight,
+				"text" : sText, "fittocontents" : this.TOT_COUNT_FITTOCONTENTS, "usedecorate" : this.TOT_COUNT_USEDECORATE_M,
+				"cssclass" : sCssClass
+			}
+		});
+	}
+	
+	var nDivTop			= this.VIEW_PADDING_TOP;
+	var nDivLeft		= this.VIEW_PADDING_LEFT;
+	var nDivHeight		= nTitleAreaHeight;
+	
+	var oLayout = 	{
+						"tag" : "Layout",
+						"Layout" : arrComponents
+					};
+					
+	// 5) 타이틀 영역 FluidLayout 적용
+	if (sHAlign)
+	{
+		var sHAlign = this.lfn_Nvl(oOption["halign"],"left");
+		var sVAlign = "center";		// VAlign : 컴포넌트 Center 고정
+		
+		var sFlexCrossAxisAlign = this.lfn_Decode(sVAlign, "top", "start", "bottom", "end", "center");
+		var sFlexMainAxisAlign	= this.lfn_Decode(sHAlign, "left", "start", "right", "end", "center");
+		
+		oLayout["attribute"] = {
+			"type" : "horizontal",
+			"horizontalgap" : this.TITLE_AREA_COMP_SPACE,
+			"flexcrossaxisalign" : sFlexCrossAxisAlign,
+			"flexmainaxisalign" : sFlexMainAxisAlign
+		};
+	}
+	
+	// 모델에 Component 설정
+	var nModelIndex = oModel.length;
+	oModel[nModelIndex] =
+	{
+		"fieldid" : this.VIEW_COMP_FIELD_ID,
+		"Components" : [{
+						"tag" : "Div",
+						"attribute" : { "id" : this.DIV_TITLE_ID, "left" : nDivLeft, "top" : nDivTop, "height" : nDivHeight},
+						"Div" : [{
+								"tag" : "Layouts",
+								"Layouts" : [oLayout]
+						}]
+					}]
+					
+	};
+	
+	// FluidLayout일때는 width 설정, 그외는 right 설정
+	if (bFluidLayout == true) {
+		oModel[nModelIndex]["Components"][0]["attribute"]["width"] = "100%";
+	} else {
+		oModel[nModelIndex]["Components"][0]["attribute"]["right"] = this.VIEW_PADDING_RIGHT;
+	}
+	
+	// 타이틀영역 생성여부
+	this.bTitleArea = true;
+	
+	return this.VIEW_PADDING_TOP + nDivHeight;
+};]]></Script>

@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<MetaInfo version="2.0">
+  <Object id="PopupAction">
+    <ObjectInfo inheritance="nexacro.Action" classname="nexacro.PopupAction" shorttypename="PopupAction" csstypename="PopupAction" csscontrolname="PopupActionControl" group="Action" subgroup="Action" csspseudo="" container="false" tabstop="false" cssstyle="false" defaultwidth="" defaultheight="" registration="allow" edittype="action" useinitvalue="false" popup="false" edittypecomponent="" dblclickevent="" requirement="IE8,IE9,IE10,IE11,Edge,Chrome,Safari,Firefox,Opera,Windows NRE,macOS NRE,Android NRE,iOS/iPadOS NRE,Android Default Web Browser,iOS/iPadOS Default Web Browser" description="팝업화면을 오픈해주는 Action" finalclass="false"/>
+    <PropertyInfo>
+      <Property name="formurl" readonly="false" initonly="false" hidden="false" control="false" expr="false" bind="false" unused="false" mandatory="false" edittype="URL" group="Action" description="팝업으로 호출할 Form Url을 설정합니다."/>
+      <Property name="popupstyle" readonly="false" initonly="false" hidden="false" control="false" expr="false" bind="false" unused="false" mandatory="false" edittype="Enum" enuminfo="popupstyle" group="Action" defaultvalue="modal" description="팝업을 호출할 형태(Modal, Modeless)를 설정합니다.&#13;&#10;&#13;&#10; - modal : 부모창과 상호 작용이 안되는(레이어팝업) 형태의 팝업 호출&#13;&#10; - modeless : 부모창과 독립적인 형태의 팝업 호출&#13;&#10;"/>
+      <Property name="popupleft" readonly="false" initonly="false" hidden="false" control="false" expr="false" bind="false" unused="false" mandatory="false" group="Position" edittype="Number" defaultvalue="-1" description="팝업을 표시하기 위한 좌측 좌표값을 입력합니다."/>
+      <Property name="popuptop" readonly="false" initonly="false" hidden="false" control="false" expr="false" bind="false" unused="false" mandatory="false" group="Position" edittype="Number" defaultvalue="-1" description="팝업을 표시하기 위한 상단 좌표값을 입력합니다."/>
+      <Property name="popupwidth" readonly="false" initonly="false" hidden="false" control="false" expr="false" bind="false" unused="false" mandatory="false" group="Position" edittype="Number" defaultvalue="-1" description="팝업을 표시하기 위한 너비를 입력합니다."/>
+      <Property name="popupheight" readonly="false" initonly="false" hidden="false" control="false" expr="false" bind="false" unused="false" mandatory="false" group="Position" edittype="Number" defaultvalue="-1" description="팝업을 표시하기 위한 높이를 입력합니다."/>
+      <Property name="args" readonly="false" initonly="false" hidden="false" control="false" expr="false" bind="false" unused="false" mandatory="false" group="Action" edittype="String" description="팝업에 추가할 변수리스트를 설정합니다. (JSON형태)"/>
+      <Property name="popupid" readonly="false" initonly="false" hidden="false" control="false" expr="false" bind="false" unused="false" mandatory="false" edittype="String" defaultvalue="popup" group="Action" description="팝업을 구분하기 위한 고유 ID값을 입력합니다."/>
+      <Property name="title" readonly="false" initonly="false" hidden="false" control="false" expr="false" bind="false" unused="false" mandatory="false" edittype="MultilineString" defaultvalue="New Form" group="Action" description="팝업 타이틀로 표현할 값을 입력합니다." stringrc="true"/>
+      <Property name="targetview" group="Action" subgroup="" refreshinfo="" edittype="ViewObjList" readonly="false" initonly="false" hidden="false" control="false" expr="false" bind="false" deprecated="false" unused="false" mandatory="false" objectinfo="" enuminfo="" enuminfo2="" unitinfo="" delimiter="" requirement="IE8,IE9,IE10,IE11,Edge,Chrome,Safari,Firefox,Opera,Windows NRE,macOS NRE,Android NRE,iOS/iPadOS NRE,Android Default Web Browser,iOS/iPadOS Default Web Browser" description="팝업 대상 View 객체를 설정합니다.&#13;&#10;(팝업에서 반환된 데이터를 처리할 View 설정)" csspropertyname="" normalpropertyname="targetview"/>
+      <Property name="popupdatatype" readonly="false" initonly="false" hidden="false" control="false" expr="false" bind="false" unused="false" mandatory="false" edittype="Enum" defaultvalue="copyrow" enuminfo="PopupDataType" description="팝업에서 반환된 데이터를 처리할 방법을 설정합니다.&#13;&#10;&#13;&#10; - none : 팝업 반환데이터 처리 안함.&#13;&#10; - copyrow : 반환된 첫번째 데이터를 현재 데이터에 복사&#13;&#10; - adddata : 반환된 데이터를 현재 데이터에 추가&#13;&#10; - replace : 반환된 데이터로 데이터를 교체&#13;&#10;" group="Action"/>
+    </PropertyInfo>
+    <CSSInfo>
+      <PropertyInfo/>
+    </CSSInfo>
+    <StatusInfo/>
+    <MethodInfo/>
+    <EventHandlerInfo>
+      <EventHandler name="canrun" group="Event" unused="false" requirement="" description="">
+        <Syntax text="canrun(obj:nexacro.PopupAction, e:nexacro.ActionRunEventInfo)">
+          <Return type="" description=""/>
+          <Arguments>
+            <Argument name="obj" type="nexacro.PopupAction" in="" out="" option="" variable="" description=""/>
+            <Argument name="e" type="nexacro.ActionRunEventInfo" in="" out="" option="" variable="" description=""/>
+          </Arguments>
+        </Syntax>
+      </EventHandler>
+      <EventHandler name="onerror" group="" deprecated="false" unused="false" requirement="IE8,IE9,IE10,IE11,Edge,Chrome,Safari,Firefox,Opera,Windows NRE,macOS NRE,Android NRE,iOS/iPadOS NRE,Android Default Web Browser,iOS/iPadOS Default Web Browser" description="run 메소드 실행이 실패했을때 Trigger callback 처리를 위한 event 입니다.">
+        <Syntax text="onerror(obj:nexacro.PopupAction, e:nexacro.ActionErrorEventInfo)">
+          <Return type="" description=""/>
+          <Arguments>
+            <Argument name="obj" type="nexacro.PopupAction" in="" out="" option="" variable="" description=""/>
+            <Argument name="e" type="nexacro.ActionErrorEventInfo" in="false" out="false" option="false" variable="false" description="Event Object."/>
+          </Arguments>
+        </Syntax>
+      </EventHandler>
+      <EventHandler name="onsuccess" group="" deprecated="false" unused="false" requirement="IE8,IE9,IE10,IE11,Edge,Chrome,Safari,Firefox,Opera,Windows NRE,macOS NRE,Android NRE,iOS/iPadOS NRE,Android Default Web Browser,iOS/iPadOS Default Web Browser" description="run 메소드 실행이 성공했을때 Trigger callback 처리를 위한 event 입니다.">
+        <Syntax text="onsuccess(obj:nexacro.PopupAction, e:nexacro.ActionSuccessEventInfo)">
+          <Return type="" description=""/>
+          <Arguments>
+            <Argument name="obj" type="nexacro.PopupAction" in="" out="" option="" variable="" description=""/>
+            <Argument name="e" type="nexacro.ActionSuccessEventInfo" in="false" out="false" option="false" variable="false" description="Event Object."/>
+          </Arguments>
+        </Syntax>
+      </EventHandler>
+    </EventHandlerInfo>
+  </Object>
+</MetaInfo>

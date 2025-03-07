@@ -1,0 +1,126 @@
+{
+  "request": {
+    "variables": [],
+    "datasets": []
+  },
+  "localVariables": {
+    "variables": [],
+    "datasets": []
+  },
+  "workflow": {
+    "getTodayRequestTotal": {
+      "next": "end",
+      "onBeforeEvent": "",
+      "onAfterEvent": "",
+      "description": "시간에 따른 처리 유형별 합계를 조회SQL",
+      "onBeginEvent": "",
+      "type": "SQL",
+      "target": "",
+      "sql": "SELECT \n  HOUR(RECEIVEDDATE) AS reqHour, \n  COUNT(\n    CASE WHEN REQUESTTYPE = '01' THEN 1 END\n  ) AS reqInProgress, \n  COUNT(\n    CASE WHEN REQUESTTYPE = '02' THEN 1 END\n  ) AS reqDelay, \n  COUNT(\n    CASE WHEN REQUESTTYPE = '03' THEN 1 END\n  ) AS reqComplete, \n  COUNT(\n    CASE WHEN REQUESTTYPE = '04' THEN 1 END\n  ) AS reqPending \nFROM \n  REQUEST \nGROUP BY \n  HOUR(RECEIVEDDATE) \nORDER BY \n  HOUR(RECEIVEDDATE);",
+      "output": "dsTodayRequestTotal",
+      "sqlType": "select",
+      "datasource": "cs_system",
+      "name": "getTodayRequestTotal",
+      "onEndEvent": "",
+      "alias": "getTodayRequestTotal"
+    },
+    "name": "svcTodayRequestTotal",
+    "start": {
+      "next": "getTodayRequestTotal",
+      "name": "start",
+      "description": "로직의 시작",
+      "alias": "start",
+      "type": "Start"
+    },
+    "project": "git_test",
+    "description": "시간에 따른 처리 유형별 합계를 조회한다.",
+    "end": {
+      "name": "end",
+      "description": "로직의 종료",
+      "alias": "end",
+      "type": "End"
+    }
+  },
+  "datasources": [
+    {
+      "database": "cs_system",
+      "password": "",
+      "port": "",
+      "datasource": "cs_system",
+      "productType": "H2",
+      "url": "jdbc:h2:file:${LOCAL_DATABASE}/datasource/cs_system",
+      "username": "sa"
+    }
+  ],
+  "response": {
+    "variables": [
+      {
+        "name": "errorCode",
+        "description": "에러코드",
+        "type": "Integer"
+      },
+      {
+        "name": "errorMessage",
+        "description": "에러메시지",
+        "type": "String"
+      }
+    ],
+    "datasets": [
+      {
+        "name": "dsTodayRequestTotal",
+        "description": "시간에 따른 처리 유형별 합계를 조회",
+        "items": [
+          {
+            "name": "reqHour",
+            "description": "접수 시간",
+            "datasize": 100,
+            "type": "STRING",
+            "insConstant": false
+          },
+          {
+            "name": "reqInProgress",
+            "description": "접수",
+            "datasize": 100,
+            "type": "INT",
+            "insConstant": false
+          },
+          {
+            "name": "reqDelay",
+            "description": "지연",
+            "datasize": 100,
+            "type": "INT",
+            "insConstant": false
+          },
+          {
+            "name": "reqComplete",
+            "description": "완료",
+            "datasize": 100,
+            "type": "INT",
+            "insConstant": false
+          },
+          {
+            "name": "reqPending",
+            "description": "보류",
+            "datasize": 100,
+            "type": "INT",
+            "insConstant": false
+          }
+        ]
+      }
+    ]
+  },
+  "clientInfo": {
+    "getTodayRequestTotal": {
+      "x": "600",
+      "y": "300"
+    },
+    "start": {
+      "x": "600",
+      "y": "150"
+    },
+    "end": {
+      "x": "600",
+      "y": "450"
+    }
+  }
+}

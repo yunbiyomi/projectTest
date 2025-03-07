@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ModelInfo version="1.1">
+  <Models>
+    <Model id="dsCustomerSearch" name="dsCustomerSearch" iotype="input">
+      <Field id="CUSTOMERNAME" label="고객 이름" fieldtype="Text" datatype="STRING" datasize="100" required="false" description="고객 이름" options=""/>
+      <Field id="CUSTOMERGENDER" label="고객 성별" fieldtype="Select" datatype="STRING" datasize="100" required="false" description="고객 성별" options="{&quot;innerdataset_list&quot;: &quot;여자,남자&quot;}"/>
+      <Field id="MEMBERTYPE" label="회원 유형" fieldtype="Select" datatype="STRING" datasize="100" required="false" description="회원 유형" options="{&quot;innerdataset_list&quot;: &quot;일반,기업,임직원&quot;}"/>
+    </Model>
+    <Model id="dsCustomerList" name="dsCustomerList" iotype="output">
+      <Field id="customerID" label="고객 ID" fieldtype="Text" datatype="STRING" datasize="100" required="false" description="고객 ID" options=""/>
+      <Field id="customerProfileImg" label="고객 프로필 이미지" fieldtype="Image" datatype="STRING" datasize="100" required="false" description="프로필 이미지" options=""/>
+      <Field id="customerName" label="고객 이름" fieldtype="Text" datatype="STRING" datasize="100" required="false" description="이름" options=""/>
+      <Field id="memberType" label="회원 유형" fieldtype="Select" datatype="STRING" datasize="100" required="false" description="회원 유형" options="{&quot;innerdataset_list&quot;: &quot;일반,기업,임직원&quot;}"/>
+      <Field id="customerPhone" label="고객 전화번호" fieldtype="Phone" datatype="STRING" datasize="100" required="false" description="전화번호" options="{&quot;dataformat&quot;: &quot;###-####-####&quot;}"/>
+      <Field id="customerEmail" label="고객 이메일" fieldtype="Text" datatype="STRING" datasize="100" required="false" description="이메일" options=""/>
+      <Field id="customerGender" label="고객 성별" fieldtype="Select" datatype="STRING" datasize="100" required="false" description="성별" options="{&quot;innerdataset_list&quot;: &quot;여자,남자&quot;}"/>
+      <Field id="customerAddress" label="고객 주소" fieldtype="Text" datatype="STRING" datasize="100" required="false" description="주소" options=""/>
+    </Model>
+  </Models>
+  <Service id="svcCustomer" name="" url="https://dev-apps.tobedevops.link/serverpart/mars-server/server/execute"/>
+</ModelInfo>

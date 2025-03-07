@@ -1,0 +1,105 @@
+{
+  "request": {
+    "variables": [],
+    "datasets": []
+  },
+  "localVariables": {
+    "variables": [],
+    "datasets": []
+  },
+  "workflow": {
+    "name": "svcResponseTime",
+    "start": {
+      "next": "getResponseTime",
+      "name": "start",
+      "description": "로직의 시작",
+      "alias": "start",
+      "type": "Start"
+    },
+    "project": "git_test",
+    "description": "요일별 문의 응답 시간 합계를 조회한다.",
+    "end": {
+      "name": "end",
+      "description": "로직의 종료",
+      "alias": "end",
+      "type": "End"
+    },
+    "getResponseTime": {
+      "next": "end",
+      "onBeforeEvent": "",
+      "onAfterEvent": "",
+      "description": "요일별 문의 응답 시간 합계를 조회 SQL",
+      "onBeginEvent": "",
+      "type": "SQL",
+      "target": "",
+      "sql": "SELECT \n  DAYNAME(RECEIVEDDATE) AS responseDate, \n  SUM(RESPONSETIME) AS responseTime \nFROM \n  REQUEST \nGROUP BY \n  DAY_OF_WEEK(RECEIVEDDATE), \n  DAYNAME(RECEIVEDDATE) \nORDER BY \n  DAY_OF_WEEK(RECEIVEDDATE)",
+      "output": "dsResponseTime",
+      "sqlType": "select",
+      "datasource": "cs_system",
+      "name": "getResponseTime",
+      "onEndEvent": "",
+      "alias": "getResponseTime"
+    }
+  },
+  "datasources": [
+    {
+      "database": "cs_system",
+      "password": "",
+      "port": "",
+      "datasource": "cs_system",
+      "productType": "H2",
+      "url": "jdbc:h2:file:${LOCAL_DATABASE}/datasource/cs_system",
+      "username": "sa"
+    }
+  ],
+  "response": {
+    "variables": [
+      {
+        "name": "errorCode",
+        "description": "에러코드",
+        "type": "Integer"
+      },
+      {
+        "name": "errorMessage",
+        "description": "에러메시지",
+        "type": "String"
+      }
+    ],
+    "datasets": [
+      {
+        "name": "dsResponseTime",
+        "description": "요일별 문의 응답 시간 합계",
+        "items": [
+          {
+            "name": "responseDate",
+            "description": "응답 날짜",
+            "datasize": 100,
+            "type": "STRING",
+            "insConstant": false
+          },
+          {
+            "name": "responseTime",
+            "description": "응답 시간",
+            "datasize": 100,
+            "type": "INT",
+            "insConstant": false
+          }
+        ]
+      }
+    ]
+  },
+  "clientInfo": {
+    "start": {
+      "x": "600",
+      "y": "150"
+    },
+    "end": {
+      "x": "600",
+      "y": "450"
+    },
+    "getResponseTime": {
+      "x": "600",
+      "y": "300"
+    }
+  }
+}

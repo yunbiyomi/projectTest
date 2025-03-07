@@ -1,0 +1,126 @@
+{
+  "request": {
+    "variables": [],
+    "datasets": []
+  },
+  "localVariables": {
+    "variables": [],
+    "datasets": []
+  },
+  "workflow": {
+    "getRequestCount": {
+      "next": "end",
+      "onBeforeEvent": "",
+      "onAfterEvent": "",
+      "description": "문의 처리 현황별 합계 테이블 추가 SQL",
+      "onBeginEvent": "",
+      "type": "SQL",
+      "target": "",
+      "sql": "SELECT \n  COUNT(\n    CASE WHEN REQUESTTYPE = '01' THEN 1 END\n  ) AS reqInProgress, \n  COUNT(\n    CASE WHEN REQUESTTYPE = '02' THEN 1 END\n  ) AS reqDelay, \n  COUNT(\n    CASE WHEN REQUESTTYPE = '03' THEN 1 END\n  ) AS reqComplete, \n  COUNT(\n    CASE WHEN REQUESTTYPE = '04' THEN 1 END\n  ) AS reqPending, \n  COUNT(\n    CASE WHEN REQUESTTYPE THEN 1 END\n  ) AS reqTotalCount \nFROM \n  REQUEST;",
+      "output": "dsRequestCount",
+      "sqlType": "select",
+      "datasource": "cs_system",
+      "name": "getRequestCount",
+      "onEndEvent": "",
+      "alias": "getRequestCount"
+    },
+    "name": "svcRequestCount",
+    "start": {
+      "next": "getRequestCount",
+      "name": "start",
+      "description": "로직의 시작",
+      "alias": "start",
+      "type": "Start"
+    },
+    "project": "git_test",
+    "description": "접수된 문의 처리 현황별 합계를 조회한다.",
+    "end": {
+      "name": "end",
+      "description": "로직의 종료",
+      "alias": "end",
+      "type": "End"
+    }
+  },
+  "datasources": [
+    {
+      "database": "cs_system",
+      "password": "",
+      "port": "",
+      "datasource": "cs_system",
+      "productType": "H2",
+      "url": "jdbc:h2:file:${LOCAL_DATABASE}/datasource/cs_system",
+      "username": "sa"
+    }
+  ],
+  "response": {
+    "variables": [
+      {
+        "name": "errorCode",
+        "description": "에러코드",
+        "type": "Integer"
+      },
+      {
+        "name": "errorMessage",
+        "description": "에러메시지",
+        "type": "String"
+      }
+    ],
+    "datasets": [
+      {
+        "name": "dsRequestCount",
+        "description": "접수된 문의의 처리 현황별 합계",
+        "items": [
+          {
+            "name": "reqInProgress",
+            "description": "처리중인 문의",
+            "datasize": 100,
+            "type": "INT",
+            "insConstant": false
+          },
+          {
+            "name": "reqDelay",
+            "description": "지연된 문의",
+            "datasize": 100,
+            "type": "INT",
+            "insConstant": false
+          },
+          {
+            "name": "reqComplete",
+            "description": "완료된 문의",
+            "datasize": 100,
+            "type": "INT",
+            "insConstant": false
+          },
+          {
+            "name": "reqPending",
+            "description": "보류된 문의",
+            "datasize": 100,
+            "type": "INT",
+            "insConstant": false
+          },
+          {
+            "name": "reqTotalCount",
+            "description": "접수된 문의",
+            "datasize": 100,
+            "type": "INT",
+            "insConstant": false
+          }
+        ]
+      }
+    ]
+  },
+  "clientInfo": {
+    "getRequestCount": {
+      "x": "600",
+      "y": "300"
+    },
+    "start": {
+      "x": "600",
+      "y": "150"
+    },
+    "end": {
+      "x": "600",
+      "y": "450"
+    }
+  }
+}

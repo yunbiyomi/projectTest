@@ -1,0 +1,359 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="frmRequest" width="1070" height="772" titletext="문의 관리" left="0">
+    <Layouts>
+      <Layout height="720" width="1280">
+        <View id="viewFilterRequest" taborder="1" viewdataset="viewdataset" left="10" top="10" right="10" height="45" formscrollbartype="none none" viewtype="Search" cssclass="">
+          <Layouts>
+            <Layout>
+              <Static id="stBg" left="0" top="0" right="0" bottom="0" cssclass="sta_searchbox"/>
+              <Button id="btnSearch" top="10" width="100" height="30" right="10" cssclass="btn_search" text="조회"/>
+              <Static id="staRequestcategoryLabel" left="10" top="10" width="86" height="26" text="접수 유형" cssclass="sta_label"/>
+              <Combo id="cmbRequestcategory" left="96" top="10" width="115" height="26" cssclass="" innerdataset="innerdatasetRequestcategory" codecolumn="code" datacolumn="data"/>
+              <Static id="staRequesttypeLabel" left="211" top="10" width="86" height="26" text="처리 유형" cssclass="sta_label"/>
+              <Combo id="cmbRequesttype" left="297" top="10" width="115" height="26" cssclass="" innerdataset="innerdatasetRequesttype" codecolumn="code" datacolumn="data"/>
+              <Static id="staStartdateLabel" left="412" top="10" width="86" height="26" text="조회 시작일" cssclass="sta_label"/>
+              <Calendar id="calStartdate" left="498" top="10" width="115" height="26" cssclass=""/>
+              <Static id="staEnddateLabel" left="613" top="10" width="86" height="26" text="조회 종료일" cssclass="sta_label"/>
+              <Calendar id="calEnddate" left="699" top="10" width="115" height="26" cssclass=""/>
+              <Static id="staCustomeridLabel" left="10" top="46" width="86" height="26" text="고객 ID" cssclass="sta_label"/>
+              <Edit id="edtCustomerid" left="96" top="46" width="115" height="26" cssclass=""/>
+              <Static id="staCustomernameLabel" left="211" top="46" width="86" height="26" text="고객 이름" cssclass="sta_label"/>
+              <Edit id="edtCustomername" left="297" top="46" width="115" height="26" cssclass=""/>
+              <Static id="staRequesttitleLabel" left="412" top="46" width="86" height="26" text="문의 제목" cssclass="sta_label"/>
+              <Edit id="edtRequesttitle" left="498" top="46" width="115" height="26" cssclass=""/>
+              <Static id="staRequestcontentLabel" left="613" top="46" width="86" height="26" text="문의 내용" cssclass="sta_label"/>
+              <Edit id="edtRequestcontent" left="699" top="46" width="115" height="26" cssclass=""/>
+            </Layout>
+          </Layouts>
+          <Objects>
+            <Dataset id="viewdataset">
+              <ColumnInfo>
+                <Column id="REQUESTCATEGORY" type="STRING" size="100" description="접수 유형"/>
+                <Column id="REQUESTTYPE" type="STRING" size="100" description="처리 유형"/>
+                <Column id="startDate" type="STRING" size="100" description="조회 시작일"/>
+                <Column id="endDate" type="STRING" size="100" description="조회 종료일"/>
+                <Column id="CUSTOMERID" type="STRING" size="100" description="고객 ID"/>
+                <Column id="CUSTOMERNAME" type="STRING" size="100" description="고객 이름"/>
+                <Column id="REQUESTTITLE" type="STRING" size="100" description="문의 제목"/>
+                <Column id="REQUESTCONTENT" type="STRING" size="100" description="문의 내용"/>
+              </ColumnInfo>
+              <Rows>
+                <Row/>
+              </Rows>
+            </Dataset>
+            <Dataset id="innerdatasetRequestcategory">
+              <ColumnInfo>
+                <Column id="code" type="STRING" size="256"/>
+                <Column id="data" type="STRING" size="256"/>
+              </ColumnInfo>
+              <Rows>
+                <Row>
+                  <Col id="code">01</Col>
+                  <Col id="data">상품</Col>
+                </Row>
+                <Row>
+                  <Col id="code">02</Col>
+                  <Col id="data">반품</Col>
+                </Row>
+                <Row>
+                  <Col id="code">03</Col>
+                  <Col id="data">환불</Col>
+                </Row>
+              </Rows>
+            </Dataset>
+            <Dataset id="innerdatasetRequesttype">
+              <ColumnInfo>
+                <Column id="code" type="STRING" size="256"/>
+                <Column id="data" type="STRING" size="256"/>
+              </ColumnInfo>
+              <Rows>
+                <Row>
+                  <Col id="code">01</Col>
+                  <Col id="data">처리</Col>
+                </Row>
+                <Row>
+                  <Col id="code">02</Col>
+                  <Col id="data">지연</Col>
+                </Row>
+                <Row>
+                  <Col id="code">03</Col>
+                  <Col id="data">완료</Col>
+                </Row>
+                <Row>
+                  <Col id="code">04</Col>
+                  <Col id="data">보류</Col>
+                </Row>
+              </Rows>
+            </Dataset>
+          </Objects>
+          <Bind>
+            <BindItem id="bind_cmbRequestcategory" compid="cmbRequestcategory" propid="value" datasetid="viewdataset" columnid="REQUESTCATEGORY"/>
+            <BindItem id="bind_cmbRequesttype" compid="cmbRequesttype" propid="value" datasetid="viewdataset" columnid="REQUESTTYPE"/>
+            <BindItem id="bind_calStartdate" compid="calStartdate" propid="value" datasetid="viewdataset" columnid="startDate"/>
+            <BindItem id="bind_calEnddate" compid="calEnddate" propid="value" datasetid="viewdataset" columnid="endDate"/>
+            <BindItem id="bind_edtCustomerid" compid="edtCustomerid" propid="value" datasetid="viewdataset" columnid="CUSTOMERID"/>
+            <BindItem id="bind_edtCustomername" compid="edtCustomername" propid="value" datasetid="viewdataset" columnid="CUSTOMERNAME"/>
+            <BindItem id="bind_edtRequesttitle" compid="edtRequesttitle" propid="value" datasetid="viewdataset" columnid="REQUESTTITLE"/>
+            <BindItem id="bind_edtRequestcontent" compid="edtRequestcontent" propid="value" datasetid="viewdataset" columnid="REQUESTCONTENT"/>
+          </Bind>
+          <ModelInfo modelserviceid="modelservice" serviceid="svcRequest" modelid="dsRequestSearch" filepath="_models_\svcRequest.xmodel">
+            <Fields>
+              <Field id="REQUESTCATEGORY" label="접수 유형" uselabel="true"/>
+              <Field id="REQUESTTYPE" label="처리 유형" uselabel="true"/>
+              <Field id="startDate" label="조회 시작일" uselabel="true"/>
+              <Field id="endDate" label="조회 종료일" uselabel="true"/>
+              <Field id="CUSTOMERID" label="고객 ID" uselabel="true"/>
+              <Field id="CUSTOMERNAME" label="고객 이름" uselabel="true"/>
+              <Field id="REQUESTTITLE" label="문의 제목" uselabel="true"/>
+              <Field id="REQUESTCONTENT" label="문의 내용" uselabel="true"/>
+            </Fields>
+            <Components>
+              <Component id="_viewcomp" fields="stBg"/>
+              <Component id="_viewcomp" fields="btnSearch"/>
+              <Component id="REQUESTCATEGORY" fields="staRequestcategoryLabel,cmbRequestcategory"/>
+              <Component id="REQUESTTYPE" fields="staRequesttypeLabel,cmbRequesttype"/>
+              <Component id="startDate" fields="staStartdateLabel,calStartdate"/>
+              <Component id="endDate" fields="staEnddateLabel,calEnddate"/>
+              <Component id="CUSTOMERID" fields="staCustomeridLabel,edtCustomerid"/>
+              <Component id="CUSTOMERNAME" fields="staCustomernameLabel,edtCustomername"/>
+              <Component id="REQUESTTITLE" fields="staRequesttitleLabel,edtRequesttitle"/>
+              <Component id="REQUESTCONTENT" fields="staRequestcontentLabel,edtRequestcontent"/>
+            </Components>
+          </ModelInfo>
+          <ViewTemplateInfo filepath="Asset\SearchViewTemplate.xviewgen">
+            <Attribute id="direction" value="horizontal"/>
+            <Attribute id="halign" value="left"/>
+            <Attribute id="valign" value="top"/>
+            <Attribute id="searchbuttontype" value="top"/>
+            <Attribute id="searchbuttontext" value="조회"/>
+          </ViewTemplateInfo>
+        </View>
+        <Button id="btnFilterSize" taborder="0" top="viewFilterRequest:-5" width="50" height="20" left="45%" onclick="btnFilterSize_onclick" cssclass="btn_WF_filter_more"/>
+        <View id="viewRequestBtnWrap" taborder="3" viewdataset="viewdataset" top="viewFilterRequest:10" cssclass="view_no_CSS" right="10" width="230" viewtype="Button" height="30">
+          <Layouts>
+            <Layout type="horizontal" flexwrap="wrap" horizontalgap="5" verticalgap="5" flexcrossaxisalign="start" flexcrossaxiswrapalign="start" flexmainaxisalign="end" spacing="0px">
+              <Button id="btnDetailbtn" left="25" top="0" width="100" height="30" text="상세보기"/>
+              <Button id="btnExportbtn" left="130" top="0" width="100" height="30" text="내보내기"/>
+            </Layout>
+          </Layouts>
+          <ModelInfo modelserviceid="modelservice" serviceid="svcCommon" modelid="common" filepath="_models_\svcCommon.xmodel">
+            <Fields>
+              <Field id="detailBtn" description="" innerdatasetinfo="" comptype="button" fieldwidth="100px" fieldheight="30px" cssclass=""/>
+              <Field id="exportBtn" description="" innerdatasetinfo="" comptype="button" fieldwidth="100px" fieldheight="30px" cssclass=""/>
+            </Fields>
+            <Components>
+              <Component id="btnDetailbtn" fields="detailBtn"/>
+              <Component id="btnExportbtn" fields="exportBtn"/>
+            </Components>
+          </ModelInfo>
+          <ViewTemplateInfo filepath="Asset\ButtonLayoutViewTemplate.xviewgen">
+            <Attribute id="halign" value="right"/>
+          </ViewTemplateInfo>
+        </View>
+        <View id="viewRequestGrid" taborder="2" text="View00" viewdataset="viewdataset" left="10" top="viewRequestBtnWrap:10" right="10" bottom="10" viewtype="Grid">
+          <Layouts>
+            <Layout>
+              <Grid id="grdList" left="0" top="0" right="0" bottom="0" binddataset="viewdataset" autofittype="col" autosizingtype="row" extendsizetype="row">
+                <Formats>
+                  <Format id="default">
+                    <Columns>
+                      <Column size="80" band="body"/>
+                      <Column size="80" band="body"/>
+                      <Column size="80" band="body"/>
+                      <Column size="80" band="body"/>
+                      <Column size="80" band="body"/>
+                      <Column size="80" band="body"/>
+                      <Column size="80" band="body"/>
+                      <Column size="80" band="body"/>
+                      <Column size="80" band="body"/>
+                      <Column size="80" band="body"/>
+                      <Column size="80" band="body"/>
+                    </Columns>
+                    <Rows>
+                      <Row size="32" band="head"/>
+                      <Row size="32" band="body"/>
+                    </Rows>
+                    <Band id="head">
+                      <Cell id="cell_head_0_0_receivedDate" col="0" row="0" text="접수일" cssclass=""/>
+                      <Cell id="cell_head_1_0_requestId" col="1" row="0" text="문의 ID" cssclass=""/>
+                      <Cell id="cell_head_2_0_requestCategory" col="2" row="0" text="접수 유형" cssclass=""/>
+                      <Cell id="cell_head_3_0_groupName" col="3" row="0" text="그룹명" cssclass=""/>
+                      <Cell id="cell_head_4_0_requestTitle" col="4" row="0" text="문의 제목" cssclass=""/>
+                      <Cell id="cell_head_5_0_requestContent" col="5" row="0" text="문의 내용" cssclass=""/>
+                      <Cell id="cell_head_6_0_customerID" col="6" row="0" text="고객 ID" cssclass=""/>
+                      <Cell id="cell_head_7_0_customerEmail" col="7" row="0" text="고객 이메일" cssclass=""/>
+                      <Cell id="cell_head_8_0_customerName" col="8" row="0" text="고객 이름" cssclass=""/>
+                      <Cell id="cell_head_9_0_customerPhone" col="9" row="0" text="고객 전화번호" cssclass=""/>
+                      <Cell id="cell_head_10_0_requestType" col="10" row="0" text="처리 유형" cssclass=""/>
+                    </Band>
+                    <Band id="body">
+                      <Cell id="cell_body_0_0_receivedDate" col="0" row="0" text="bind:receivedDate" displaytype="date" edittype="none" cssclass="" autosizerow="limitmin" calendardisplaynulltype="none"/>
+                      <Cell id="cell_body_1_0_requestId" col="1" row="0" text="bind:requestId" displaytype="normal" edittype="none" cssclass="" autosizerow="limitmin"/>
+                      <Cell id="cell_body_2_0_requestCategory" col="2" row="0" text="bind:requestCategory" displaytype="combotext" edittype="none" cssclass="" autosizerow="limitmin" combodataset="innerdatasetRequestcategory" combocodecol="code" combodatacol="data"/>
+                      <Cell id="cell_body_3_0_groupName" col="3" row="0" text="bind:groupName" displaytype="normal" edittype="none" cssclass="" autosizerow="limitmin"/>
+                      <Cell id="cell_body_4_0_requestTitle" col="4" row="0" text="bind:requestTitle" displaytype="normal" edittype="none" cssclass="" autosizerow="limitmin"/>
+                      <Cell id="cell_body_5_0_requestContent" col="5" row="0" text="bind:requestContent" displaytype="normal" edittype="none" cssclass="" autosizerow="limitmin"/>
+                      <Cell id="cell_body_6_0_customerID" col="6" row="0" text="bind:customerID" displaytype="normal" edittype="none" cssclass="" autosizerow="limitmin"/>
+                      <Cell id="cell_body_7_0_customerEmail" col="7" row="0" text="bind:customerEmail" displaytype="normal" edittype="none" cssclass="" autosizerow="limitmin"/>
+                      <Cell id="cell_body_8_0_customerName" col="8" row="0" text="bind:customerName" displaytype="normal" edittype="none" cssclass="" autosizerow="limitmin"/>
+                      <Cell id="cell_body_9_0_customerPhone" col="9" row="0" text="bind:customerPhone" displaytype="normal" edittype="none" cssclass="" autosizerow="limitmin"/>
+                      <Cell id="cell_body_10_0_requestType" col="10" row="0" text="bind:requestType" displaytype="combotext" edittype="none" cssclass="" autosizerow="limitmin" combodataset="innerdatasetRequesttype" combocodecol="code" combodatacol="data"/>
+                    </Band>
+                    <Band id="summary"/>
+                  </Format>
+                </Formats>
+              </Grid>
+            </Layout>
+          </Layouts>
+          <Objects>
+            <Dataset id="viewdataset">
+              <ColumnInfo>
+                <Column id="receivedDate" type="STRING" size="100" description="접수일"/>
+                <Column id="requestId" type="STRING" size="100" description="문의 ID"/>
+                <Column id="requestCategory" type="STRING" size="100" description="접수 유형"/>
+                <Column id="groupName" type="STRING" size="100" description="그룹명"/>
+                <Column id="requestTitle" type="STRING" size="100" description="문의 제목"/>
+                <Column id="requestContent" type="STRING" size="100" description="문의 내용"/>
+                <Column id="customerID" type="STRING" size="100" description="고객 ID"/>
+                <Column id="customerEmail" type="STRING" size="100" description="고객 이메일"/>
+                <Column id="customerName" type="STRING" size="100" description="고객 이름"/>
+                <Column id="customerPhone" type="STRING" size="100" description="고객 전화번호"/>
+                <Column id="requestType" type="STRING" size="100" description="처리 유형"/>
+              </ColumnInfo>
+              <Rows/>
+            </Dataset>
+            <Dataset id="innerdatasetRequestcategory">
+              <ColumnInfo>
+                <Column id="code" type="STRING" size="256"/>
+                <Column id="data" type="STRING" size="256"/>
+              </ColumnInfo>
+              <Rows>
+                <Row>
+                  <Col id="code">01</Col>
+                  <Col id="data">상품</Col>
+                </Row>
+                <Row>
+                  <Col id="code">02</Col>
+                  <Col id="data">반품</Col>
+                </Row>
+                <Row>
+                  <Col id="code">03</Col>
+                  <Col id="data">환불</Col>
+                </Row>
+              </Rows>
+            </Dataset>
+            <Dataset id="innerdatasetRequesttype">
+              <ColumnInfo>
+                <Column id="code" type="STRING" size="256"/>
+                <Column id="data" type="STRING" size="256"/>
+              </ColumnInfo>
+              <Rows>
+                <Row>
+                  <Col id="code">01</Col>
+                  <Col id="data">처리</Col>
+                </Row>
+                <Row>
+                  <Col id="code">02</Col>
+                  <Col id="data">지연</Col>
+                </Row>
+                <Row>
+                  <Col id="code">03</Col>
+                  <Col id="data">완료</Col>
+                </Row>
+                <Row>
+                  <Col id="code">04</Col>
+                  <Col id="data">보류</Col>
+                </Row>
+              </Rows>
+            </Dataset>
+          </Objects>
+          <ModelInfo modelserviceid="modelservice" serviceid="svcRequest" modelid="dsRequestList" filepath="_models_\svcRequest.xmodel">
+            <Fields>
+              <Field id="receivedDate" label="접수일" uselabel="true"/>
+              <Field id="requestId" label="문의 ID" uselabel="true"/>
+              <Field id="requestCategory" label="접수 유형" uselabel="true"/>
+              <Field id="groupName" label="그룹명" uselabel="true"/>
+              <Field id="requestTitle" label="문의 제목" uselabel="true"/>
+              <Field id="requestContent" label="문의 내용" uselabel="true"/>
+              <Field id="customerID" label="고객 ID" uselabel="true"/>
+              <Field id="customerEmail" label="고객 이메일" uselabel="true"/>
+              <Field id="customerName" label="고객 이름" uselabel="true"/>
+              <Field id="customerPhone" label="고객 전화번호" uselabel="true"/>
+              <Field id="requestType" label="처리 유형" uselabel="true"/>
+            </Fields>
+            <Components>
+              <Component id="receivedDate,requestId,requestCategory,groupName,requestTitle,requestContent,customerID,customerEmail,customerName,customerPhone,requestType" fields="grdList"/>
+            </Components>
+          </ModelInfo>
+          <ViewTemplateInfo filepath="Asset\GridViewTemplate.xviewgen">
+            <Attribute id="titletext" value=""/>
+            <Attribute id="fieldwidth" value="80"/>
+            <Attribute id="headbandsize" value="32"/>
+            <Attribute id="bodybandsize" value="32"/>
+            <Attribute id="summbandsize" value="-1"/>
+            <Attribute id="autofittype" value="col"/>
+            <Attribute id="suppress" value="false"/>
+          </ViewTemplateInfo>
+        </View>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <TransactionAction id="TransactionAction00" servicemodel="svcRequest" serviceurl="https://dev-apps.tobedevops.link/serverpart/mars-server/server/execute" inputdatasets="dsRequestSearch=viewFilterRequest.form.viewdataset" outputdatasets="viewRequestGrid.form.viewdataset=dsRequestList" args="">
+        <Contents/>
+      </TransactionAction>
+      <DsCopyRowDataAction id="DsCopyRowDataAction00" targetdataset="gds_RequestDetail" fromview="viewRequestGrid" fromdataset="viewdataset">
+        <Contents/>
+      </DsCopyRowDataAction>
+      <MessageAction id="MessageAction02" message="내보내기가 성공적으로 완료되었습니다." messagetype="alert">
+        <Contents/>
+      </MessageAction>
+      <PopupAction id="PopupAction01" formurl="Popup::popRequestDetail.xfdl" popupstyle="modal" popupid="popup" title="Detail" targetview="frmRequest" popupdatatype="copyrow" popupleft="-1" popuptop="-1" popupwidth="-1" popupheight="-1">
+        <Contents/>
+      </PopupAction>
+    </Objects>
+    <Trigger>
+      <TriggerItem id="item0" triggertype="Click" triggerview="viewFilterRequest" triggerobj="btnSearch" targetaction="TransactionAction00" condition=""/>
+      <TriggerItem id="item2" triggertype="Form Init" triggerview="frmRequest" triggerobj="frmRequest" targetaction="TransactionAction00" condition=""/>
+      <TriggerItem id="item3" triggertype="Row Change" triggerview="viewRequestGrid" triggerobj="viewdataset" targetaction="DsCopyRowDataAction00" condition=""/>
+      <TriggerItem id="item6" triggertype="Click" triggerview="viewRequestBtnWrap" triggerobj="btnExportbtn" targetaction="MessageAction02" condition=""/>
+      <TriggerItem id="item7" triggertype="Click" triggerview="viewRequestBtnWrap" triggerobj="btnDetailbtn" targetaction="PopupAction01" condition=""/>
+    </Trigger>
+    <Script type="xscript5.1"><![CDATA[/**
+*  @FileName 	frmRequest.xfdl
+*  @Creator 	TOBESOFT
+*  @CreateDate 	2024/08/01
+*  @Desction   
+************** 소스 수정 이력 ***********************************************
+* Date					Modifier					Description
+*******************************************************************************
+* 2024/08/01			TOBESOFT					최초생성
+*******************************************************************************
+*/
+
+/**
+ * @description : Filter 화면 사이즈 조절
+ */
+this.btnFilterSize_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var btnText = this.btnFilterSize.text;
+	var nHeight = this.viewFilterRequest.height;
+
+    var nMin = 45, nMax = 90;
+
+	if(nHeight == nMin){
+		this.viewFilterRequest.height= nMax;
+		var nTop = this.btnFilterSize.getOffsetTop();
+		this.btnFilterSize.icon =  "URL('imagerc::asset/btn_WF_Up.png')";
+	} else if(nHeight == nMax){
+		this.viewFilterRequest.height= nMin;
+		var nTop = this.btnFilterSize.getOffsetTop();
+		this.btnFilterSize.icon =  "URL('imagerc::asset/btn_WF_Down.png')";
+	}
+	
+	this.resetScroll();
+};
+]]>
+    </Script>
+  </Form>
+</FDL>

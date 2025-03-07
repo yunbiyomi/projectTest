@@ -1,0 +1,1009 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<XCSS version="1.1">
+  <CSSData><![CDATA[/************************************************************************************************/
+/*********************************** LoginViewTemplate ******************************************/
+/************************************************************************************************/
+.Static.sta_login_label
+{
+	font : bold 12px "Malgun Gothic","Arial","Gulim";
+	-nexa-border : 0px none;
+	-nexa-padding : 0px 5px 0px 5px;
+}
+/************************************************************************************************/
+/*********************************** SearchViewTemplate *****************************************/
+/************************************************************************************************/
+.View.view_searchbox
+{
+	background : #eeeeee;
+	-nexa-border : 1px solid #cecece;
+}
+
+.View.view_cm_searchbox2, .Div.view_cm_searchbox2
+{
+	background : #eeeeee;
+	-nexa-border : 1px solid #c7c7c7,0px none;
+}
+
+.View.view_cm_searchbox
+{
+	background : #f7f7f7;
+	-nexa-border : 1px solid #c7c7c7,0px none;
+}
+/************************************************************************************************/
+/********************************** FreeformViewTemplate ****************************************/
+/************************************************************************************************/
+.Static.sta_labelbox_essential
+{
+	background : #f7f7f7;
+	-nexa-border : 1px solid #c7c7c7;
+	-nexa-text-align : center;
+	-nexa-padding : 0px 5px 0px 5px;
+	color : #f04c4d;
+}
+.Static.sta_fieldbox
+{
+	-nexa-border : 1px solid #c7c7c7;
+	-nexa-padding : 0px 5px 0px 5px;
+}
+
+/*** Title 관련 ***/
+/* Title Static */
+.Static.sta_subtitle_noicon
+{
+	color : #101010;
+	font : bold 13px "Malgun Gothic","Arial","Gulim";
+	-nexa-padding : 0px 0px 0px 0px;
+}
+/* 전체건수 Static */
+.Static.sta_total_count
+{
+	color : #505050;
+	-nexa-word-wrap : none;
+}
+/* 접기/펼치기 버튼 */
+.Button.btn_title_open
+{
+	-nexa-icon : url('imagerc::asset/img_title_open.png');
+}
+.Button.btn_title_close
+{
+	-nexa-icon : url('imagerc::asset/img_title_close.png');
+}
+
+/************************************************************************************************/
+/************************************ GridViewTemplate ******************************************/
+/************************************************************************************************/
+.Grid .head .row .cell.cell_essential
+{
+	color : #f04c4d;
+}
+
+/************************************************************************************************/
+/************************************ TreeViewTemplate ******************************************/
+/************************************************************************************************/
+/* 접고, 펼치기 버튼 */
+.Button.btn_tree_collapse
+{
+	-nexa-text-align  		: center;
+	-nexa-vertical-align 	: middle;
+	background 		: url('imagerc::asset/btn_tree_collapse.png') no-repeat center center #ffffff;
+}
+.Button.btn_tree_collapse[status=mouseover],.Button.btn_tree_collapse[status=focused]
+{
+	background : url('imagerc::asset/btn_tree_collapse.png') no-repeat center center #fefefe;
+}
+.Button.btn_tree_collapse[userstatus=pushed],.Button.btn_tree_collapse[userstatus=selected]
+{
+	background : url('imagerc::asset/btn_tree_collapse.png') no-repeat center center #e9e9e9;
+}
+.Button.btn_tree_expand
+{
+	-nexa-text-align 	: center;
+	-nexa-vertical-align 	: middle;
+	background 		: url('imagerc::asset/btn_tree_expand.png') no-repeat center center #ffffff;
+}
+.Button.btn_tree_expand[status=mouseover],.Button.btn_tree_expand[status=focused]
+{
+	background : url('imagerc::asset/btn_tree_expand.png') no-repeat center center #fefefe;
+}
+
+.Button.btn_tree_expand[userstatus=pushed],.Button.btn_tree_expand[userstatus=selected]
+{
+	background : url('imagerc::asset/btn_tree_expand.png') no-repeat center center #e9e9e9;
+}
+/* 테스트용 cssclass */
+.Grid.grd_tree_noline
+{
+	color : #101010;
+	-nexa-border : 1px solid #c7c7c7;
+}
+.Grid.grd_tree_noline[status=focused]
+{
+	color : #ffffff;
+}
+.Grid.grd_tree_noline .body .row .cell
+{
+	color : #101010;
+	-nexa-border : 0px none;
+}
+.Grid.grd_tree_noline .body .row .cell[status=mouseover]
+{
+	background : #e7e7e7;
+	color : #101010;
+	-nexa-border : 0px none;
+}
+.Grid.grd_tree_noline .body .row .cell[userstatus=selected],.Grid.grd_tree_noline .body .row .cell[status=focused]
+{
+	background : #a1c4e8;
+	-nexa-border : 0px none;
+}
+
+.Grid .body .row .cell.cell_tree_blue .celltreeitem .treeitemtext
+{
+	color : #0052A6;
+}
+
+/* ListView - Card ViewTemplate*/
+.ListView.liv_card,
+.ListView.liv_card[status=mouseover], .ListView.liv_card[status=focused],
+.ListView.liv_card[status=readonly], .ListView.liv_card[status=disabled]
+{
+	background	: #e6e6e6;
+}
+.ListView.liv_card .body, .ListView.liv_card .body[status=readonly]
+{
+	-nexa-border	: 0px none;
+	background	: #ffffff;
+	-nexa-edge	: url('imagerc::asset/cell_CardBandBg.png') 15px 15px;
+}
+.ListView.liv_card .body[status=mouseover]
+{
+	background	: #F9F9F9;
+	-nexa-edge : url('imagerc::asset/cell_CardBandBgO.png') 15px 15px;
+	-nexa-border	: 0px none;
+}
+.ListView.liv_card .body[status=focused], .ListView.liv_card .body[userstatus=selected]
+{
+	background	: #f0f9fd;
+	-nexa-edge : url('imagerc::asset/cell_CardBandBgS.png') 15px 15px;
+	-nexa-border	: 0px none;
+}
+.ListView.liv_card .detail, 
+.ListView.liv_card .detail[status=readonly], .ListView.liv_card .detail[status=mouseover], .ListView.liv_card .detail[status=focused]
+{
+	-nexa-border	: 0px none;
+	background	: #ffffff;
+}
+
+.ListView.liv_card .body .cell, .ListView.liv_card .detail .cell,
+.ListView.liv_card .body .cell[status=disabled], .ListView.liv_card .detail .cell[status=disabled],
+.ListView.liv_card .body .cell[status=readonly], .ListView.liv_card .detail .cell[status=readonly],
+.ListView.liv_card .body .cell[status=focused], .ListView.liv_card .detail .cell[status=focused],
+.ListView.liv_card .body .cell[status=mouseover], .ListView.liv_card .detail .cell[status=mouseover]
+{
+	-nexa-border	: 0px none;
+	color		: #666666;
+	background	: transparent;
+}
+.ListView.liv_card .body .cell.cell_BandBg, .ListView.liv_card .detail .cell.cell_BandBg,
+.ListView.liv_card .body .cell.cell_BandBg[status=disabled], .ListView.liv_card .detail .cell.cell_BandBg[status=disabled],
+.ListView.liv_card .body .cell.cell_BandBg[status=readonly], .ListView.liv_card .detail .cell.cell_BandBg[status=readonly],
+.ListView.liv_card .body .cell.cell_BandBg[status=focused], .ListView.liv_card .detail .cell.cell_BandBg[status=focused],
+.ListView.liv_card .body .cell.cell_BandBg[status=mouseover], .ListView.liv_card .detail .cell.cell_BandBg[status=mouseover]
+{
+	-nexa-border 	: 1px solid #ffffff;
+	background	: #ffffff;
+	border-radius	: 5px;
+}
+
+.ListView.liv_card .body .cell.cell_image, .ListView.liv_card .detail .cell.cell_image,
+.ListView.liv_card .body .cell.cell_image[status=disabled], .ListView.liv_card .detail .cell.cell_image[status=disabled],
+.ListView.liv_card .body .cell.cell_image[status=readonly], .ListView.liv_card .detail .cell.cell_image[status=readonly],
+.ListView.liv_card .body .cell.cell_image[status=focused], .ListView.liv_card .detail .cell.cell_image[status=focused],
+.ListView.liv_card .body .cell.cell_image[status=mouseover], .ListView.liv_card .detail .cell.cell_image[status=mouseover]
+{
+	-nexa-border 	: 1px solid #e1e2e7;
+	border-radius	: 5px;
+	/*background	: #ffffff;*/
+}
+
+.ListView.liv_card .body .cell.cell_Title, .ListView.liv_card .detail .cell.cell_Title,
+.ListView.liv_card .body .cell.cell_Title[status=disabled], .ListView.liv_card .detail .cell.cell_Title[status=disabled],
+.ListView.liv_card .body .cell.cell_Title[status=readonly], .ListView.liv_card .detail .cell.cell_Title[status=readonly],
+.ListView.liv_card .body .cell.cell_Title[status=focused], .ListView.liv_card .detail .cell.cell_Title[status=focused],
+.ListView.liv_card .body .cell.cell_Title[status=mouseover], .ListView.liv_card .detail .cell.cell_Title[status=mouseover]
+{
+	font		: bold 16px "Malgun Gothic";
+	color		: #333333;
+	-nexa-padding	: 5px 5px 5px 10px;
+}
+
+.ListView.liv_card .body .cell.cell_LebelSub, .ListView.liv_card .detail .cell.cell_LebelSub,
+.ListView.liv_card .body .cell.cell_LebelSub[status=disabled], .ListView.liv_card .detail .cell.cell_LebelSub[status=disabled],
+.ListView.liv_card .body .cell.cell_LebelSub[status=readonly], .ListView.liv_card .detail .cell.cell_LebelSub[status=readonly],
+.ListView.liv_card .body .cell.cell_LebelSub[status=focused], .ListView.liv_card .detail .cell.cell_LebelSub[status=focused],
+.ListView.liv_card .body .cell.cell_LebelSub[status=mouseover], .ListView.liv_card .detail .cell.cell_LebelSub[status=mouseover]
+{
+	font		: bold 13px "Malgun Gothic";
+	-nexa-padding	: 5px 5px 5px 10px;
+}
+
+.ListView.liv_card .body .cell.cell_TitleNoLabel, .ListView.liv_card .detail .cell.cell_TitleNoLabel,
+.ListView.liv_card .body .cell.cell_TitleNoLabel[status=disabled], .ListView.liv_card .detail .cell.cell_TitleNoLabel[status=disabled],
+.ListView.liv_card .body .cell.cell_TitleNoLabel[status=readonly], .ListView.liv_card .detail .cell.cell_TitleNoLabel[status=readonly],
+.ListView.liv_card .body .cell.cell_TitleNoLabel[status=focused], .ListView.liv_card .detail .cell.cell_TitleNoLabel[status=focused],
+.ListView.liv_card .body .cell.cell_TitleNoLabel[status=mouseover], .ListView.liv_card .detail .cell.cell_TitleNoLabel[status=mouseover]
+{
+	font		: bold 16px "Malgun Gothic";
+	color		: #333333;
+	-nexa-padding	: 5px 5px 5px 5px;
+}
+/************************************************************************************************/
+/****************************** FreeformReadonlyViewTemplate ************************************/
+/************************************************************************************************/
+/* 텍스트만 보여지는 타입 class */
+.Calendar.com_View,
+.Calendar.com_View[status=mouseover],.Calendar.com_View[status=focused],.Calendar.com_View[status=readonly],
+.Edit.com_View,
+.Edit.com_View[status=mouseover],.Edit.com_View[status=focused],.Edit.com_View[status=readonly],
+.MaskEdit.com_View,
+.MaskEdit.com_View[status=mouseover],.MaskEdit.com_View[status=focused],.MaskEdit.com_View[status=readonly],
+.Spin.com_View,
+.Spin.com_View[status=mouseover],.Spin.com_View[status=focused],.Spin.com_View[status=readonly],
+.TextArea.com_View,
+.TextArea.com_View[status=mouseover],.TextArea.com_View[status=focused],.TextArea.com_View[status=readonly],
+.TextArea.com_View .hscrollbar,.TextArea.com_View .vscrollbar,
+.Combo.com_View,
+.Combo.com_View[status=mouseover],.Combo.com_View[status=focused],.Combo.com_View[status=readonly],
+.TextField.com_View .box,
+.TextField.com_View .box[status=mouseover],.TextField.com_View .box[status=focused],.TextField.com_View .box[status=readonly],
+.MultiLineTextField.com_View .box,
+.MultiLineTextField.com_View .box[status=mouseover],.MultiLineTextField.com_View .box[status=focused],.MultiLineTextField.com_View .box[status=readonly]
+{
+	-nexa-border 		: 0px none;
+	background 		: transparent;
+}
+.Spin.com_WF_View .spinupbutton,.Spin.com_View .spinupbutton[status=disabled],
+.Spin.com_WF_View .spindownbutton,.Spin.com_View .spindownbutton[status=disabled],
+.Calendar.com_View .dropbutton,.Calendar.com_View .dropbutton[status=disabled],
+.Combo.com_View .dropbutton,.Combo.com_View .dropbutton[status=disabled]
+{
+	-nexa-icon : url('imagerc::asset/blank.png');
+}
+.TextField.com_View .box .leadingbutton,.TextField.com_View .box .leadingbutton[status=disabled],
+.TextField.com_View .box .trailingbutton,.TextField.com_View .box .trailingbutton[status=disabled]
+{									
+	background : transparent url('imagerc::asset/blank.png');			
+}
+
+/************************************************************************************************/
+/****************************** ScheduleViewTemplate ************************************/
+/************************************************************************************************/
+.Calendar.cal_MF_Cal,
+.Calendar.cal_MF_Cal[status=mouseover],.Calendar.cal_MF_Cal[status=focused],
+.Calendar.cal_MF_Cal[status=disabled],.Calendar.cal_MF_Cal[status=readonly],
+.Calendar.cal_MF_Cal .datepicker,
+.Calendar.cal_MF_Cal .datepicker[status=mouseover],.Calendar.cal_MF_Cal .datepicker[status=focused],
+.Calendar.cal_MF_Cal .datepicker[status=disabled],.Calendar.cal_MF_Cal .datepicker[status=readonly]
+{
+	-nexa-border 		: 0px none;
+}
+
+.Calendar.cal_MF_Cal .datepicker .head,.Calendar.cal_MF_Cal .datepicker .body,
+.Calendar.cal_MF_Cal .datepicker .head[status=mouseover],.Calendar.cal_MF_Cal .datepicker .head[status=focused],
+.Calendar.cal_MF_Cal .datepicker .head[status=disabled],.Calendar.cal_MF_Cal .datepicker .head[status=readonly],
+.Calendar.cal_MF_Cal .datepicker .body[status=mouseover],.Calendar.cal_MF_Cal .datepicker .body[status=focused],
+.Calendar.cal_MF_Cal .datepicker .body[status=disabled],.Calendar.cal_MF_Cal .datepicker .body[status=readonly]
+{
+	-nexa-border 		: 0px none;
+	background 		: #ffffff;
+	color 			: #333333;
+	font 			: bold 14px "Noto Sans CJK KR Regular";
+}
+.Calendar.cal_MF_Cal .datepicker .head .monthstatic,
+.Calendar.cal_MF_Cal .datepicker .head .yearstatic
+{
+	color 			: #0a0a0a;
+	font 			: bold 16px "Noto Sans CJK KR Regular";
+}
+.Calendar.cal_MF_Cal .datepicker .head .prevbutton,
+.Calendar.cal_MF_Cal .datepicker .head .prevbutton[status=focused]
+{
+	-nexa-icon 		: URL("imagerc::asset/cal_WF_PreBtn.png");
+}
+.Calendar.cal_MF_Cal .datepicker .head .prevbutton[status=mouseover],.Calendar.cal_MF_Cal .datepicker .head .prevbutton[userstatus=pushed],
+.Calendar.cal_MF_Cal .datepicker .head .prevbutton[userstatus=selected]
+{
+	-nexa-icon 		: URL("imagerc::asset/cal_WF_PreBtnO.png");
+}
+.Calendar.cal_MF_Cal .datepicker .head .prevbutton[status=disabled]
+{
+	-nexa-icon 		: URL("imagerc::asset/cal_WF_PreBtnD.png");
+}
+.Calendar.cal_MF_Cal .datepicker .head .nextbutton,
+.Calendar.cal_MF_Cal .datepicker .head .nextbutton[status=focused]
+{
+	-nexa-icon 		: URL("imagerc::asset/cal_WF_NxtBtn.png");
+}
+.Calendar.cal_MF_Cal .datepicker .head .nextbutton[status=mouseover],.Calendar.cal_MF_Cal .datepicker .head .nextbutton[userstatus=pushed],
+.Calendar.cal_MF_Cal .datepicker .head .nextbutton[userstatus=selected]
+{
+	-nexa-icon 		: URL("imagerc::asset/cal_WF_NxtBtnO.png");
+}
+.Calendar.cal_MF_Cal .datepicker .head .nextbutton[status=disabled]
+{
+	-nexa-icon 		: URL("imagerc::asset/cal_WF_NxtBtnD.png");
+}
+.Calendar.cal_MF_Cal .datepicker .body .weekband
+{
+	-nexa-border 		: 0px none;
+	background 		: #ffffff;
+	color 			: #333333;
+}
+.Calendar.cal_MF_Cal .datepicker .body .weekitem
+{
+	color 			: #666666;
+}
+.Calendar.cal_MF_Cal .datepicker .body .dayitem
+{
+	border-radius 		: 80px;
+	-nexa-border : 2px solid #ffffff;
+	background 		: #ffffff;
+	font 			: bold 13px "Noto Sans CJK KR Regular";
+}
+.Calendar.cal_MF_Cal .datepicker .body .dayitem[userstatus=day]
+{
+	color 			: #666666;
+}
+.Calendar.cal_MF_Cal .datepicker .body .dayitem[status=mouseover]
+{
+	-nexa-border : 2px solid #e4f0ff;
+	background 		: #ffffff;
+	border-radius 		: 80px;
+}
+.Calendar.cal_MF_Cal .datepicker .body .dayitem[userstatus=selected]
+{
+	-nexa-border : 2px solid #38c2d8;
+	background 		: #ffffff;
+	border-radius 		: 80px;
+	color 			: #3683e2;
+}
+.Calendar.cal_MF_Cal .datepicker .body .dayitem[userstatus=today]
+{
+	-nexa-border : 2px solid #3683e2;
+	background 		: #ffffff;
+	border-radius 		: 80px;
+	color 			: #3e8ded;
+}
+
+.Grid.grd_DashBoard,
+.Grid.grd_DashBoard[status=mouseover],.Grid.grd_DashBoard[status=focused],.Grid.grd_DashBoard[status=disabled],.Grid.grd_DashBoard[status=readonly]
+{
+	-nexa-border : 0px none;
+	background : transparent;
+}
+.Grid.grd_DashBoard .body
+{
+	-nexa-border : 0px none;
+}
+.Grid.grd_DashBoard .body .row .cell
+{
+	-nexa-border 	: 0px none;
+}
+.Grid.grd_DashBoard .body .row .cell[status=mouseover]
+{
+	-nexa-border 	: 0px none;
+	font : normal 12px/normal "Noto Sans CJK KR Regular";
+	
+}
+.Grid.grd_DashBoard .body .row .cell[userstatus=selected]
+{
+	-nexa-border 	: 0px none;
+	font : normal 12px/normal "Noto Sans CJK KR Regular";
+}
+.Grid.grd_DashBoard .vscrollbar,
+.Grid.grd_DashBoard .vscrollbar[status=mouseover]
+{
+	-nexa-border : 0px none;
+	-nexa-padding : 0px 5px;
+	background : #ffffff;
+}
+.Grid.grd_DashBoard .vscrollbar .decbutton,
+.Grid.grd_DashBoard .vscrollbar .decbutton[status=mouseover],.Grid.grd_DashBoard .vscrollbar .decbutton[status=focused],
+.Grid.grd_DashBoard .vscrollbar .decbutton[userstatus=pushed],.Grid.grd_DashBoard .vscrollbar .decbutton[userstatus=selected],
+.Grid.grd_DashBoard .vscrollbar .decbutton[status=disabled],
+.Grid.grd_DashBoard .vscrollbar .incbutton,
+.Grid.grd_DashBoard .vscrollbar .incbutton[status=mouseover],.Grid.grd_DashBoard .vscrollbar .incbutton[status=focused],
+.Grid.grd_DashBoard .vscrollbar .incbutton[userstatus=pushed],.Grid.grd_DashBoard .vscrollbar .incbutton[userstatus=selected],
+.Grid.grd_DashBoard .vscrollbar .incbutton[status=disabled]
+{
+	-nexa-icon : none;
+}
+.Grid.grd_DashBoard .vscrollbar .trackbar,
+.Grid.grd_DashBoard .vscrollbar .trackbar[status=focused],.Grid.grd_DashBoard .vscrollbar .trackbar[status=mouseover],
+.Grid.grd_DashBoard .vscrollbar .trackbar[userstatus=pushed],.Grid.grd_DashBoard .vscrollbar .trackbar[userstatus=selected]
+{
+	background	: #dcdee2;
+	border-radius	: 15px;
+}.Div.div_LOGIN_Bg
+{
+}
+/* cs_system */
+.Static.sta_TF_Bg
+{
+	-nexa-border 		: 0px none, 0px none, 1px solid #05060e, 0px none;
+	background 		: #3e4f6a;
+}
+
+.Static.sta_TF_Logo
+{
+	-nexa-text-align 	: center;
+	background 		: #3e4f6a;
+	color 			: #ffffff;
+	font 			: bold 22px "Malgun Gothic";
+}
+
+.Div.div_LF_BG
+{
+	background 		: #eef2f9;
+}
+
+.Grid.grd_LF_Menu
+{
+	-nexa-border 		: 0px none;
+}
+.Grid.grd_LF_Menu .body
+{
+	background 		: #eef2f9;
+}
+.Grid.grd_LF_Menu .body .row .cell
+{
+	-nexa-border 		: 0px none;
+	-nexa-text-align 	: left;
+	background 		: #eef2f9;
+	color 			: #666666;
+	cursor 			: pointer;
+	font 			: bold 15px "Malgun Gothic";
+}
+.Grid.grd_LF_Menu .body .row .cell[status=mouseover]
+{
+	-nexa-text-decoration 	: underline;
+	background 		: transparent;
+}
+.Grid.grd_LF_Menu .body .row .cell[userstatus=selected]
+{
+	-nexa-text-decoration 	: underline;
+	background 		: transparent;
+	color 			: #0380e1;
+}
+.Grid.grd_LF_Menu .body .row .cell.cell_LF_Lev
+{
+	-nexa-border 		: 0px none;
+	-nexa-padding 		: 15px 0px 5px 0px;
+	-nexa-text-align 	: left;
+	background 		: #eef2f9;
+	color 			: #233756;
+	cursor 			: pointer;
+	font 			: bold 15px "Malgun Gothic";
+}
+.Grid.grd_LF_Menu .body .row .cell .celltreeitem
+{
+	background 		: #eef2f9;
+	font 			: bold 15px "Malgun Gothic";
+}
+.Grid.grd_LF_Menu .body .row .cell .celltreeitem .treeitembutton[userstatus=expand]
+{
+	-nexa-icon		: URL("theme://images/grd_LF_TreeOpen.png");
+}
+.Grid.grd_LF_Menu .body .row .cell .celltreeitem .treeitembutton[userstatus=collapse]
+{
+	-nexa-icon		: URL("theme://images/grd_LF_TreeClose.png");
+}
+.Grid.grd_LF_Menu .body .row .cell .cellbutton,
+.Grid.grd_LF_Menu .body .row .cell .cellbutton[status=focused],.Grid.grd_LF_Menu .body .row .cell .cellbutton[status=mouseover],
+.Grid.grd_LF_Menu .body .row .cell .cellbutton[userstatus=pushed],.Grid.grd_LF_Menu .body .row .cell .cellbutton[userstatus=selected]
+{
+	-nexa-border 		: 0px none;
+	-nexa-padding 		: 0px 0px 0px 0px;
+	-nexa-icon 		: URL("theme://images/grd_LF_Delete.png");
+	background		: transparent;
+}
+.Grid.grd_LF_Menu .vscrollbar,.Grid.grd_LF_Menu .vscrollbar[status=mouseover]
+{
+	-nexa-border 		: 0px none;
+	-nexa-padding 		: 0px 5px;
+	background 		: transparent;
+}
+.Grid.grd_LF_Menu .vscrollbar[status=disabled]
+{
+	opacity 		: 0.3;
+}
+.Grid.grd_LF_Menu .vscrollbar .decbutton,
+.Grid.grd_LF_Menu .vscrollbar .decbutton[status=mouseover],.Grid.grd_LF_Menu .vscrollbar .decbutton[status=focused],
+.Grid.grd_LF_Menu .vscrollbar .decbutton[userstatus=pushed],.Grid.grd_LF_Menu .vscrollbar .decbutton[userstatus=selected],
+.Grid.grd_LF_Menu .vscrollbar .decbutton[status=disabled],
+.Grid.grd_LF_Menu .vscrollbar .incbutton,
+.Grid.grd_LF_Menu .vscrollbar .incbutton[status=mouseover],.Grid.grd_LF_Menu .vscrollbar .incbutton[status=focused],
+.Grid.grd_LF_Menu .vscrollbar .incbutton[userstatus=pushed],.Grid.grd_LF_Menu .vscrollbar .incbutton[userstatus=selected],
+.Grid.grd_LF_Menu .vscrollbar .incbutton[status=disabled]
+{
+	-nexa-icon 		: URL("theme://images/btn_WF_None.png");
+}
+.Grid.grd_LF_Menu .vscrollbar .trackbar,
+.Grid.grd_LF_Menu .vscrollbar .trackbar[status=focused]
+{
+	background 		: #dcdee2;
+	border-radius 		: 10px;
+}
+.Grid.grd_LF_Menu .vscrollbar .trackbar[status=mouseover]
+{
+	background 		: #e9ebef;
+}
+.Grid.grd_LF_Menu .vscrollbar .trackbar[userstatus=pushed],.Grid.grd_LF_Menu .vscrollbar .trackbar[userstatus=selected]
+{
+	background 		: #c0c1c5;
+}
+.Grid.grd_LF_Menu .vscrollbar .trackbar[status=disabled]
+{
+	background 		: #e4e4e4;
+}
+
+.PopupDiv.pdiv_LF_Sch
+{
+	-nexa-border 		: 1px solid #444444;
+	background 		: #eef2f9;
+	box-shadow 		: 0px 3px 3px #dddddd;
+}.Div.LOGIN_Logo
+{
+	background : url('imagerc::sample/img_LOGIN_Logo.png') no-repeat center center white;
+}
+.View
+{
+	background : #ffffff;
+	border-radius : 5px;
+}
+.Static.sta_countbox_content
+{
+	-nexa-text-align : center;
+	font : normal 900 50px/normal "normal/normal";
+	color : #3e4f6a;
+	-nexa-vertical-align : top;
+}
+.Static.sta_Dashboard_count_fieldbox
+{
+	-nexa-border : 0px none;
+	-nexa-padding : 0px 5px 0px 5px;
+	-nexa-text-align : center;
+	background : #ced8ed;
+	border-radius : 25px;
+	-nexa-vertical-align : top;
+}
+.Static.sta_Dashboard_count_label
+{
+	-nexa-text-align : center;
+	-nexa-padding : 0px 5px 0px 5px;
+	font : normal 700 19px/normal "Arial";
+	-nexa-vertical-align : bottom;
+	color : #3e4f6a;
+}
+.Static.sta_searchbox
+{
+	background : white;
+	-nexa-border : 0px none;
+	border-radius : 10px;
+}
+.Static.sta_label
+{
+	-nexa-padding : 0px 5px 0px 5px;
+	-nexa-text-align : right;
+	color : #8e919c;	
+}
+.Static.sta_label_essential
+{
+	-nexa-padding : 0px 5px 0px 5px;
+	color : #f04c4d;
+}
+.Button.btn_search
+{
+	font : 13px "Malgun Gothic","Arial","Gulim";
+	background : #5c759d;
+	border-radius : 5px;
+	color : #ffffff;
+	-nexa-text-align : center;
+}
+.Button.btn_search[status=mouseover],.Button.btn_search[status=focused]
+{
+	background :  #5c759d;
+	color : #ffffff;
+	-nexa-border : 1px solid #5c759d;
+}
+.Button.btn_search[userstatus=pushed],.Button.btn_search[userstatus=selected]
+{
+	background : #5c759d;
+	color : #ffffff;
+	-nexa-border : 1px solid #5c759d;	
+}
+.Button.btn_search[status=disabled]
+{
+	background : #dddddd;
+	color : #999999;
+	-nexa-border : 1px solid #aaaaaa;
+}
+.Edit.edit_WF_search
+{
+}
+.ImageViewer.img_customer_profile_img
+{
+}
+.Edit.edit_customer_profile_name
+{
+	-nexa-border : 0px none, 0px none, 2px solid #e7e7e8;
+	border-radius : 0px;
+	color : #8e919c;
+	font : normal 500 15px/normal "Arial";
+	-nexa-padding : 0px 10px 10px 0px;
+}
+.Edit.edit_customer_profile_phone
+{
+	-nexa-border : 0px none, 0px none, 2px solid #e7e7e8;
+	border-radius : 0px;
+	color : #8e919c;
+	font : normal 500 15px/normal "Arial";
+	-nexa-padding : 0px 10px 10px 0px;
+}
+.Edit.edit_customer_profile_email
+{
+	-nexa-border : 0px none, 0px none, 2px solid #e7e7e8;
+	border-radius : 0px;
+	color : #8e919c;
+	font : normal 500 15px/normal "Arial";
+	-nexa-padding : 0px 10px 10px 0px;
+}
+.Grid
+{
+	-nexa-border 		: 8px solid #e7e7e8;
+	background 		: #ffffff;
+	border-radius : 10px;
+}
+.Grid .head
+{
+	background 		: #5c759d;
+}
+.Grid .head .row .cell
+{
+	-nexa-border 		: 2px solid #e9eaeb;
+	-nexa-text-align 	: center;
+	color 			: #ffffff;
+	font 			: normal 600 15px/normal "Malgun Gothic";
+}
+.Grid .body .row .cell
+{
+	-nexa-border 		: 2px solid #e9eaeb;
+	-nexa-padding 		: 4px 4px 4px 4px;
+	color 			: #3E4F6A;
+	font 			: normal 500 13px/normal "Malgun Gothic";
+	-nexa-text-align : center;
+}
+.Grid .body .row .cell[status=mouseover]
+{
+	background 		: #ccd8ea;
+}
+.Grid .body .row .cell[userstatus=selected]
+{
+	background 		: #ccd8ea;
+}
+.Grid .summary
+{
+	background 		: #b2b9c6;
+}
+.Grid .summary .row .cell
+{
+	-nexa-border 		: 1px solid #c8cdd7;
+	-nexa-padding 		: 4px 10px 4px 10px;
+	color 			: #ffffff;
+	font 			: bold 14px "Malgun Gothic";
+}
+/*cellcontrol Start*/
+.GridCellControl .cellbutton
+{
+	-nexa-border 		: 1px solid #dddddd;
+	background 		: linear-gradient(to bottom,#ffffff,#f6f7f8);
+	border-radius 		: 1px;
+	color 			: #646982;
+	cursor 			: pointer;
+	font 			: bold 13px "Malgun Gothic";
+}
+.GridCellControl .cellbutton[status=mouseover],.GridCellControl .cellbutton[userstatus=pushed],
+.GridCellControl .cellbutton[userstatus=selected]
+{
+	-nexa-border 		: 1px solid #6c7189;
+}
+.GridCellControl .cellbutton[status=disabled]
+{
+	-nexa-border 		: 1px solid #eeeeee;
+	color 			: #aaaaaa;
+}
+.GridCellControl .cellexpandbutton,
+.GridCellControl .cellexpandbutton[status=focused],.GridCellControl .cellexpandbutton[status=mouseover],
+.GridCellControl .cellexpandbutton[userstatus=pushed],.GridCellControl .cellexpandbutton[userstatus=selected],
+.GridCellControl .cellexpandbutton[status=disabled]
+{
+	-nexa-icon 		: URL("theme://images/btn_WF_Search.png") no-repeat center transparent;
+}
+.GridCellControl .celltreeitem .treeitembutton[userstatus=expand]
+{
+	-nexa-icon 		: URL("theme://images/grd_WF_TreeClose.png");
+}
+.GridCellControl .celltreeitem .treeitembutton[userstatus=collapse]
+{
+	-nexa-icon 		: URL("theme://images/grd_WF_TreeOpen.png");
+}
+.GridCellControl .celltreeitem .treeitemimage[userstatus=expand]
+{
+	-nexa-icon 		: URL("theme://images/grd_WF_TreeCloseImg.png");
+}
+.GridCellControl .celltreeitem .treeitemimage[userstatus=collapse]
+{
+	-nexa-icon 		: URL("theme://images/grd_WF_TreeOpenImg.png");
+}
+.GridCellControl .celltreeitem .treeitemimage[userstatus=leaf]
+{
+	-nexa-icon 		: URL("theme://images/grd_WF_TreeLeafImg.png");
+}
+.GridCellControl .celltreeline
+{
+	-nexa-border 		: 1px dotted #999999;
+}
+.GridCellControl .celltreeline[status=disabled]
+{
+	-nexa-border 		: 1px dotted #aeaeae;
+}.Grid .body
+{
+	background 		: #ffffff;
+}
+.Static.sta_subtitle
+{
+	background : url('imagerc::asset/img_title02.png') no-repeat left center;/*지워야하나???*/
+	font : bold 16px "Malgun Gothic","Arial","Gulim";
+	color : #42444c;
+	-nexa-padding : 0px 0px 0px 20px;
+}
+.Button.btn_search[status=mouseover][userstatus=pushed]
+{
+	background : #5c759d;
+	border-radius : 5px;
+}
+.Button.btn_search[status=mouseover][userstatus=selected]
+{
+	background : #5c759d;
+	border-radius : 5px;
+}
+.Button.btn_search[userstatus=selected][status=mouseover]
+{
+	background : #5c759d;
+	border-radius : 5px;
+}
+.Button.btn_date
+{
+	border-radius : 0px;
+}
+.Button.btn_WF_border
+{
+	background :  #ffffff;
+	color : #5c759d;
+	-nexa-border : 1px solid #5c759d;
+	box-shadow : 5px -5px 0px #FFFFFF;
+}
+.Edit.edit_customer_profile_id
+{	
+	-nexa-border : 0px none;
+	border-radius : 0px;
+	-nexa-text-align : center;
+	color : #5c759d;
+	font : normal 900 23px/normal "Arial";
+}
+.Edit.edit_customer_profile_type
+{
+	-nexa-border : 0px none;
+	border-radius : 0px;
+	-nexa-text-align : center;
+	color : #8e919c;
+	font : normal 500 18px/normal "Arial";
+}
+.Edit.edit_customer_profile_address
+{
+	-nexa-border : 0px none, 0px none, 2px solid #e7e7e8;
+	border-radius : 0px;
+	color : #8e919c;
+	font : normal 500 15px/normal "Arial";
+	-nexa-padding : 0px 10px 10px 0px;
+}
+.Div.frm_LOGIN_Bg
+{
+	background : #f4f5f9;
+}
+.Edit.edit_login_id
+{
+	-nexa-border : 0px none, 0px none, 1px solid #ced4da;
+	cursor : pointer;
+	border-radius : 0px;
+}
+.Edit.edit_login_pw
+{
+-nexa-border : 0px none, 0px none, 1px solid #ced4da;
+	cursor : pointer;
+	border-radius : 0px;
+}
+.Edit.edit_login_id[status=focused]
+{
+-nexa-border : 0px none, 0px none, 1px solid #143a84;
+}
+.Edit.edit_login_id[status=mouseover]
+{
+-nexa-border : 0px none, 0px none, 1px solid #143a84;
+}
+.Edit.edit_login_pw[status=focused]
+{
+-nexa-border : 0px none, 0px none, 1px solid #143a84;
+}
+.Edit.edit_login_pw[status=mouseover]
+{
+-nexa-border : 0px none, 0px none, 1px solid #143a84;
+}
+.CheckBox.chk_login
+{
+	font : 12px "Malgun Gothic","Arial","Gulim";
+	-nexa-icon : url('imagerc::asset/chk_box.png');
+	-nexa-text-padding : 0px 5px 0px 10px;
+	-nexa-padding : 10px 0px;
+
+}
+.CheckBox.chk_login[userstatus=selected]
+{	
+	font : bold 12px "Malgun Gothic","Arial","Gulim";
+	-nexa-icon : url('imagerc::asset/chk_box_s.png');
+	-nexa-text-padding : 0px 5px 0px 10px;
+}
+.Button.btn_login
+{
+	font : normal bold 20px/normal "Malgun Gothic","Arial","Gulim";
+	background : #5c759d;
+	border-radius : 5px;
+	-nexa-padding : 10px;
+	-nexa-text-align : center;
+	color : white;
+}
+.Button.btn_login[status=mouseover]
+{
+	font : normal bold 20px/normal "Malgun Gothic","Arial","Gulim";
+	background : #fff;
+	border-radius : 5px;
+	color : #5c759d;
+	-nexa-text-align : center;	
+	-nexa-border : 1px solid #5c759d;
+}
+.Button.btn_login[status=focused]
+{
+	font : normal bold 20px/normal "Malgun Gothic","Arial","Gulim";
+	background : #5c759d;
+	border-radius : 5px;	
+	color : white;
+	-nexa-text-align : center;
+}
+.Button.btn_login[userstatus=pushed]
+{
+	font : normal bold 20px/normal "Malgun Gothic","Arial","Gulim";
+	background : #5c759d;
+	border-radius : 5px;
+	-nexa-text-align : center;
+	color : white;
+}
+.Button.btn_login[userstatus=selected]
+{
+	font : normal bold 20px/normal "Malgun Gothic","Arial","Gulim";
+	background : #5c759d;
+	border-radius : 5px;
+	-nexa-text-align : center;
+		color : white;
+}
+.Static.sta_labelbox
+{
+	background: #5c759d;
+	color: #ffffff;
+	border-radius : 0px;
+	font : normal 14px/normal "Arial";
+	-nexa-border : 0px none;
+	-nexa-text-align : center;
+	-nexa-padding : 0px 5px 0px 5px;
+}
+.Button.btn_WF_filter_more
+{
+	border-radius : 50px;
+	-nexa-border : 1px solid #8e919c;
+	-nexa-icon : url('imagerc::asset/btn_WF_Down.png');
+	-nexa-icon-position : left;
+	background : white;
+}
+.Button.btn_Dashboard_reqMore
+{
+	-nexa-border : 0px solid;
+	-nexa-text-decoration : underline;
+	cursor : pointer;
+	color : #5c759d;
+	font : normal 16px/normal "Arial";
+}
+.Button.btn_Dashboard_reqMore[status=focused], .Button.btn_Dashboard_reqMore[status=mouseover]
+{
+	-nexa-border : 0px solid;
+}
+.Edit.edit_customer_profile_id[status=readonly]
+{
+	background : white;
+}
+.Edit.edit_customer_profile_name[status=readonly]
+{	
+	background : white;
+}
+.Edit.edit_customer_profile_address[status=readonly]
+{
+	background : white;
+}
+.Edit.edit_customer_profile_email[status=readonly]
+{
+	background : white;
+}
+.Edit.edit_customer_profile_phone[status=readonly]
+{
+	background : white;
+}
+.Edit.edit_customer_profile_type[status=readonly]
+{
+	background : white;
+}
+.Static.sta_customer_detail_label
+{
+	color : #5C759D;
+	font : normal bold 13px/normal "Arial";
+}
+.Combo.comb_WF_search
+{
+}
+.Combo.comb_WF_search .combolist
+{
+}
+.Combo.comb_WF_search .combolist .listboxitem[status=mouseover]
+{
+	background : #ccd8ea;
+}
+.View.view_transparent
+{
+	background : transparent;
+}
+.Combo.comb_customer_profile_type
+{
+	-nexa-border : 0px none;
+	border-radius : 0px;
+	color : #8e919c;
+	font : normal 500 18px/normal "Arial";
+	background : white;
+}
+.Combo.comb_customer_profile_type[status=readonly]
+{
+	background : white;
+}
+.Combo.comb_customer_profile_type .comboedit[status=readonly]
+{
+	-nexa-text-align : center;
+}
+.View.view_no_CSS
+{
+	background : transparent;
+	border-radius : 0px;
+	
+}
+]]></CSSData>
+  <CSSData type="desktop"><![CDATA[]]></CSSData>
+  <CSSData type="mobile_large"><![CDATA[]]></CSSData>
+  <CSSData type="mobile_small"><![CDATA[]]></CSSData>
+  <CSSData type="mobile_medium"><![CDATA[]]></CSSData>
+</XCSS>

@@ -1,0 +1,227 @@
+{
+  "request": {
+    "variables": [],
+    "datasets": [
+      {
+        "name": "dsConsultantSearch",
+        "description": "검색조건",
+        "items": [
+          {
+            "name": "startDate",
+            "description": "조회 시작일",
+            "datasize": 100,
+            "type": "STRING",
+            "insConstant": false
+          },
+          {
+            "name": "endDate",
+            "description": "조회 종료일",
+            "datasize": 100,
+            "type": "STRING",
+            "insConstant": false
+          }
+        ],
+        "datasource": "cs_system"
+      }
+    ]
+  },
+  "localVariables": {
+    "variables": [],
+    "datasets": []
+  },
+  "workflow": {
+    "If1": {
+      "isExpression": true,
+      "name": "If1",
+      "alias": "If",
+      "type": "If",
+      "conditions": [
+        {
+          "next": "getAllConsultantList",
+          "condition": "#dsConsultantSearch[0].get('startDate')# == null \n&& #dsConsultantSearch[0].get('endDate')# == null ",
+          "description": "",
+          "conditionType": "if"
+        },
+        {
+          "next": "getFilterConsultantList",
+          "condition": "",
+          "description": "",
+          "conditionType": "else"
+        }
+      ]
+    },
+    "name": "svcConsultant",
+    "start": {
+      "next": "If1",
+      "name": "start",
+      "description": "로직의 시작",
+      "alias": "start",
+      "type": "Start"
+    },
+    "project": "git_test",
+    "description": "상담원 리스트를 조회한다.",
+    "end": {
+      "name": "end",
+      "description": "로직의 종료",
+      "alias": "end",
+      "type": "End"
+    },
+    "getFilterConsultantList": {
+      "next": "end",
+      "onBeforeEvent": "",
+      "onAfterEvent": "",
+      "description": "상담원 리스트 조회 SQL",
+      "onBeginEvent": "",
+      "type": "SQL",
+      "target": "",
+      "sql": "SELECT \n  CONSULTANTID, \n  GROUPNAME, \n  CONSULTANTNAME, \n  COUNT(\n    CASE WHEN REQUESTTYPE = '01' THEN 1 END\n  ) AS reqInProgress, \n  COUNT(\n    CASE WHEN REQUESTTYPE = '02' THEN 1 END\n  ) AS reqtDelay, \n  COUNT(\n    CASE WHEN REQUESTTYPE = '03' THEN 1 END\n  ) AS reqtComplete, \n  COUNT(\n    CASE WHEN REQUESTTYPE = '04' THEN 1 END\n  ) AS reqtPending, \n  COUNT(*) AS reqTotalCount, \n  SUM(RESPONSETIME) AS totalResponseTime, \n  SUM(RESPONSETIME) / COUNT(*) AS avgResponseTime \nFROM \n  REQUEST \nWHERE CAST(RECEIVEDDATE AS DATE) BETWEEN #dsConsultantSearch.startDate# AND #dsConsultantSearch.endDate#\nGROUP BY \n  CONSULTANTID, \n  GROUPNAME, \n  CONSULTANTNAME;",
+      "output": "dsConsultantList",
+      "sqlType": "select",
+      "datasource": "cs_system",
+      "name": "getFilterConsultantList",
+      "onEndEvent": "",
+      "alias": "getFilterConsultantList"
+    },
+    "getAllConsultantList": {
+      "next": "end",
+      "onBeforeEvent": "",
+      "onAfterEvent": "",
+      "description": "상담원 리스트 전체 조회 SQL",
+      "onBeginEvent": "",
+      "type": "SQL",
+      "target": "",
+      "sql": "SELECT \n  CONSULTANTID, \n  GROUPNAME, \n  CONSULTANTNAME, \n  COUNT(\n    CASE WHEN REQUESTTYPE = '01' THEN 1 END\n  ) AS reqInProgress, \n  COUNT(\n    CASE WHEN REQUESTTYPE = '02' THEN 1 END\n  ) AS reqtDelay, \n  COUNT(\n    CASE WHEN REQUESTTYPE = '03' THEN 1 END\n  ) AS reqtComplete, \n  COUNT(\n    CASE WHEN REQUESTTYPE = '04' THEN 1 END\n  ) AS reqtPending, \n  COUNT(*) AS reqTotalCount, \n  SUM(RESPONSETIME) AS totalResponseTime, \n  SUM(RESPONSETIME) / COUNT(*) AS avgResponseTime \nFROM \n  REQUEST \nGROUP BY \n  CONSULTANTID, \n  GROUPNAME, \n  CONSULTANTNAME;",
+      "output": "dsConsultantList",
+      "sqlType": "select",
+      "datasource": "cs_system",
+      "name": "getAllConsultantList",
+      "onEndEvent": "",
+      "alias": "getAllConsultantList"
+    }
+  },
+  "datasources": [
+    {
+      "database": "cs_system",
+      "password": "",
+      "port": "",
+      "datasource": "cs_system",
+      "productType": "H2",
+      "url": "jdbc:h2:file:${LOCAL_DATABASE}/datasource/cs_system",
+      "username": "sa"
+    }
+  ],
+  "response": {
+    "variables": [
+      {
+        "name": "errorCode",
+        "description": "에러코드",
+        "type": "Integer"
+      },
+      {
+        "name": "errorMessage",
+        "description": "에러메시지",
+        "type": "String"
+      }
+    ],
+    "datasets": [
+      {
+        "name": "dsConsultantList",
+        "description": "상담원 리스트",
+        "items": [
+          {
+            "name": "consultantID",
+            "description": "상담원 ID",
+            "datasize": 100,
+            "type": "STRING",
+            "insConstant": false
+          },
+          {
+            "name": "groupName",
+            "description": "그룹",
+            "datasize": 100,
+            "type": "STRING",
+            "insConstant": false
+          },
+          {
+            "name": "consultantName",
+            "description": "이름",
+            "datasize": 100,
+            "type": "STRING",
+            "insConstant": false
+          },
+          {
+            "name": "reqTotalCount",
+            "description": "문의 총합",
+            "datasize": 100,
+            "type": "INT",
+            "insConstant": false
+          },
+          {
+            "name": "reqInProgress",
+            "description": "처리된 문의",
+            "datasize": 100,
+            "type": "INT",
+            "insConstant": false
+          },
+          {
+            "name": "reqDelay",
+            "description": "지연된 문의",
+            "datasize": 100,
+            "type": "INT",
+            "insConstant": false
+          },
+          {
+            "name": "reqComplete",
+            "description": "완료된 문의",
+            "datasize": 100,
+            "type": "INT",
+            "insConstant": false
+          },
+          {
+            "name": "reqPending",
+            "description": "보류된 문의",
+            "datasize": 100,
+            "type": "INT",
+            "insConstant": false
+          },
+          {
+            "name": "totalResponseTime",
+            "description": "전체 처리 시간",
+            "datasize": 100,
+            "type": "INT",
+            "insConstant": false
+          },
+          {
+            "name": "avgResponseTime",
+            "description": "평균 처리 시간",
+            "datasize": 100,
+            "type": "INT",
+            "insConstant": false
+          }
+        ]
+      }
+    ]
+  },
+  "clientInfo": {
+    "If1": {
+      "x": "600",
+      "y": "300"
+    },
+    "start": {
+      "x": "600",
+      "y": "150"
+    },
+    "end": {
+      "x": "600",
+      "y": "600"
+    },
+    "getFilterConsultantList": {
+      "x": "750",
+      "y": "450"
+    },
+    "getAllConsultantList": {
+      "x": "450",
+      "y": "450"
+    }
+  }
+}

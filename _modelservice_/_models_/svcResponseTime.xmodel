@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ModelInfo version="1.1">
+  <Models>
+    <Model id="dsResponseTime" name="dsResponseTime" iotype="output">
+      <Field id="responseDate" label="응답 날짜" fieldtype="Date" datatype="STRING" datasize="100" required="false" description="응답 날짜" options="{&quot;dataformat&quot;: &quot;yyyy-MM-dd&quot;}"/>
+      <Field id="responseTime" label="응답 시간" fieldtype="Number" datatype="INT" datasize="100" required="false" description="응답 시간" options=""/>
+    </Model>
+  </Models>
+  <Service id="svcResponseTime" name="" url="https://dev-apps.tobedevops.link/serverpart/mars-server/server/execute"/>
+</ModelInfo>

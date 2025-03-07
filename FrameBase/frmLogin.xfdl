@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="frmLogin" width="1280" height="720" cssclass="frm_LOGIN_Bg" onsize="frmLogin_onsize" onload="form_onload" titletext="LoginFrame">
+    <Layouts>
+      <Layout height="720" width="1280">
+        <Div id="divLogin" taborder="0" text="" left="430.00" top="135" width="400" height="200" cssclass="div_LOGIN_Bg" formscrollbartype="none none">
+          <Layouts>
+            <Layout>
+              <Div id="imgLoginLogo" taborder="0" left="1.00" top="3" width="100.00%" height="185" cssclass="LOGIN_Logo"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <View id="viewLogin" taborder="2" text="View00" viewdataset="viewdataset" left="431" top="divLogin:-50" width="400" height="353" viewtype="ETC">
+          <Layouts>
+            <Layout>
+              <Button id="btnLogin" left="0" height="60" right="0" bottom="0" cssclass="btn_login" text="로 그 인"/>
+              <Static id="staConsultantidLabel" left="0" top="0" width="400" height="60" text="아이디" cssclass="sta_login_label"/>
+              <Edit id="edtConsultantid" left="0" top="60" height="30" cssclass="" width="400" password="false"/>
+              <Static id="staConsultantpwdLabel" left="0" top="95" width="400" height="60" text="비밀번호" cssclass="sta_login_label"/>
+              <Edit id="edtConsultantpwd" left="0" top="155" height="30" cssclass="" width="400" password="true"/>
+              <CheckBox id="chkSaveId" left="0" top="190" height="30" right="0" text="아이디 저장" cssclass="chk_login"/>
+            </Layout>
+          </Layouts>
+          <Objects>
+            <Dataset id="viewdataset">
+              <ColumnInfo>
+                <Column id="CONSULTANTID" type="STRING" size="100" description="아이디"/>
+                <Column id="CONSULTANTPWD" type="STRING" size="100" description="비밀번호"/>
+              </ColumnInfo>
+              <Rows>
+                <Row/>
+              </Rows>
+            </Dataset>
+          </Objects>
+          <Bind>
+            <BindItem id="bind_edtConsultantid" compid="edtConsultantid" propid="value" datasetid="viewdataset" columnid="CONSULTANTID"/>
+            <BindItem id="bind_edtConsultantpwd" compid="edtConsultantpwd" propid="value" datasetid="viewdataset" columnid="CONSULTANTPWD"/>
+          </Bind>
+          <ModelInfo modelserviceid="modelservice" serviceid="svcCSLogin" modelid="dsCSLoginInput" filepath="_models_\svcCSLogin.xmodel">
+            <Fields>
+              <Field id="CONSULTANTID" label="아이디" uselabel="true"/>
+              <Field id="CONSULTANTPWD" label="비밀번호" uselabel="true"/>
+            </Fields>
+            <Components>
+              <Component id="_viewcomp" fields="btnLogin"/>
+              <Component id="CONSULTANTID" fields="staConsultantidLabel,edtConsultantid"/>
+              <Component id="CONSULTANTPWD" fields="staConsultantpwdLabel,edtConsultantpwd"/>
+              <Component id="_viewcomp" fields="chkSaveId"/>
+            </Components>
+          </ModelInfo>
+          <ViewTemplateInfo filepath="Asset\LoginViewTemplate.xviewgen">
+            <Attribute id="loginbuttontype" value="bottomfull"/>
+            <Attribute id="loginbuttontext" value="로 그 인"/>
+            <Attribute id="saveidcheckboxuse" value="true"/>
+            <Attribute id="saveidcheckboxtext" value="아이디 저장"/>
+            <Attribute id="fielddirection" value="vertical"/>
+            <Attribute id="labelwidth" value="60"/>
+            <Attribute id="viewpadding" value=""/>
+          </ViewTemplateInfo>
+        </View>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  @FileName 	frmLogin.xfdl
+*  @Creator 	TOBESOFT
+*  @CreateDate 	2024/08/01
+*  @Desction   
+************** 소스 수정 이력 ***********************************************
+* Date					Modifier					Description
+*******************************************************************************
+* 2024/08/01			TOBESOFT					최초생성
+*******************************************************************************
+*/
+
+/*******************************************************************************************************************************
+ * FORM 변수 선언 영역
+*******************************************************************************************************************************/
+/*******************************************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose..)
+*******************************************************************************************************************************/
+/**
+ * @description 화면 오픈
+ */
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// form size 변경시 divLogin size 변경
+	this.fnDivLoginResize();
+	this.viewLogin.form.edtConsultantid.value = 'admin';
+	this.viewLogin.form.edtConsultantpwd.value = 'admin';
+};
+
+/**
+ * @description 화면 리사이징
+ */
+this.frmLogin_onsize = function(obj:nexacro.Form,e:nexacro.SizeEventInfo)
+{
+	// form size 변경시 divLogin size 변경
+	this.fnDivLoginResize();
+};
+
+/*******************************************************************************************************************************
+ * 공통함수영역 (cfnSearch : 조회 / cfnSave : 저장 / cfnAdd : 신규 / cfnDel : 삭제 / cfnPrint : 인쇄..)
+*******************************************************************************************************************************/
+
+/*******************************************************************************************************************************
+ * Transaction 서비스호출 처리 영역
+*******************************************************************************************************************************/
+/*******************************************************************************************************************************
+ * Callback 영역 (Transaction, popup, message..)
+*******************************************************************************************************************************/
+/*******************************************************************************************************************************
+ * 사용자 Function 영역
+*******************************************************************************************************************************/
+/**
+ * @description form size 변경시 divLogin size 변경
+ */ 
+this.fnDivLoginResize = function()
+{
+  	var nLeft = (nexacro.getApplication().mainframe.width / 2) - Math.round((this.divLogin.getOffsetWidth()) / 2);
+
+	if(nLeft <= 0){
+		this.divLogin.setOffsetLeft(0);
+		this.viewLogin.setOffsetLeft(0);
+	}else{
+    	this.divLogin.setOffsetLeft(nLeft);
+		this.viewLogin.setOffsetLeft(nLeft);
+	}
+}
+
+/*******************************************************************************************************************************
+ * 각 COMPONENT 별 EVENT 영역
+*******************************************************************************************************************************/
+this.TransactionAction00_onsuccess = function(obj:nexacro.Action, e:nexacro.TranActionSuccessEventInfo)
+{
+	var loginResult = this.dsLoginResult.getColumn();
+	
+	if(loginResult) {
+		this.gfnSetLogin();
+ 	}
+};
+
+this.TransactionAction00_canrun = function(obj:nexacro.TransactionAction, e:nexacro.ActionRunEventInfo)
+{
+	this.dsLoginResult = new Dataset();
+	this.dsLoginResult.addColumn("loginResult","INT", "256");
+};
+
+]]>
+    </Script>
+    <Objects>
+      <TransactionAction id="TransactionAction00" servicemodel="svcCSLogin" serviceurl="https://dev-apps.tobedevops.link/serverpart/mars-server/server/execute" inputdatasets="dsCSLoginInput=viewLogin.form.viewdataset" onsuccess="TransactionAction00_onsuccess" outputdatasets="dsLoginResult=dsCSLogin" args="" canrun="TransactionAction00_canrun">
+        <Contents/>
+      </TransactionAction>
+      <MessageAction id="MessageAction00" message="로그인에 실패하였습니다. 다시 시도해주세요." messagetype="alert">
+        <Contents/>
+      </MessageAction>
+      <MessageAction id="MessageAction01" message="ID/PWD를 확인해주세요." messagetype="alert">
+        <Contents/>
+      </MessageAction>
+    </Objects>
+    <Bind>
+      <BindItem id="bind_edtId" compid="edtId" propid="value" datasetid="viewdataset" columnid="id"/>
+      <BindItem id="bind_edtPwd" compid="edtPwd" propid="value" datasetid="viewdataset" columnid="pwd"/>
+    </Bind>
+    <Trigger>
+      <TriggerItem id="item0" triggertype="Click" triggerview="viewLogin" triggerobj="btnLogin" targetaction="TransactionAction00" condition=""/>
+      <TriggerItem id="item1" triggertype="Action Fail" triggerview="frmLogin" triggerobj="TransactionAction00" targetaction="MessageAction00" condition=""/>
+      <TriggerItem id="item2" triggertype="Action Success" triggerview="frmLogin" triggerobj="TransactionAction00" targetaction="MessageAction01" condition="this.dsLoginResult.getColumn() == undefined"/>
+    </Trigger>
+  </Form>
+</FDL>

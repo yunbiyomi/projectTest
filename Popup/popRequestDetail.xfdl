@@ -1,0 +1,216 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="popRequestDetail" width="500" height="700" titletext="문의 상세보기">
+    <Layouts>
+      <Layout height="700" horizontalgap="0" mobileorientation="landscape" spacing="0px" tabletemplate="1* / 1*" verticalgap="0" width="500">
+        <View id="viewReqBtnWrap" taborder="0" text="View00" viewdataset="viewdataset" left="0" top="660" right="0" bottom="7" viewtype="Button">
+          <Layouts>
+            <Layout>
+              <Button id="btnReqtotalcount" left="15" top="0" width="90" height="28" text="접수"/>
+              <Button id="btnReqinprogress" left="108" top="0" width="90" height="28" text="처리중"/>
+              <Button id="btnReqdelay" left="201" top="0" width="90" height="28" text="지연"/>
+              <Button id="btnReqcomplete" left="294" top="0" width="90" height="28" text="완료"/>
+              <Button id="btnReqpending" left="387" top="0" width="90" height="28" text="보류"/>
+            </Layout>
+          </Layouts>
+          <ModelInfo modelserviceid="modelservice" serviceid="svcRequestCount" modelid="dsRequestCount" filepath="_models_\svcRequestCount.xmodel">
+            <Fields>
+              <Field id="reqTotalCount" label="접수" description="접수된 문의" innerdatasetinfo="" fieldwidth="90px" fieldheight="28px" cssclass=""/>
+              <Field id="reqInProgress" label="처리중" description="처리중인 문의" innerdatasetinfo="" fieldwidth="90px" fieldheight="28px" cssclass=""/>
+              <Field id="reqDelay" label="지연" description="지연된 문의" innerdatasetinfo="" fieldwidth="90px" fieldheight="28px" cssclass=""/>
+              <Field id="reqComplete" label="완료" description="완료된 문의" innerdatasetinfo="" fieldwidth="90px" fieldheight="28px" cssclass=""/>
+              <Field id="reqPending" label="보류" description="보류된 문의" innerdatasetinfo="" fieldwidth="90px" fieldheight="28px" cssclass=""/>
+            </Fields>
+            <Components>
+              <Component id="btnReqtotalcount" fields="reqTotalCount"/>
+              <Component id="btnReqinprogress" fields="reqInProgress"/>
+              <Component id="btnReqdelay" fields="reqDelay"/>
+              <Component id="btnReqcomplete" fields="reqComplete"/>
+              <Component id="btnReqpending" fields="reqPending"/>
+            </Components>
+          </ModelInfo>
+          <ViewTemplateInfo filepath="Asset\ButtonViewTemplate.xviewgen">
+            <Attribute id="viewpadding" value="0 15"/>
+          </ViewTemplateInfo>
+        </View>
+        <View id="viewRequestDetail" taborder="1" text="View00" viewdataset="viewdataset" left="0" top="0" right="0" height="660" viewtype="FreeForm">
+          <Layouts>
+            <Layout>
+              <Static id="staReceiveddateBg" left="9" top="10.5" width="480" height="34" cssclass="sta_fieldbox"/>
+              <Static id="staReceiveddateLabel" left="9" top="10.5" width="100" height="34" text="접수일" cssclass="sta_labelbox"/>
+              <Calendar id="calReceiveddate" left="114" top="15.5" width="370" height="24" cssclass="com_View" dateformat="yyyy-MM-dd ddd HH:mm:ss" editformat="yyyy-MM-dd HH:mm:ss" readonly="true" buttonsize="0"/>
+              <Static id="staRequestcategoryBg" left="9" top="46.5" width="240" height="34" cssclass="sta_fieldbox"/>
+              <Static id="staRequestcategoryLabel" left="9" top="46.5" width="100" height="34" text="접수 유형" cssclass="sta_labelbox"/>
+              <Static id="staRequestcategory_2" left="114" top="51.5" width="130" height="24" text="접수 유형"/>
+              <Static id="staRequestidBg" left="248" top="46.5" width="240" height="34" cssclass="sta_fieldbox"/>
+              <Static id="staRequestidLabel" left="248" top="46.5" width="102" height="34" text="문의 ID" cssclass="sta_labelbox"/>
+              <Static id="staRequestid_2" left="355" top="51.5" width="128" height="24" text="문의 ID"/>
+              <Static id="staCustomeridBg" left="9" top="82.5" width="240" height="34" cssclass="sta_fieldbox"/>
+              <Static id="staCustomeridLabel" left="9" top="82.5" width="100" height="34" text="고객 ID" cssclass="sta_labelbox"/>
+              <Static id="staCustomerid_2" left="114" top="87.5" width="130" height="24" text="고객 ID"/>
+              <Static id="staCustomernameBg" left="248" top="82.5" width="240" height="34" cssclass="sta_fieldbox"/>
+              <Static id="staCustomernameLabel" left="248" top="82.5" width="102" height="34" text="고객 이름" cssclass="sta_labelbox"/>
+              <Static id="staCustomername_2" left="355" top="87.5" width="128" height="24" text="고객 이름"/>
+              <Static id="staCustomeremailBg" left="9" top="118.5" width="480" height="34" cssclass="sta_fieldbox"/>
+              <Static id="staCustomeremailLabel" left="9" top="118.5" width="100" height="34" text="고객 이메일" cssclass="sta_labelbox"/>
+              <Static id="staCustomeremail_2" left="114" top="123.5" width="370" height="24" text="고객 이메일"/>
+              <Static id="staCustomerphoneBg" left="9" top="154.5" width="480" height="34" cssclass="sta_fieldbox"/>
+              <Static id="staCustomerphoneLabel" left="9" top="154.5" width="100" height="34" text="고객 전화번호" cssclass="sta_labelbox"/>
+              <Static id="staCustomerphone_2" left="114" top="159.5" width="370" height="24" text="고객 전화번호"/>
+              <Static id="staRequesttitleBg" left="9" top="191" width="480" height="74" cssclass="sta_fieldbox"/>
+              <Static id="staRequesttitleLabel" left="9" top="191" width="480" height="34" text="문의 제목" cssclass="sta_labelbox"/>
+              <Edit id="edtRequesttitle" left="14" top="230" width="470" height="30"/>
+              <Static id="staRequestcontentBg" left="9" top="264" width="480" height="200" cssclass="sta_fieldbox"/>
+              <Static id="staRequestcontentLabel" left="9" top="264" width="480" height="34" text="문의 내용" cssclass="sta_labelbox"/>
+              <TextArea id="txtRequestcontent" left="14" top="303" width="470" height="156"/>
+              <Static id="staRequestresultBg" left="9" top="463" width="480" height="185" cssclass="sta_fieldbox"/>
+              <Static id="staRequestresultLabel" left="9" top="463" width="480" height="34" text="처리 결과" cssclass="sta_labelbox"/>
+              <TextArea id="txtRequestresult" left="14" top="502" width="470" height="141"/>
+            </Layout>
+          </Layouts>
+          <Objects>
+            <Dataset id="viewdataset">
+              <ColumnInfo>
+                <Column id="receivedDate" type="DATETIME" size="100" description="접수일"/>
+                <Column id="requestCategory" type="STRING" size="100" description="접수 유형"/>
+                <Column id="requestId" type="STRING" size="100" description="문의 ID"/>
+                <Column id="customerID" type="STRING" size="100" description="고객 ID"/>
+                <Column id="customerName" type="STRING" size="100" description="고객 이름"/>
+                <Column id="customerEmail" type="STRING" size="100" description="고객 이메일"/>
+                <Column id="customerPhone" type="STRING" size="100" description="고객 전화번호"/>
+                <Column id="requestTitle" type="STRING" size="100" description="문의 제목"/>
+                <Column id="requestContent" type="STRING" size="100" description="문의 내용"/>
+                <Column id="requestResult" type="STRING" size="100" description="처리 결과"/>
+              </ColumnInfo>
+              <Rows>
+                <Row/>
+              </Rows>
+            </Dataset>
+            <Dataset id="innerdatasetRequestcategory">
+              <ColumnInfo>
+                <Column id="code" type="STRING" size="256"/>
+                <Column id="value" type="STRING" size="256"/>
+              </ColumnInfo>
+              <Rows>
+                <Row>
+                  <Col id="code">01</Col>
+                  <Col id="value">상품</Col>
+                </Row>
+                <Row>
+                  <Col id="code">02</Col>
+                  <Col id="value">반품</Col>
+                </Row>
+                <Row>
+                  <Col id="code">03</Col>
+                  <Col id="value">환불</Col>
+                </Row>
+              </Rows>
+            </Dataset>
+          </Objects>
+          <Bind>
+            <BindItem id="bind_calReceiveddate" compid="calReceiveddate" propid="value" datasetid="viewdataset" columnid="receivedDate"/>
+            <BindItem id="bind_staRequestcategory_2" compid="staRequestcategory_2" propid="text" datasetid="viewdataset" columnid="requestCategory"/>
+            <BindItem id="bind_staRequestid_2" compid="staRequestid_2" propid="text" datasetid="viewdataset" columnid="requestId"/>
+            <BindItem id="bind_staCustomerid_2" compid="staCustomerid_2" propid="text" datasetid="viewdataset" columnid="customerID"/>
+            <BindItem id="bind_staCustomername_2" compid="staCustomername_2" propid="text" datasetid="viewdataset" columnid="customerName"/>
+            <BindItem id="bind_staCustomeremail_2" compid="staCustomeremail_2" propid="text" datasetid="viewdataset" columnid="customerEmail"/>
+            <BindItem id="bind_staCustomerphone_2" compid="staCustomerphone_2" propid="text" datasetid="viewdataset" columnid="customerPhone"/>
+            <BindItem id="bind_edtRequesttitle" compid="edtRequesttitle" propid="value" datasetid="viewdataset" columnid="requestTitle"/>
+            <BindItem id="bind_txtRequestcontent" compid="txtRequestcontent" propid="value" datasetid="viewdataset" columnid="requestContent"/>
+            <BindItem id="bind_txtRequestresult" compid="txtRequestresult" propid="value" datasetid="viewdataset" columnid="requestResult"/>
+          </Bind>
+          <ModelInfo modelserviceid="modelservice" serviceid="svcRequest" modelid="dsRequestList" filepath="_models_\svcRequest.xmodel">
+            <Fields>
+              <Field id="receivedDate" description="" innerdatasetinfo="" comptype="calendar" compwidth="100%" compheight="34px" labelsize="100" fieldposition="horizontal" cssclass="" labelcssclass="sta_labelbox" compreadonly="true" usecomp="true"/>
+              <Field id="requestCategory" label="접수 유형" fieldtype="SelectOne" datatype="STRING" description="" innerdatasetinfo="{&quot;columns&quot;:[{&quot;id&quot;:&quot;code&quot;,&quot;datatype&quot;:&quot;STRING&quot;,&quot;innertype&quot;:&quot;code&quot;},{&quot;id&quot;:&quot;value&quot;,&quot;datatype&quot;:&quot;STRING&quot;,&quot;innertype&quot;:&quot;data&quot;}],&quot;rows&quot;:[{&quot;code&quot;:&quot;01&quot;,&quot;value&quot;:&quot;상품&quot;},{&quot;code&quot;:&quot;02&quot;,&quot;value&quot;:&quot;반품&quot;},{&quot;code&quot;:&quot;03&quot;,&quot;value&quot;:&quot;환불&quot;}]}" comptype="static" compwidth="100%" compheight="34px" labelsize="100" fieldposition="horizontal" cssclass="" labelcssclass="sta_labelbox" compreadonly="true" usecomp="true"/>
+              <Field id="requestId" description="" innerdatasetinfo="" comptype="static" compwidth="100%" compheight="34px" labelsize="102" fieldposition="horizontal" cssclass="" labelcssclass="sta_labelbox" compreadonly="true" usecomp="true"/>
+              <Field id="customerID" label="고객 ID" fieldtype="FreeText" description="" innerdatasetinfo="" comptype="static" compwidth="100%" compheight="34px" labelsize="100" fieldposition="horizontal" cssclass="" labelcssclass="sta_labelbox" compreadonly="true" usecomp="true"/>
+              <Field id="customerName" label="고객 이름" description="" innerdatasetinfo="" comptype="static" compwidth="100%" compheight="34px" labelsize="102" fieldposition="horizontal" cssclass="" labelcssclass="sta_labelbox" compreadonly="true" usecomp="true"/>
+              <Field id="customerEmail" label="고객 이메일" description="" innerdatasetinfo="" comptype="static" compwidth="100%" compheight="34px" labelsize="100" fieldposition="horizontal" cssclass="" labelcssclass="sta_labelbox" compreadonly="true" usecomp="true"/>
+              <Field id="customerPhone" label="고객 전화번호" description="" innerdatasetinfo="" comptype="static" compwidth="100%" compheight="34px" labelsize="100" fieldposition="horizontal" cssclass="" labelcssclass="sta_labelbox" compreadonly="true" usecomp="true"/>
+              <Field id="requestTitle" label="문의 제목" description="" innerdatasetinfo="" comptype="edit" compwidth="100%" compheight="100%" labelsize="34" fieldposition="vertical" cssclass="" labelcssclass="sta_labelbox" compreadonly="false" usecomp="true"/>
+              <Field id="requestContent" label="문의 내용" description="" innerdatasetinfo="" comptype="textarea" compwidth="100%" compheight="100%" labelsize="34" fieldposition="vertical" cssclass="" labelcssclass="sta_labelbox" compreadonly="false" usecomp="true"/>
+              <Field id="requestResult" label="처리 결과" description="처리 결과" innerdatasetinfo="" comptype="textarea" compwidth="100%" compheight="100%" labelsize="34" fieldposition="vertical" cssclass="" labelcssclass="sta_labelbox" compreadonly="false" usecomp="true"/>
+            </Fields>
+            <Components>
+              <Component id="staReceiveddateBg" fields="receivedDate"/>
+              <Component id="staReceiveddateLabel" fields="receivedDate"/>
+              <Component id="calReceiveddate" fields="receivedDate"/>
+              <Component id="staRequestcategoryBg" fields="requestCategory"/>
+              <Component id="staRequestcategoryLabel" fields="requestCategory"/>
+              <Component id="staRequestcategory_2" fields="requestCategory"/>
+              <Component id="staRequestidBg" fields="requestId"/>
+              <Component id="staRequestidLabel" fields="requestId"/>
+              <Component id="staRequestid_2" fields="requestId"/>
+              <Component id="staCustomeridBg" fields="customerID"/>
+              <Component id="staCustomeridLabel" fields="customerID"/>
+              <Component id="staCustomerid_2" fields="customerID"/>
+              <Component id="staCustomernameBg" fields="customerName"/>
+              <Component id="staCustomernameLabel" fields="customerName"/>
+              <Component id="staCustomername_2" fields="customerName"/>
+              <Component id="staCustomeremailBg" fields="customerEmail"/>
+              <Component id="staCustomeremailLabel" fields="customerEmail"/>
+              <Component id="staCustomeremail_2" fields="customerEmail"/>
+              <Component id="staCustomerphoneBg" fields="customerPhone"/>
+              <Component id="staCustomerphoneLabel" fields="customerPhone"/>
+              <Component id="staCustomerphone_2" fields="customerPhone"/>
+              <Component id="staRequesttitleBg" fields="requestTitle"/>
+              <Component id="staRequesttitleLabel" fields="requestTitle"/>
+              <Component id="edtRequesttitle" fields="requestTitle"/>
+              <Component id="staRequestcontentBg" fields="requestContent"/>
+              <Component id="staRequestcontentLabel" fields="requestContent"/>
+              <Component id="txtRequestcontent" fields="requestContent"/>
+              <Component id="staRequestresultBg" fields="requestResult"/>
+              <Component id="staRequestresultLabel" fields="requestResult"/>
+              <Component id="txtRequestresult" fields="requestResult"/>
+            </Components>
+          </ModelInfo>
+          <ViewTemplateInfo filepath="Asset\FreeformViewTemplate.xviewgen">
+            <Attribute id="direction" value="vertical"/>
+            <Attribute id="format" value="{&quot;columnsize&quot;:[10,240,240,10],&quot;rowsize&quot;:[10,37,37,37,37,37,3,74,200,185,10],&quot;celllist&quot;:[{&quot;col&quot;:&quot;0&quot;,&quot;row&quot;:&quot;0&quot;,&quot;halign&quot;:&quot;left&quot;,&quot;valign&quot;:&quot;middle&quot;,&quot;direction&quot;:&quot;horizontal&quot;,&quot;mergelabel&quot;:&quot;false&quot;},{&quot;col&quot;:&quot;1&quot;,&quot;row&quot;:&quot;0&quot;,&quot;halign&quot;:&quot;left&quot;,&quot;valign&quot;:&quot;middle&quot;,&quot;direction&quot;:&quot;horizontal&quot;,&quot;mergelabel&quot;:&quot;false&quot;},{&quot;col&quot;:&quot;2&quot;,&quot;row&quot;:&quot;0&quot;,&quot;halign&quot;:&quot;left&quot;,&quot;valign&quot;:&quot;middle&quot;,&quot;direction&quot;:&quot;horizontal&quot;,&quot;mergelabel&quot;:&quot;false&quot;},{&quot;col&quot;:&quot;3&quot;,&quot;row&quot;:&quot;0&quot;,&quot;halign&quot;:&quot;left&quot;,&quot;valign&quot;:&quot;middle&quot;,&quot;direction&quot;:&quot;horizontal&quot;,&quot;mergelabel&quot;:&quot;false&quot;},{&quot;col&quot;:&quot;0&quot;,&quot;row&quot;:&quot;1&quot;,&quot;halign&quot;:&quot;left&quot;,&quot;valign&quot;:&quot;middle&quot;,&quot;direction&quot;:&quot;horizontal&quot;,&quot;mergelabel&quot;:&quot;false&quot;},{&quot;col&quot;:&quot;1&quot;,&quot;row&quot;:&quot;1&quot;,&quot;halign&quot;:&quot;left&quot;,&quot;valign&quot;:&quot;middle&quot;,&quot;direction&quot;:&quot;horizontal&quot;,&quot;mergelabel&quot;:&quot;false&quot;,&quot;fieldlist&quot;:[&quot;receivedDate&quot;],&quot;colspan&quot;:&quot;2&quot;},{&quot;col&quot;:&quot;3&quot;,&quot;row&quot;:&quot;1&quot;,&quot;halign&quot;:&quot;left&quot;,&quot;valign&quot;:&quot;middle&quot;,&quot;direction&quot;:&quot;horizontal&quot;,&quot;mergelabel&quot;:&quot;false&quot;},{&quot;col&quot;:&quot;0&quot;,&quot;row&quot;:&quot;2&quot;,&quot;halign&quot;:&quot;left&quot;,&quot;valign&quot;:&quot;middle&quot;,&quot;direction&quot;:&quot;horizontal&quot;,&quot;mergelabel&quot;:&quot;false&quot;},{&quot;col&quot;:&quot;1&quot;,&quot;row&quot;:&quot;2&quot;,&quot;halign&quot;:&quot;left&quot;,&quot;valign&quot;:&quot;middle&quot;,&quot;direction&quot;:&quot;horizontal&quot;,&quot;mergelabel&quot;:&quot;false&quot;,&quot;fieldlist&quot;:[&quot;requestCategory&quot;]},{&quot;col&quot;:&quot;2&quot;,&quot;row&quot;:&quot;2&quot;,&quot;halign&quot;:&quot;left&quot;,&quot;valign&quot;:&quot;middle&quot;,&quot;direction&quot;:&quot;horizontal&quot;,&quot;mergelabel&quot;:&quot;false&quot;,&quot;fieldlist&quot;:[&quot;requestId&quot;]},{&quot;col&quot;:&quot;3&quot;,&quot;row&quot;:&quot;2&quot;,&quot;halign&quot;:&quot;left&quot;,&quot;valign&quot;:&quot;middle&quot;,&quot;direction&quot;:&quot;horizontal&quot;,&quot;mergelabel&quot;:&quot;false&quot;},{&quot;col&quot;:&quot;0&quot;,&quot;row&quot;:&quot;3&quot;,&quot;halign&quot;:&quot;left&quot;,&quot;valign&quot;:&quot;middle&quot;,&quot;direction&quot;:&quot;horizontal&quot;,&quot;mergelabel&quot;:&quot;false&quot;},{&quot;col&quot;:&quot;1&quot;,&quot;row&quot;:&quot;3&quot;,&quot;halign&quot;:&quot;left&quot;,&quot;valign&quot;:&quot;middle&quot;,&quot;direction&quot;:&quot;horizontal&quot;,&quot;mergelabel&quot;:&quot;false&quot;,&quot;fieldlist&quot;:[&quot;customerID&quot;]},{&quot;col&quot;:&quot;2&quot;,&quot;row&quot;:&quot;3&quot;,&quot;halign&quot;:&quot;left&quot;,&quot;valign&quot;:&quot;middle&quot;,&quot;direction&quot;:&quot;horizontal&quot;,&quot;mergelabel&quot;:&quot;false&quot;,&quot;fieldlist&quot;:[&quot;customerName&quot;]},{&quot;col&quot;:&quot;3&quot;,&quot;row&quot;:&quot;3&quot;,&quot;halign&quot;:&quot;left&quot;,&quot;valign&quot;:&quot;middle&quot;,&quot;direction&quot;:&quot;horizontal&quot;,&quot;mergelabel&quot;:&quot;false&quot;},{&quot;col&quot;:&quot;0&quot;,&quot;row&quot;:&quot;4&quot;,&quot;halign&quot;:&quot;left&quot;,&quot;valign&quot;:&quot;middle&quot;,&quot;direction&quot;:&quot;horizontal&quot;,&quot;mergelabel&quot;:&quot;false&quot;},{&quot;col&quot;:&quot;1&quot;,&quot;row&quot;:&quot;4&quot;,&quot;halign&quot;:&quot;left&quot;,&quot;valign&quot;:&quot;middle&quot;,&quot;direction&quot;:&quot;horizontal&quot;,&quot;mergelabel&quot;:&quot;false&quot;,&quot;fieldlist&quot;:[&quot;customerEmail&quot;],&quot;colspan&quot;:&quot;2&quot;},{&quot;col&quot;:&quot;3&quot;,&quot;row&quot;:&quot;4&quot;,&quot;halign&quot;:&quot;left&quot;,&quot;valign&quot;:&quot;middle&quot;,&quot;direction&quot;:&quot;horizontal&quot;,&quot;mergelabel&quot;:&quot;false&quot;},{&quot;col&quot;:&quot;0&quot;,&quot;row&quot;:&quot;5&quot;,&quot;halign&quot;:&quot;left&quot;,&quot;valign&quot;:&quot;middle&quot;,&quot;direction&quot;:&quot;horizontal&quot;,&quot;mergelabel&quot;:&quot;false&quot;},{&quot;col&quot;:&quot;1&quot;,&quot;row&quot;:&quot;5&quot;,&quot;halign&quot;:&quot;left&quot;,&quot;valign&quot;:&quot;middle&quot;,&quot;direction&quot;:&quot;horizontal&quot;,&quot;mergelabel&quot;:&quot;false&quot;,&quot;fieldlist&quot;:[&quot;customerPhone&quot;],&quot;colspan&quot;:&quot;2&quot;},{&quot;col&quot;:&quot;3&quot;,&quot;row&quot;:&quot;5&quot;,&quot;halign&quot;:&quot;left&quot;,&quot;valign&quot;:&quot;middle&quot;,&quot;direction&quot;:&quot;horizontal&quot;,&quot;mergelabel&quot;:&quot;false&quot;},{&quot;col&quot;:&quot;0&quot;,&quot;row&quot;:&quot;6&quot;,&quot;halign&quot;:&quot;left&quot;,&quot;valign&quot;:&quot;middle&quot;,&quot;direction&quot;:&quot;horizontal&quot;,&quot;mergelabel&quot;:&quot;false&quot;},{&quot;col&quot;:&quot;1&quot;,&quot;row&quot;:&quot;6&quot;,&quot;halign&quot;:&quot;left&quot;,&quot;valign&quot;:&quot;middle&quot;,&quot;direction&quot;:&quot;horizontal&quot;,&quot;mergelabel&quot;:&quot;false&quot;},{&quot;col&quot;:&quot;2&quot;,&quot;row&quot;:&quot;6&quot;,&quot;halign&quot;:&quot;left&quot;,&quot;valign&quot;:&quot;middle&quot;,&quot;direction&quot;:&quot;horizontal&quot;,&quot;mergelabel&quot;:&quot;false&quot;},{&quot;col&quot;:&quot;3&quot;,&quot;row&quot;:&quot;6&quot;,&quot;halign&quot;:&quot;left&quot;,&quot;valign&quot;:&quot;middle&quot;,&quot;direction&quot;:&quot;horizontal&quot;,&quot;mergelabel&quot;:&quot;false&quot;},{&quot;col&quot;:&quot;0&quot;,&quot;row&quot;:&quot;7&quot;,&quot;halign&quot;:&quot;left&quot;,&quot;valign&quot;:&quot;middle&quot;,&quot;direction&quot;:&quot;horizontal&quot;,&quot;mergelabel&quot;:&quot;false&quot;},{&quot;col&quot;:&quot;1&quot;,&quot;row&quot;:&quot;7&quot;,&quot;halign&quot;:&quot;left&quot;,&quot;valign&quot;:&quot;middle&quot;,&quot;direction&quot;:&quot;horizontal&quot;,&quot;mergelabel&quot;:&quot;false&quot;,&quot;fieldlist&quot;:[&quot;requestTitle&quot;],&quot;colspan&quot;:&quot;2&quot;},{&quot;col&quot;:&quot;3&quot;,&quot;row&quot;:&quot;7&quot;,&quot;halign&quot;:&quot;left&quot;,&quot;valign&quot;:&quot;middle&quot;,&quot;direction&quot;:&quot;horizontal&quot;,&quot;mergelabel&quot;:&quot;false&quot;},{&quot;col&quot;:&quot;0&quot;,&quot;row&quot;:&quot;8&quot;,&quot;halign&quot;:&quot;left&quot;,&quot;valign&quot;:&quot;middle&quot;,&quot;direction&quot;:&quot;horizontal&quot;,&quot;mergelabel&quot;:&quot;false&quot;},{&quot;col&quot;:&quot;1&quot;,&quot;row&quot;:&quot;8&quot;,&quot;halign&quot;:&quot;left&quot;,&quot;valign&quot;:&quot;middle&quot;,&quot;direction&quot;:&quot;horizontal&quot;,&quot;mergelabel&quot;:&quot;false&quot;,&quot;fieldlist&quot;:[&quot;requestContent&quot;],&quot;colspan&quot;:&quot;2&quot;},{&quot;col&quot;:&quot;3&quot;,&quot;row&quot;:&quot;8&quot;,&quot;halign&quot;:&quot;left&quot;,&quot;valign&quot;:&quot;middle&quot;,&quot;direction&quot;:&quot;horizontal&quot;,&quot;mergelabel&quot;:&quot;false&quot;},{&quot;col&quot;:&quot;0&quot;,&quot;row&quot;:&quot;9&quot;,&quot;halign&quot;:&quot;left&quot;,&quot;valign&quot;:&quot;middle&quot;,&quot;direction&quot;:&quot;horizontal&quot;,&quot;mergelabel&quot;:&quot;false&quot;},{&quot;col&quot;:&quot;1&quot;,&quot;row&quot;:&quot;9&quot;,&quot;halign&quot;:&quot;left&quot;,&quot;valign&quot;:&quot;middle&quot;,&quot;direction&quot;:&quot;horizontal&quot;,&quot;mergelabel&quot;:&quot;false&quot;,&quot;fieldlist&quot;:[&quot;requestResult&quot;],&quot;colspan&quot;:&quot;2&quot;},{&quot;col&quot;:&quot;3&quot;,&quot;row&quot;:&quot;9&quot;,&quot;halign&quot;:&quot;left&quot;,&quot;valign&quot;:&quot;middle&quot;,&quot;direction&quot;:&quot;horizontal&quot;,&quot;mergelabel&quot;:&quot;false&quot;},{&quot;col&quot;:&quot;0&quot;,&quot;row&quot;:&quot;10&quot;,&quot;halign&quot;:&quot;left&quot;,&quot;valign&quot;:&quot;middle&quot;,&quot;direction&quot;:&quot;horizontal&quot;,&quot;mergelabel&quot;:&quot;false&quot;},{&quot;col&quot;:&quot;1&quot;,&quot;row&quot;:&quot;10&quot;,&quot;halign&quot;:&quot;left&quot;,&quot;valign&quot;:&quot;middle&quot;,&quot;direction&quot;:&quot;horizontal&quot;,&quot;mergelabel&quot;:&quot;false&quot;},{&quot;col&quot;:&quot;2&quot;,&quot;row&quot;:&quot;10&quot;,&quot;halign&quot;:&quot;left&quot;,&quot;valign&quot;:&quot;middle&quot;,&quot;direction&quot;:&quot;horizontal&quot;,&quot;mergelabel&quot;:&quot;false&quot;},{&quot;col&quot;:&quot;3&quot;,&quot;row&quot;:&quot;10&quot;,&quot;halign&quot;:&quot;left&quot;,&quot;valign&quot;:&quot;middle&quot;,&quot;direction&quot;:&quot;horizontal&quot;,&quot;mergelabel&quot;:&quot;false&quot;}]}"/>
+          </ViewTemplateInfo>
+        </View>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <DsCopyRowDataAction id="DsCopyRowDataAction00" targetview="viewRequestDetail" targetdataset="viewdataset" fromview="popRequestDetail" fromdataset="gds_RequestDetail">
+        <Contents/>
+      </DsCopyRowDataAction>
+      <PopupCloseAction id="PopupCloseAction00" returntype="none">
+        <Contents/>
+      </PopupCloseAction>
+      <PopupCloseAction id="PopupCloseAction01" targetview="popRequestDetail" returntype="none">
+        <Contents/>
+      </PopupCloseAction>
+      <PopupCloseAction id="PopupCloseAction02" targetview="popRequestDetail" returntype="none">
+        <Contents/>
+      </PopupCloseAction>
+      <PopupCloseAction id="PopupCloseAction03" targetview="popRequestDetail" returntype="none">
+        <Contents/>
+      </PopupCloseAction>
+      <PopupCloseAction id="PopupCloseAction04" targetview="popRequestDetail" returntype="none">
+        <Contents/>
+      </PopupCloseAction>
+    </Objects>
+    <Trigger>
+      <TriggerItem id="item0" triggertype="Row Change" triggerview="viewRequestDetail" triggerobj="viewdataset" targetaction="DsCopyRowDataAction00" condition=""/>
+      <TriggerItem id="item1" triggertype="Click" triggerview="viewReqBtnWrap" triggerobj="btnReceived" targetaction="PopupCloseAction00" condition=""/>
+      <TriggerItem id="item2" triggertype="Click" triggerview="viewReqBtnWrap" triggerobj="btnInprogress" targetaction="PopupCloseAction01" condition=""/>
+      <TriggerItem id="item3" triggertype="Click" triggerview="viewReqBtnWrap" triggerobj="btnDelayed" targetaction="PopupCloseAction02" condition=""/>
+      <TriggerItem id="item4" triggertype="Click" triggerview="viewReqBtnWrap" triggerobj="btnCompleted" targetaction="PopupCloseAction03" condition=""/>
+      <TriggerItem id="item5" triggertype="Click" triggerview="viewReqBtnWrap" triggerobj="btnPending" targetaction="PopupCloseAction04" condition=""/>
+    </Trigger>
+    <Script type="xscript5.1"><![CDATA[/**
+*  @FileName 	popRequestDetail.xfdl
+*  @Creator 	TOBESOFT
+*  @CreateDate 	2024/08/01
+*  @Desction   
+************** 소스 수정 이력 ***********************************************
+* Date					Modifier					Description
+*******************************************************************************
+* 2024/08/01			TOBESOFT					최초생성
+*******************************************************************************
+*/
+]]></Script>
+  </Form>
+</FDL>

@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ModelInfo version="1.1">
+  <Models>
+    <Model id="common" name="common" iotype="" description="">
+      <Field id="detailBtn" label="상세보기" fieldtype="Text" datatype="STRING" datasize="80" required="false" uselabel="true" editable="true" options=""/>
+      <Field id="exportBtn" label="내보내기" fieldtype="Text" datatype="STRING" datasize="80" required="false" uselabel="true" editable="true" options=""/>
+    </Model>
+  </Models>
+  <Service id="svcCommon" name="" url=""/>
+</ModelInfo>

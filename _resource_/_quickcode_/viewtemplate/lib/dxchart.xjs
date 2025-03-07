@@ -1,0 +1,1079 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Script version="1.0" type="xscript5.1"><![CDATA[//--------------------------------------------------------------------------------------------------------
+// 차트 디자인관련 상수 설정부 START
+//--------------------------------------------------------------------------------------------------------
+// 차트색상 - 프로젝트 표준색상 : NexacroSketch
+this.arrBaseChartColor = ["#1f77b4","#ff7f0e","#2ca02c","#d62728","#9467bd","#8c564b","#e377c2","#7f7f7f","#bcbd22","#17becf"];
+
+// 컬러 Array [참고] https://observablehq.com/@d3/color-schemes#Category10 
+this.arrColorCategory10	= ["#1f77b4","#ff7f0e","#2ca02c","#d62728","#9467bd","#8c564b","#e377c2","#7f7f7f","#bcbd22","#17becf"];
+this.arrColorTableau10	= ["#4e79a7","#f28e2c","#e15759","#76b7b2","#59a14f","#edc949","#af7aa1","#ff9da7","#9c755f","#bab0ab"];
+this.arrColorAccent		= ["#7fc97f","#beaed4","#fdc086","#ffff99","#386cb0","#f0027f","#bf5b17","#666666"];
+this.arrColorDark2		= ["#1b9e77","#d95f02","#7570b3","#e7298a","#66a61e","#e6ab02","#a6761d","#666666"];
+this.arrColorPaired		= ["#a6cee3","#1f78b4","#b2df8a","#33a02c","#fb9a99","#e31a1c","#fdbf6f","#ff7f00","#cab2d6","#6a3d9a","#ffff99","#b15928"];
+this.arrColorPastel1	= ["#fbb4ae","#b3cde3","#ccebc5","#decbe4","#fed9a6","#ffffcc","#e5d8bd","#fddaec","#f2f2f2"];
+this.arrColorPastel2	= ["#b3e2cd","#fdcdac","#cbd5e8","#f4cae4","#e6f5c9","#fff2ae","#f1e2cc","#cccccc"];
+this.arrColorSet1		= ["#e41a1c","#377eb8","#4daf4a","#984ea3","#ff7f00","#ffff33","#a65628","#f781bf","#999999"];
+this.arrColorSet2		= ["#66c2a5","#fc8d62","#8da0cb","#e78ac3","#a6d854","#ffd92f","#e5c494","#b3b3b3"];
+this.arrColorSet3		= ["#8dd3c7","#ffffb3","#bebada","#fb8072","#80b1d3","#fdb462","#b3de69","#fccde5","#d9d9d9","#bc80bd","#ccebc5","#ffed6f"];
+this.arrColorBlue		= ["#9ed9bb","#7bcbc4","#23abd8","#417de0","#2c62ca","#234ea0","#6e40aa"];
+this.arrColorPurple		= ["#6e40aa","#5c5ace","#417de0","#aa2395","#cc4778","#e66c5c","#f89540"];
+this.arrColorRainbow	= ["#d53e4f","#ff7847","#e2b72f","#aff05b","#52f667","#1ddfa3","#23abd8","#4c6edb","#6e40aa"];
+this.arrColorBasic		= ["#9ED9BB","#23ABD8","#E2B72F","#F56C6C","#9C71C6","#9AC5F4","#4F709C","#EA906C","#9BABB8","#FF9DA7","#AF7AA1"];
+//this.arrColorSketch		= ["#9C71C6","#9AC5F4","#FF9DA7","#23ABD8","#9ED9BB","#4F709C","#EA906C","#9BABB8","#AF7AA1","#F56C6C","#E2B72F"];
+//--------------------------------------------------------------------------------------------------------
+// Font - pt 미지원, font-family : 쌍따옴표로 구분 시 동작.
+this.CHART_FONT = '"Malgun Gothic", "Meiryo", "MS Gothic"';
+//--------------------------------------------------------------------------------------------------------
+// 차트 Attribute 상수
+//--------------------------------------------------------------------------------------------------------
+this.oAttrChartThemeType =	{
+                                "id": "chartthemetype",
+								"displaytext": "Color Palettes",
+                                "edittype": "Enum",
+                                "defaultvalue": "basic",
+                                "enumlist" : ["category10", "blue", "purple", "rainbow", "basic"],
+                                "description": "Set the chart color theme"
+												+ "\n" + " - category10 : Basic theme"
+												+ "\n" + " - blue : Blue theme"
+												+ "\n" + " - purple : Purple theme"
+												+ "\n" + " - rainbow : Rainbow theme"
+                            };
+
+this.oAttrChartTitleText =		{									
+									"id": "charttitletext",
+								    "displaytext": "Title Text",
+									"edittype": "String",											
+									"defaultvalue": "",									
+									"description": "Set the title text (Other fields will not be created if title text is not entered)"								
+								};
+this.oAttrLegendPosition =		{
+									"id": "legendposition",
+								    "displaytext": "Legend Position",
+									"edittype": "Enum",
+									"defaultvalue": "none",
+									"enumlist" : ["none","right","bottom"],
+									"description": "Set the position of the legend display"
+													+ "\n" + " - none : Do not display the legend"
+													+ "\n" + " - right : Display the legend on the right side of the chart"
+													+ "\n" + " - bottom : Display the legend at the bottom of the chart"
+								};
+this.oAttrCategoryAxisTitleText =	{							
+									"id": "categoryaxistitletext",
+								    "displaytext": "Categoryaxis Text",
+									"edittype": "String",											
+									"defaultvalue": "",									
+									"description": "Set the title text for the category axis"									
+								};
+this.oAttrValueAxisTitleText =	{									
+									"id": "valueaxistitletext",
+								    "displaytext": "Valueaxis Text",
+									"edittype": "String",											
+									"defaultvalue": "",									
+									"description": "Set the title text for the value axis (when setting multiple axes, enter multiple as separator)"								
+								};
+this.oAttrDisplay3D =			{									
+									"id": "display3d",
+								    "displaytext": "Display 3D",
+									"edittype": "Boolean",											
+									"defaultvalue": "false",									
+									"description": "Set 3D display for the chart"									
+								};
+//--------------------------------------------------------------------------------------------------------
+// 차트 기본속성
+this.oBaseChartAttr =	{
+							"id" : "chart", "left" : 0,  "top" : 0, "right" : 0, "bottom" : 0
+						};
+
+// 타이틀 기본속성
+this.oBaseTitle = 		{
+							  "FontStyle"			: 'normal 700 17px/normal ' + this.CHART_FONT
+							, "SubtitleColor"		: "gray"
+							, "SubtitleFontStyle"	: 'italic 8px/normal ' + this.CHART_FONT
+						};
+
+// 툴팁 기본속성
+this.oBaseTooltip =		{
+							  "Css"					: {"fontSize": '12px',"padding": '5px'}
+						};
+
+// 배경 기본속성
+this.oBaseBackGround =	{
+							  "GridBorder"			: false
+							, "GridVlines"			: false
+						};
+
+// 범례 기본속성
+this.oBaseLegend = 		{
+							  "Interactive"			: true
+							, "LabelsFontStyle"		: '12px ' + this.CHART_FONT
+						};
+
+// 카테고리축(x축) 기본속성
+this.oBaseCategoryaxis =	{
+							  "Use" 				: true
+							, "Color"				: "#d0d0d0"
+							, "TitleColor"			: "#4c4c4c"
+							, "TitleFontStyle"		: 'bold 10px ' + this.CHART_FONT
+							, "TitleValign"			: "top"
+							, "LabelsColor"			: "#6f6f6f"
+							, "LabelsFontStyle"		: '12px ' + this.CHART_FONT
+							, "Tickmarks"			: false
+						};
+						
+// 데이터축(y축) 기본속성
+this.oBaseValueaxis =	{
+							  "Use" 				: true
+							, "Color"				: "#d0d0d0"
+							, "TitleColor" 			: "#4c4c4c"
+							, "TitleFontStyle"		: 'bold 10px ' + this.CHART_FONT
+							//, "titlerotate"			: "0"
+							, "TitleValign"			: "top"
+							, "TitleHalign"			: "right"
+							//, "TitleOffsetX"		: -5
+							, "LabelsColor" 		: "#6f6f6f"
+							, "LabelsFontStyle" 	: '12px ' + this.CHART_FONT
+							, "Tickmarks"			: false
+							, "Scale"				: true
+							//, "LabelsCount"			: 5
+						};
+						
+// 차트 Text 기본속성
+this.oBaseLabels =		{
+							  "FontStyle"			: 'bold 12px ' + this.CHART_FONT	
+						};
+//--------------------------------------------------------------------------------------------------------
+// 범례와 축위치 계산용 상수
+// Y축 데이터 기본 넓이값(현재 폰트기준 숫자 5자리까지 표시가능)
+this.MARGIN_H = 60;
+// X축 데이터 기본 높이값
+this.MARGIN_V = 20;
+//--------------------------------------------------------------------------------------------------------
+// [BarChart] 막대그래프 시리즈 기본속성
+this.oBaseSeriesBar =	{
+							  "margin"				: { "Inner" : 20, "Left" : this.MARGIN_H, "Bottom" : this.MARGIN_V}
+							, "background"			: this.oBaseBackGround
+						};
+						
+// [BarChart] 가로막대그래프 시리즈 기본속성
+this.oBaseSeriesHBar =	{
+							  "margin"				: { "Inner" : 10, "Bottom" : this.MARGIN_V}
+							, "background"			: {"GridBorder" : false, "GridHlines" : false}
+						};
+
+// [LineChart] 선그래프 시리즈 기본속성
+this.oBaseSeriesLine =	{
+							  "margin"				: {"Left" : 60, "Bottom" : this.MARGIN_V}
+							, "background"			: this.oBaseBackGround
+							, "tickmarks"			: {"Style" : "filledcircle", "Size" : 3}
+						};
+
+// [AreaChart] 영역그래프 시리즈 기본속성
+this.oBaseSeriesArea =	{
+							  "margin"				: {"Left" : 60, "Bottom" : this.MARGIN_V}
+							, "background"			: this.oBaseBackGround
+							, "tickmarks"			: {"Style" : "filledcircle", "Size" : 3}
+						};
+
+// [PieChart] 원그래프 시리즈 기본속성
+this.oBaseSeriesPie =	{
+							  "colorsStroke"			: "transparent"
+						};
+
+// [RoseChart] 장미도표 시리즈 기본속성
+this.oBaseSeriesRose =	{
+							   "margin"				: {"Bottom" : this.MARGIN_V}
+						};
+
+// [RadarChart] 레이더차트 시리즈 기본속성
+this.oBaseSeriesRadar =	{
+							   "margin"				: {"Bottom" : this.MARGIN_V}
+						};
+						
+// [BipolarChart] 양극성차트 시리즈 기본속성
+this.oBaseSeriesBipolar =	{
+							  "margin"				: { "Inner" : 10, "Bottom" : this.MARGIN_V}
+							, "background"			: {"GridBorder" : false, "GridHlines" : false}
+						};
+						
+// [WaterfallChart] 폭포차트 시리즈 기본속성
+this.oBaseSeriesWaterfall =	{
+							  "margin"				: {"Inner" : 20, "Left" : this.MARGIN_H, "Bottom" : this.MARGIN_V}
+							, "highlight"			: {"Fill" : "rgba(255,255,255,0.7)"}
+						};
+						
+// [SegmentChart] 세그먼트차트 시리즈 기본속성
+this.oBaseSeriesSegmentChart =	{
+							  "text" 				: { "FontStyle" : 'bold 38px ' + this.CHART_FONT }
+						};
+
+// [HorseShoeChart] 말굽모양차트 시리즈 기본속성
+this.oBaseSeriesHorseShoe =	{
+							  "text" 				: { "FontStyle" : 'bold 38px ' + this.CHART_FONT }
+						};
+
+// [HProgressChart] 가로 진행바 차트 시리즈 기본속성
+this.oBaseSeriesHProgress =	{
+							  "highlight"			: {"Fill" : "rgba(255,255,255,0.7)"}
+						};
+
+// [VProgressChart] 세로 진행바 차트 시리즈 기본속성
+this.oBaseSeriesVProgress =	{
+							  "highlight"			: {"Fill" : "rgba(255,255,255,0.7)"}
+						};
+
+// [SemiCircleProgressChart] 가로 진행바 차트 시리즈 기본속성
+this.oBaseSeriesSemiCircleProgress = {
+							 "scale"				: {"Visible" : true, "LabelsCount": 10}
+						};
+
+// [GanttChart] 간트차트 시리즈 기본속성
+this.oBaseSeriesGanttMonth = {
+							  "margin"				: {"Inner" : 7, "Top" : 50}
+							, "linked"				: {"Use" : true}
+							, "xaxis"				: {"Use" : true,
+														"Position" : "top",
+														"LabelsCount" : 5,
+														"DateFormat" : "yyyy-MM-dd",
+														"WeekList": ["S","M","T","W","T","F","S"],
+														"WeeklyTitleFontStyle": 'bold 10px'  + this.CHART_FONT,
+														"WeeklyTitleColor": "#000000",
+														"WeeklySubTitleFontStyle": '10px '  + this.CHART_FONT,
+														"WeeklySubTitleColor": "#000000",
+														"WeeklyDateWidth": 20,
+														"WeeklySundayColor" : "#ff0000",
+														"WeeklySundayBackgroundColor" : "#eeeeee",
+														"WeeklyTitleBackgroundColor": "#ffffff",
+														"WeeklySubTitleBackgroundColor": "",
+														"WeeklyTitleHeight": 20,
+														"WeeklyTitleLineWidth": 2,
+														"WeeklyTitleLineColor": "#000000",
+														"WeeklySubTitleLineWidth": 1,
+														"WeeklySubTitleLineColor": "#777777",
+														"WeeklyVLineWidth": 1,
+														"WeeklyVLineColor": "#000000",
+														"WeeklyVSubLineWidth": 1,
+														"WeeklyVSubLineColor": "#dddddd",
+														"WeeklyRowHeight": 36,
+														"WeeklyHLineWidth": 1,
+														"WeeklyHLineColor": "#eeeeee"
+													}
+							, "labels"				: {"FontStyle" : '9px '  + this.CHART_FONT, "Color" : "#000000"}
+							, "colorsDefault"		: ["#C8EFD4"]
+						};
+
+// [GanttChart] 간트차트 시리즈 기본속성
+this.oBaseSeriesGanttDate = {
+							  "margin"				: {"Inner" : 7}
+							, "xaxis"				: {"Use" : true, "LabelsCount" : 5, "DateFormat" : "yyyy-MM-dd"}
+						};
+						
+// [GanttChart] 간트차트 시리즈 기본속성
+this.oBaseSeriesGanttTime = {
+							  "margin"				: {"Inner" : 7}
+							, "xaxis"				: {"Use" : true, "Position": "top", "LabelsPosition" : "edge", "DateFormat" : "HH:mm", "LabelsCount" : 10}
+							, "labels"				: {"InbarFontStyle" : 'bold 10px '  + this.CHART_FONT, "InbarColor" : "#ffffff"}
+						};		
+						
+// [ActivityChart] 액티비티차트 시리즈 기본속성
+this.oBaseSeriesActivity = {
+							  "background"			: {"Color": "white", "Grid": false}
+							, "labels"				: {"FontStyle": 'bold 12px ' + this.CHART_FONT, "Color" : "#6f6f6f", "OffsetX" : -20
+													, "CenterFontStyle" : 'bold 16px ' + this.CHART_FONT, "CenterColor" : "#6f6f6f"}
+						};	
+
+// [PyramidChart] 피라미드차트 시리즈 기본속성
+this.oBaseSeriesPyramid = {
+						};	
+						
+// [FunnelChart] 퍼널차트 시리즈 기본속성
+this.oBaseSeriesFunnel = {
+						};
+						
+// [GaugeChart] 게이지차트 시리즈 기본속성
+this.oBaseSeriesGauge = {
+							  "labels"				: {"ValueBounding": false, "ValueFontStyle" : 'bold 24px ' + this.CHART_FONT}
+						};
+
+// [MeterChart] 미터차트 시리즈 기본속성
+this.oBaseSeriesMeter = {
+								"labels"			: {"CenterFontStyle" : 'bold 16px ' + this.CHART_FONT}
+						};
+
+// [OdoChart] 오도미터차트 시리즈 기본속성
+this.oBaseSeriesOdo = {
+								"labels"			: {"ValueFontStyle" : 'bold 24px ' + this.CHART_FONT}
+						};
+
+// [FuelChart] 연료차트 시리즈 기본속성
+this.oBaseSeriesFuel = {
+								"scale"				: {"Visible": true}
+						};
+
+// [ThermometerChart] 온도계차트 시리즈 기본속성
+this.oBaseSeriesThermometer = {
+								"margin" 			: {"LeftAuto":true},
+								"scale"				: {"Visible": true},
+								"labels"			: {"ValueFontStyle" : 'bold 24px ' + this.CHART_FONT}
+						};
+//----------------------------- 차트 디자인관련 상수 설정부 END -----------------------------------
+
+/**
+ * @class chartthemetype 값에 따라 테마용 컬러배열을 반환.
+ * @param {string} sChartThemeType - chartthemetype("base", "category10", "blue", "purple", "rainbow")
+ * @return {array} arrColor - 16진 색상코드 배열
+ */
+this.lfn_GetChartThemeColor = function(sChartThemeType)
+{
+	if (this.lfn_IsNull(sChartThemeType))		sChartThemeType = 'category10';
+	
+	var arrThemeColor;
+	
+	switch(sChartThemeType) {
+		case "blue":
+			arrThemeColor = this.arrColorBlue;
+			break;
+		case "purple":
+			arrThemeColor = this.arrColorPurple;
+			break;
+		case "rainbow":
+			arrThemeColor = this.arrColorRainbow;
+			break;
+		case "basic":
+			arrThemeColor = this.arrColorBasic;
+			break;
+		default:
+			arrThemeColor = this.arrColorCategory10;
+	}
+	
+	return arrThemeColor;
+};
+
+/**
+ * @class 색상배열에서 Index에 해당하는 Chart 색상을 반환한다.
+ * @param {number} nIdx - 색상 Index
+ * @param {array} arrColor - 16진 색상코드 배열
+ * @return {string} 16진 색상코드
+ * @example
+ * var sColor = this.lfn_GetChartColor(0);	// "#1f77b4" <br>
+ * var sColor2 = this.lfn_GetChartColor(0,this.arrColorTableau10);	// "#4e79a7"
+ */
+this.lfn_GetChartColor = function(nIdx,arrColor)
+{
+	if (this.lfn_IsNull(arrColor))		arrColor = this.arrBaseChartColor;
+	
+	var nArrIdx = nIdx % arrColor.length;
+	return arrColor[nArrIdx];
+};
+
+/**
+ * @class 색상 Hex값에서 Rgb로 변경 
+ * @param {number} nIdx - 색상 Index
+ * @param {array} arrColorRgb - RGB배열
+ * @return {string} RGB색상배열
+ */
+this.lfn_HexToRgb =function(sColorHex, nAlpha)
+{ 
+	// 맨 앞의 "#" 기호를 삭제하기
+    var hex = sColorHex.trim().replace( "#", "" );
+	var ret = "";
+    
+	// rgb로 각각 분리해서 배열에 담기
+    var rgb = ( 3 === hex.length ) ? 
+		hex.match( /[a-f\d]/gi ) : hex.match( /[a-f\d]{2}/gi );     
+    
+    rgb.forEach(function (str, x, arr){     
+		// rgb 각각의 헥사값이 한자리일 경우, 두자리로 변경
+        if ( str.length == 1 ) str = str + str; 
+        
+		// 10진수로 변환하기. */ 
+        arr[ x ] = parseInt( str, 16 ); 
+    }); 
+	
+	if (this.lfn_IsNotNull(nAlpha)) {
+		ret = "rgba(" + rgb.join(", ") + ", " + nAlpha + ")"; 
+	} else {
+		ret = "rgb(" + rgb.join(", ") + ")"; 
+	}
+    
+    return ret; 
+};
+
+/**
+ * @class 데이터 타입에 따른 Mask값 반환.
+ * @param {string} sDataType - 데이터타입
+ * @return {array} 데이터 타입에 따른 Mask값
+ * @example
+ * var sMask = this.lfn_GetDataTypeMask("INT");	// ["","number","number"]
+ */
+this.lfn_GetDataTypeMask= function(sDataType, sChartType)
+{
+	if (this.lfn_IsNull(sChartType))		sChartType = "";
+	
+	var sCheckDataType = this.lfn_IsNullEmpty(sDataType).toUpperCase();
+	var sMask = "";
+	var sMaskType = "normal";
+	var sDataGroup = "";
+	
+	switch(sCheckDataType) {
+		case "INT":
+		case "FLOAT":
+		case "BIGDECIMAL":
+			sMask		= "";
+			sMaskType	= "number";
+			sDataGroup 	= "number";
+			break;
+		case "DATE":
+			if (sChartType == "gantt") {
+				sMask		= "yyyy-MM-dd";
+			} else {
+				sMask		= "@@@@-@@-@@";
+			}
+			sDataGroup 	= "date";
+			break;
+		case "TIME":
+			if (sChartType == "gantt") {
+				sMask		= "HH:mm";
+			} else {
+				sMask		= "@@:@@";
+			}
+			sDataGroup 	= "date";
+			break;
+		case "DATETIME":
+			if (sChartType == "timeline") {
+				sMask		= "yyyy-MM-dd HH:mm";
+			} else {
+				sMask		= "@@@@-@@-@@ @@:@@";
+			}
+			sDataGroup 	= "date";
+			break;
+		case "STRING":
+			sMask		= "";
+			sMaskType	= "normal";
+			sDataGroup 	= "string";
+		default:
+	}
+	
+	return [sMask, sMaskType, sDataGroup];
+};
+
+/**
+ * @class Preview용 데이터 반환
+ * @param {object} oFieldArray - Field JSON Array
+ * @param {number} nRowIndex - Dataset Row Index
+ * @return {object} Row Data JSON Array
+ */
+this.lfn_GetPreviewData= function(oFieldArray, nRowCount)
+{
+	var oRows = [];
+	var oRow = {};
+	
+	var oField;
+    var sFieldId;
+	var sDataType;
+	var sValue;
+	
+	//컬럼 개수
+    var nColCnt = oFieldArray.fieldcount;
+	
+	for(i=0;i<nRowCount;i++)
+	{
+		oRow = {};
+		
+		// 필드별로 데이터 생성
+		for(j=0;j<nColCnt;j++)
+		{
+			oField = oFieldArray.fields[j];
+
+			sFieldId = oField.id;
+			sDataType = this.lfn_IsNullEmpty(oField.datatype).toUpperCase();
+			
+			// 데이터 형식에 따라 데이터 기본값제공
+			switch(sDataType) {
+				case "INT":
+				case "FLOAT":
+				case "BIGDECIMAL":
+					sValue = Math.floor(Math.random()*100);						// 0~100
+					break;
+				case "DATE":
+					sValue = this.lfn_AddDate(this.lfn_GetDate(),i);	// 오늘날짜 + nRowIndex
+					break;
+				default:
+					sValue = String.fromCharCode((65 + i));				// A~Z + nRowIndex
+					break;
+			}
+			
+			oRow[sFieldId] = sValue;
+		}
+		
+		oRows.push(oRow);
+	}
+	
+	return oRows;
+};
+
+
+/*---------------------------------------------------------------------------------------------*
+ * Function     : lfn_GetCommonDXChartScript
+ * Parameter    :	sViewNm - View 객체명
+ * Return       : Script 문자열
+ * Description  : 컴포넌트 공통 ViewScript 반환
+ *---------------------------------------------------------------------------------------------*/
+this.lfn_GetCommonDXChartScript = function(sViewNm, sSetDXChart)
+{
+	var sScript = "";
+	
+	sScript += "this.lfn_DXChart_form_onload = function(obj,e)";
+	sScript += "{";
+	//sScript += "	// 데이터셋 변경 이벤트 추가(데이터변경시 차트 다시 표시)";
+	sScript += "	this.viewdataset.addEventHandler('onload', this.lfn_DXChart_viewdataset_onload, this);";
+	sScript += "	this.viewdataset.addEventHandler('onrowsetchanged', this.lfn_DXChart_viewdataset_onrowsetchanged, this);";
+	sScript += "	this.viewdataset.addEventHandler('oncolumnchanged', this.lfn_DXChart_viewdataset_oncolumnchanged, this);";
+	sScript += "};";
+	sScript += "";
+	sScript += "this.lfn_DXChart_viewdataset_onrowsetchanged = function(obj,e)";
+	sScript += "{";
+	sScript += "	this.lfn_SetDXChart(obj);";
+	sScript += "};";
+	sScript += "";
+	sScript += "this.lfn_DXChart_viewdataset_onload = function(obj,e)";
+	sScript += "{";
+	sScript += "	this.lfn_SetDXChart(obj);";
+	sScript += "};";
+	sScript += "";
+	sScript += "this.lfn_DXChart_viewdataset_oncolumnchanged = function(obj,e)";
+	sScript += "{";
+	sScript += "	this.lfn_SetDXChart(obj);";
+	sScript += "};";
+	sScript += "";
+	sScript += "";
+	sScript += "this.lfn_SetDXChart = function()";
+	sScript += "{";
+	if (this.lfn_IsNotNull(sSetDXChart))			sScript += sSetDXChart;
+	sScript += "};";
+	sScript += "";
+	sScript += "this.addEventHandler('onload', this.lfn_DXChart_form_onload, this);";
+	
+	return sScript;
+};
+
+/*---------------------------------------------------------------------------------------------*
+ * Function     : lfn_GetDxChartScript
+ * Parameter    : arrChart : chart정보 배열
+ * Return       : DxChart ViewScript 문자열
+ * Description  : DxChart ViewScript 반환
+ *---------------------------------------------------------------------------------------------*/
+this.lfn_GetDxChartScript = function(arrChart)
+{
+	var sScript = "";
+	
+	var oChart = {};
+	var oProps = {};
+	var oOption = {};
+	
+	var sChartId = "";
+	var sComboId = "";
+	var sProps = "";
+	var sOption = "";
+	
+	//this.lfn_Log(arrChart);
+	
+	sScript += "var chart = this.chart;";
+	sScript += "var canvas = chart.getCanvas();";
+	sScript += "var cvs = canvas.id;";
+	sScript += "DxChart.reset(canvas);";
+	
+	for(var i=0;i<arrChart.length;i++)
+	{
+		oChart = arrChart[i];
+		
+		if (oChart)
+		{
+			oProps = oChart["prop"];
+			oOption = oChart["option"];
+			
+			//this.lfn_Log(oChart);
+			
+			// 차트 생선전 script 추가
+			if (oChart["prescript"]) {
+				sScript +=  "		" + oChart["prescript"];
+			}
+			
+			sChartId = oChart["charttype"] + i;
+			
+			sScript += "var " + sChartId + " = new " + oChart["chartclassid"] +"({";
+			sScript += "		id: cvs,";
+			sScript += "		elem : canvas,";
+			sScript += "		binddataset : this.viewdataset,";
+			
+			// 속성값 설정
+			if (oProps) {
+				//sProps = JSON.stringify(oProps);
+				sProps = this.lfn_StringifyJSON(oProps);
+				sProps = sProps.substring(1, sProps.length -1);
+				
+				sScript += "		" + sProps + ",";
+			}
+			
+			// 옵션값 설정
+			if (oOption) {
+				//sOption = JSON.stringify(oOption);
+				sOption = this.lfn_StringifyJSON(oOption);
+				
+				sScript += "		options: " + sOption;
+			}
+			
+			if (arrChart.length == 1) {
+				sScript += "	})." + oChart["anitype"] + "();";
+			} else {
+				sScript += "	});";
+				
+				sComboId += (i==0 ? "" : ", ") + sChartId;
+			}
+		}
+	}
+	
+	// Combine
+	if (arrChart.length > 1) {
+		sScript += "var combo = new DxChart.CombinedChart([" + sComboId + "]);";
+		sScript += "combo.draw();";
+	}
+	
+	//this.lfn_Log(sScript);
+	
+	return sScript;
+};
+
+/*---------------------------------------------------------------------------------------------*
+ * Function     : lfn_GetChartClassId
+ * Parameter    : 
+ * Return       : 
+ * Description  : 각 차트 시리즈별 DXChart ClassID
+ *---------------------------------------------------------------------------------------------*/
+this.lfn_GetChartClassId = function(sChartType)
+{
+	var sChartClassId = "DxChartBar";
+	
+	switch(sChartType) {
+		case "column":
+			sChartClassId = "DxChartBar";
+			break;
+		case "bar" :
+			sChartClassId = "DxChartHBar";
+			break;
+		case "line":
+		case "area":
+			sChartClassId = "DxChartLine";
+			break;
+		case "pie":
+		case "doughnut":
+			sChartClassId = "DxChartPie";
+			break;
+		case "rose":
+			sChartClassId = "DxChartRose";
+			break;
+		case "radar":
+			sChartClassId = "DxChartRadar";
+			break;
+		case "gauge":
+			sChartClassId = "DxChartGauge";
+			break;
+		case "meter":
+			sChartClassId = "DxChartMeter";
+			break;
+		case "odo":
+			sChartClassId = "DxChartOdo";
+			break;
+		case "fuel":
+			sChartClassId = "DxChartFuel";
+			break;
+		case "thermometer":
+			sChartClassId = "DxChartThermometer";
+			break;
+		case "segment":
+			sChartClassId = "DxChartSegment";
+			break;
+		case "horseshoe":
+			sChartClassId = "DxChartHorseShoe";
+			break;
+		case "vprogress":
+			sChartClassId = "DxChartVProgress";
+			break;
+		case "hprogress":
+			sChartClassId = "DxChartHProgress";
+			break;
+		case "semicircularprogress":
+			sChartClassId = "DxChartSemiCircle";
+			break;
+		case "waterfall":
+			sChartClassId = "DxChartWaterfall";
+			break;
+		case "bipolar" :
+			sChartClassId = "DxChartBipolar";
+			break;
+		case "gantt" :
+			sChartClassId = "DxChartGantt";
+			break;
+		case "activity" :
+			sChartClassId = "DxChartActivity";
+			break;
+		case "pyramid" :
+			sChartClassId = "DxChartPyramid";
+			break;
+		case "funnel" :
+			sChartClassId = "DxChartFunnel";
+			break;
+		default:
+			sChartClassId = "DxChartBar";
+	}
+	
+	return sChartClassId;
+};
+
+/*---------------------------------------------------------------------------------------------*
+ * Function     : lfn_GetSeriesAni
+ * Parameter    : 
+ * Return       : 
+ * Description  : 각 차트 시리즈별 Animation 타입 반환
+ *---------------------------------------------------------------------------------------------*/
+this.lfn_GetSeriesAni = function(sChartClassId, bEnableAnimation)
+{
+	if (this.lfn_IsNull(bEnableAnimation))		bEnableAnimation = true;
+	
+	var sAniType = "draw";
+	
+	if (bEnableAnimation)
+	{
+		// 차트마다 다른 Animation을 지원할때 사용
+		switch(sChartClassId) {
+// 			case "DxChartBar":
+// 			case "DxChartHBar" :
+// 				// draw,grow,wave
+// 				sAniType = "grow";
+// 				break;
+// 			case "DxChartLine":
+// 				// draw,wave,drawAni("toRight","toBottom","toTop","toCenter","fromCenter")
+// 				sAniType = "trace";
+// 				break;
+// 			case "DxChartPie":
+// 				// draw, grow, roundRobin, roundRobinSequential, implode, drawAni("explode","grow","roundRobin","roundRobinSequential","implode","explodeSegment")
+// 				sAniType = "roundRobinSequential";
+// 				break;
+			default:
+				sAniType = "drawAni";
+		}
+	}
+	
+	return sAniType;
+};
+
+this.lfn_GetMaxTextSize = function(oText, sFont, nAddChar)
+{
+	var nMaxX = 0;
+	var nMaxY = 0;
+	var oTextSize;
+	var sText = "";
+	
+	if (Array.isArray(oText)) {
+		var sText = "";
+		var nCurX = 0;
+		var nCurY = 0;
+		
+		for(var i=0;i<oText.length;i++)
+		{
+			sText = oText[i];
+			
+			if (nAddChar) {
+				sText = sText + "■".repeat(nAddChar);
+			}
+			
+			objSize = nexacro.getTextSize(sText, sFont);
+			
+			if (objSize)
+			{
+				nCurX = objSize.nx;
+				nCurY = objSize.ny;
+				
+				nMaxX = Math.max(nCurX, nMaxX);
+				nMaxY = Math.max(nCurY, nMaxY);
+			}
+		}
+	} else {
+		sText = oText;
+			
+		if (nAddChar) {
+			sText = sText + "■".repeat(nAddChar);
+		}
+			
+		objSize = nexacro.getTextSize(sText, sFont);
+		
+		if (objSize)
+		{
+			nMaxX = objSize.nx;
+			nMaxY = objSize.ny;
+		}
+	}
+	
+	return [nMaxX,nMaxY];
+};
+
+/**
+ * @class 타이틀 영역 설정
+ * @param {object} oGenerationAttr - ViewAttributeList 
+ * @return {object} title 속성
+ */
+this.lfn_GetChartTitle = function(oChartOption, oViewAttr)
+{
+	var sChartTitletext = oViewAttr["charttitletext"];
+	var sChartSubTitletext = oViewAttr["chartsubtitletext"];
+	
+	// 타이틀설정
+	var oTitle = this.lfn_CloneObject(this.oBaseTitle);
+	if (this.lfn_IsNotNull(sChartTitletext) || this.lfn_IsNotNull(sChartSubTitletext)) {
+		oTitle["Text"] = sChartTitletext;
+		oTitle["Subtitle"] = sChartSubTitletext;
+	}
+	
+	oChartOption["title"] = oTitle;
+	
+	return oChartOption;
+};
+
+/**
+ * @class 범례 영역 설정
+ * @param {object} oGenerationAttr - ViewAttributeList 
+ * @return {object} title 속성
+ */
+this.lfn_GetChartLegend = function(oChartOption, oViewAttr, arrData)
+{
+	var sLegendPosition = oViewAttr["legendposition"];
+	
+	if (sLegendPosition == "none")		return;
+	
+	// 범례 기본값
+	var oLegend = this.lfn_CloneObject(this.oBaseLegend);
+	
+	// Margin값 설정
+	var oMargin = this.lfn_Nvl(oChartOption["margin"],{});
+	
+	var sFont = this.lfn_Nvl(this.oBaseLegend["LabelsFontStyle"],"9pt " + this.CHART_FONT);
+	var arrTextMaxSize = this.lfn_GetMaxTextSize(arrData, sFont, 1);	// 범례 ■넓이를 위해 nAddChar에 1설정
+		
+	if (sLegendPosition == "right")
+	{
+		var nLegendHGap = 20;		// 차트와 범례 사이 가로간격
+		var nLegendHSpase = 20;		// 범례사이즈 계산시 범례 범례 글씨 외 넓이
+		
+		// 범례영역 사이즈 계산
+		var nLegendWidth = arrTextMaxSize[0] + nLegendHSpase;
+		
+		// 기존 설정된 margin right값 가져오기
+		var nMarginRight = nexacro.toNumber(oMargin["Right"],0);
+		
+		// 범례위치 계산(0으로 설정시 차트 영역내 범례가 들어와 있음)
+		var nOffsetX = nLegendWidth + nLegendHGap;
+		
+		// 범례 설정
+		oLegend["Position"] = "graph";
+		oLegend["Halign"] = "right";
+		oLegend["Valign"] = "center";
+		oLegend["Data"] = arrData;
+		oLegend["PositionOffsetX"] = nOffsetX;
+		
+		// 범례가 들어갈 공간을 margin에 설정
+		oMargin["Right"] = nMarginRight + nOffsetX;
+	}
+	else if (sLegendPosition == "bottom")
+	{
+		var nLegendVGap = 10;		// 차트와 범례 사이 세로간격
+		var nLegendVSpase = 10;		// 범례사이즈 계산시 범례 글씨 외 높이
+		
+		// 범례영역 사이즈 계산
+		var nLegendHeight = arrTextMaxSize[1] + nLegendVSpase;
+		
+		// 기존 설정된 margin bottom값 가져오기
+		var nMarginBottom = nexacro.toNumber(oMargin["Bottom"],0);
+		
+		// 범례위치 계산(0으로 설정 시 X축 글씨와 붙어있음. X축 글씨부터 간격)
+		var nDiffMarginBottom = nMarginBottom > 0 ? nMarginBottom - this.MARGIN_V  : 0;
+		var nOffsetY = nDiffMarginBottom + nLegendVGap;
+		
+		// 범례 설정
+		oLegend["Position"] = "margin";
+		oLegend["Halign"] = "center";
+		oLegend["Valign"] = "bottom";
+		oLegend["Data"] = arrData;
+		oLegend["PositionOffsetY"] = nOffsetY;
+		
+		// 범례가 들어갈 공간을 margin에 설정
+		oMargin["Bottom"] = nMarginBottom + nLegendHeight + nLegendVGap;
+	}
+	
+	oChartOption["margin"] = oMargin;
+	oChartOption["key"] = oLegend;
+};
+
+// 카테고리 축 설정
+this.lfn_GetCategoryAxes = function(oOption, oCategoryField, sCategoryAxes)
+{
+	if (this.lfn_IsNull(sCategoryAxes))		sCategoryAxes = "xaxis";
+	
+	var sAxisTitleText = this.lfn_IsNullEmpty(this.oGenerationAttr.attributes.categoryaxistitletext);
+	
+	var oCategoryAxes;
+	
+	// 카테고리축 추가
+	oCategoryAxes = {};
+	oCategoryAxes = this.lfn_CloneObject(this.oBaseCategoryaxis);
+	oCategoryAxes["Title"] = this.lfn_Trim(sAxisTitleText);
+	oCategoryAxes["Labels"] = "bind:" + oCategoryField.id;
+	
+	// 여백값 조절
+	if (sAxisTitleText)
+	{
+		var oMargin = this.lfn_Nvl(oOption["margin"],{});
+		var sFont = this.lfn_Nvl(oCategoryAxes["TitleFontStyle"],"bold 10px " + this.CHART_FONT);
+		var arrTitleSize = this.lfn_GetMaxTextSize(sAxisTitleText, sFont);
+		var nSize = 0;
+		var nGap = 10;
+		
+		if (sCategoryAxes == "xaxis")
+		{
+			nSize= nexacro.toNumber(oMargin["Bottom"],this.MARGIN_V);
+			oMargin["Bottom"] = nSize + arrTitleSize[1] + nGap;
+			
+			sCategoryAxes["TitleOffsetY"] = nGap;
+		}
+		else
+		{
+			nSize= nexacro.toNumber(oMargin["Left"],this.MARGIN_H);
+			oMargin["Left"] = nSize + arrTitleSize[0] + nGap;
+			
+			sCategoryAxes["TitleOffsetX"] = -1 * nGap;
+		}
+		
+		oOption["margin"] = oMargin;
+	}
+	
+	oOption[sCategoryAxes] = oCategoryAxes;
+	
+};
+
+// 데이터 축 설정
+this.lfn_GetValueAxes = function(oOption, arrAxisYField, sValueAxes, sAxesType)
+{
+	if (this.lfn_IsNull(sValueAxes))		sValueAxes = "yaxis";
+	if (this.lfn_IsNull(sAxesType))			sAxesType = "y";
+	
+	var sAxisTitleText = this.lfn_IsNullEmpty(this.oGenerationAttr.attributes.valueaxistitletext);
+	var arrAxisTitleText = sAxisTitleText.split(",");
+	
+	var oValueAxes;
+	
+	// 기본y축 추가
+	oValueAxes = {};
+	oValueAxes = this.lfn_CloneObject(this.oBaseValueaxis);
+	oValueAxes["Title"] = this.lfn_Trim(arrAxisTitleText[0]);
+	
+	if (arrAxisYField.length == 0) {
+		this.lfn_Log("valueaxis가 설정되지 않았습니다.","warn");
+	}
+	
+	// 여백값 조절
+	if (sAxisTitleText)
+	{
+		var oMargin = this.lfn_Nvl(oOption["margin"],{});
+		var sFont = this.lfn_Nvl(oValueAxes["TitleFontStyle"],"bold 10px " + this.CHART_FONT);
+		var arrTitleSize = this.lfn_GetMaxTextSize(sAxisTitleText, sFont);
+		var nSize = 0;
+		var nGap = 10;
+
+		if (sValueAxes == "xaxis")
+		{
+			nSize= nexacro.toNumber(oMargin["Bottom"],this.MARGIN_V);
+			oMargin["Bottom"] = nSize + arrTitleSize[1] + nGap;
+			
+			oValueAxes["TitleOffsetY"] = 0;		//nGap;			// bar 차트일때 여백없는게 더 위치가 이쁘게 출력됨.
+		}
+		else
+		{
+			if (sAxesType == "y1")
+			{
+				oValueAxes["Title"] = this.lfn_Trim(arrAxisTitleText[1]);
+				
+				nSize= nexacro.toNumber(oMargin["Right"],this.MARGIN_H);
+				oMargin["Right"] = nSize + arrTitleSize[1] + nGap;
+				
+				oValueAxes["TitleOffsetX"] = nGap;
+			}
+			else
+			{
+				nSize= nexacro.toNumber(oMargin["Left"],this.MARGIN_H);
+				oMargin["Left"] = nSize + arrTitleSize[1] + nGap;
+				
+				oValueAxes["TitleOffsetX"] = -1 * nGap;
+			}
+		}
+		
+		oOption["margin"] = oMargin;
+	}
+	
+    oOption[sValueAxes] = oValueAxes;
+};
+
+// JSON을 문자열로 변환하는 함수.(DXChart에서 font-family 지원하기 위해 JSON.stringify()함수를 사용하지 않고 새로 만듬)
+this.lfn_StringifyJSON = function(obj)
+{
+	switch(typeof(obj)) {
+		case "number" :
+		case "boolean" :
+			return '' + obj;
+		case "string" :
+			var xstr = "";
+			xstr = nexacro.replaceAll(obj, "'",'"');
+			return "'" + xstr + "'";
+		case "null" :
+			return "null";
+		case "undefined" :
+			return "undefined";
+		case "object" :
+			var xstr = "";
+			if(Array.isArray(obj)) {
+				if (obj.length) {	// for array
+					xstr = "[";
+					for (var i = 0; i < obj.length; i++) {
+						if (i > 0)
+							xstr += ",";
+							xstr += this.lfn_StringifyJSON(obj[i]);
+					}
+					xstr += "]";
+				}
+			} else if (obj instanceof nexacro.Decimal
+				|| obj instanceof nexacro.Date) {
+				return '' + obj;
+			} else if (obj === undefined || obj === null) {
+				return '';
+			} else {
+				xstr += "{";
+				var pstr = "";
+				for (var propName in obj) {
+					if(typeof obj[propName] === 'function' || obj[propName] === undefined) {
+						continue;
+					} else {
+						if (pstr != "")		pstr += ",";
+						
+						//pstr += nexacro.wrapQuote(propName) + ":";
+						pstr += propName + ":";
+						pstr += this.lfn_StringifyJSON(obj[propName]);
+					}
+				}
+				xstr += pstr + "}";
+			}
+			return xstr;
+		default :
+			trace("lfn_StringifyJSON unknown type:"+typeof(obj));
+			return "undefined";
+	}
+	
+	return "undefined";
+};]]></Script>

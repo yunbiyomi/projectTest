@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Script version="1.0" type="xscript5.1"><![CDATA[/******************************************************************************
+*  ViewTemplate
+*  @FileName 	lib.xjs
+*  @Creator
+*  @CreateDate
+*  @Desction    공통 Lib
+*******************************************************************************/
+include "quickcode::viewtemplate/lib/util.xjs";
+include "quickcode::viewtemplate/lib/common.xjs";
+
+]]></Script>

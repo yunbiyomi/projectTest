@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<MetaInfo version="2.0">
+  <Object id="DsMoveRowDataAction">
+    <ObjectInfo inheritance="nexacro.Action" classname="nexacro.DsMoveRowDataAction" shorttypename="DsMoveRowDataAction" csstypename="DsMoveRowDataAction" csscontrolname="DsMoveRowDataActionControl" group="Action" subgroup="ActionBase" csspseudo="" container="false" tabstop="false" cssstyle="false" defaultwidth="" defaultheight="" registration="allow" edittype="action" useinitvalue="false" popup="false" edittypecomponent="" dblclickevent="" requirement="IE10,IE11,Edge,Chrome,Safari,Firefox,Opera,Windows NRE,macOS NRE,Android NRE,iOS/iPadOS NRE,Android Default Web Browser,iOS/iPadOS Default Web Browser" description="" finalclass="true"/>
+    <PropertyInfo>
+      <Property name="contents" edittype="Contents" readonly="false" initonly="false" hidden="false" control="false" expr="false" bind="false" unused="false" mandatory="false"/>
+    </PropertyInfo>
+    <CSSInfo>
+      <PropertyInfo/>
+    </CSSInfo>
+    <StatusInfo/>
+    <MethodInfo/>
+    <EventHandlerInfo/>
+    <ContentsInfo contentsformat="json" contentseditor="auto" contentstype="contents" showpreview="false" showobjtree="false" showproperties="false"/>
+  </Object>
+</MetaInfo>

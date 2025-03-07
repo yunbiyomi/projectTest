@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ENV version="2.1">
+  <Environment themeid="theme::nxui_Blue_Round" datatyperule="2.0" usehttpkeepalive="true" filesecurelevel="all" loadingimage="url('imagerc::loadingimage.gif')">
+    <ScreenDefinition>
+      <Screen id="desktop" type="desktop"/>
+    </ScreenDefinition>
+    <Variables>
+      <Variable id="evMessagePopup" initval="true"/>
+      <Variable id="evQuickView" initval="Y"/>
+    </Variables>
+    <Cookies/>
+    <httpheader/>
+  </Environment>
+</ENV>

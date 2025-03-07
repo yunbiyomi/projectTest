@@ -1,0 +1,127 @@
+{
+  "request": {
+    "variables": [],
+    "datasets": []
+  },
+  "localVariables": {
+    "variables": [],
+    "datasets": []
+  },
+  "workflow": {
+    "name": "svcGetRequest",
+    "start": {
+      "next": "getAllRequest",
+      "name": "start",
+      "description": "로직의 시작",
+      "alias": "start",
+      "type": "Start"
+    },
+    "project": "git_test",
+    "description": "사용자가 설정한 조회 기간에 따라 문의 내역을 조회한다.",
+    "end": {
+      "name": "end",
+      "description": "로직의 종료",
+      "alias": "end",
+      "type": "End"
+    },
+    "getAllRequest": {
+      "next": "end",
+      "onBeforeEvent": "",
+      "onAfterEvent": "",
+      "description": "문의 내역 조회 SQL",
+      "onBeginEvent": "",
+      "type": "SQL",
+      "target": "",
+      "sql": "SELECT \n  RECEIVEDDATE, \n  REQUESTID, \n  REQUESTTITLE, \n  CUSTOMERNAME \nFROM \n  REQUEST \nLIMIT \n  5",
+      "output": "dsRequestList",
+      "sqlType": "select",
+      "datasource": "cs_system",
+      "name": "getAllRequest",
+      "onEndEvent": "",
+      "alias": "getAllRequest"
+    }
+  },
+  "datasources": [
+    {
+      "database": "cs_system",
+      "password": "",
+      "port": "",
+      "datasource": "cs_system",
+      "productType": "H2",
+      "url": "jdbc:h2:file:${LOCAL_DATABASE}/datasource/cs_system",
+      "username": "sa"
+    }
+  ],
+  "response": {
+    "variables": [
+      {
+        "name": "errorCode",
+        "description": "에러코드",
+        "type": "Integer"
+      },
+      {
+        "name": "errorMessage",
+        "description": "에러메시지",
+        "type": "String"
+      }
+    ],
+    "datasets": [
+      {
+        "name": "dsRequestList",
+        "description": "문의 내역 목록",
+        "items": [
+          {
+            "name": "receivedDate",
+            "description": "접수일",
+            "datasize": 100,
+            "type": "STRING",
+            "insConstant": false
+          },
+          {
+            "name": "requestId",
+            "description": "문의 ID",
+            "datasize": 100,
+            "type": "STRING",
+            "insConstant": false
+          },
+          {
+            "name": "requestTitle",
+            "description": "문의 제목",
+            "datasize": 100,
+            "type": "STRING",
+            "insConstant": false
+          },
+          {
+            "name": "customerName",
+            "description": "고객 이름",
+            "datasize": 100,
+            "type": "STRING",
+            "insConstant": false
+          }
+        ]
+      }
+    ]
+  },
+  "clientInfo": {
+    "getFilterRequest": {
+      "x": "600",
+      "y": "300"
+    },
+    "If1": {
+      "x": "500",
+      "y": "200"
+    },
+    "start": {
+      "x": "600",
+      "y": "150"
+    },
+    "end": {
+      "x": "600",
+      "y": "450"
+    },
+    "getAllRequest": {
+      "x": "600",
+      "y": "300"
+    }
+  }
+}

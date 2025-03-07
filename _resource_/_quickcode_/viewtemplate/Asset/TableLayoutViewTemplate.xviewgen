@@ -1,0 +1,1716 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ViewTemplateInfo version="1.0">
+  <ViewTemplate id="TableLayoutViewTemplate" viewtype="Grid" description="Single data display generation in table format (with Fluid Layout)"/>
+  <Script version="1.0" type="xscript5.1"><![CDATA[/**
+*  Table Layout View Template
+*  @FileName 	TableLayoutViewTemplate.xviewgen
+*  @Creator 	Creator
+*  @CreateDate 	2023.09.21
+*  @Desction    Single data display generation in table format (with Fluid Layout)
+*  @version		1.0.0.0
+************** 소스 수정 이력 ***********************************************
+*  date          		Modifier                Description
+*******************************************************************************
+*  2023.09.21     		Creator       	    	최초 생성
+*******************************************************************************
+*/
+/************************************************************************************************
+ * include 선언부
+ ************************************************************************************************/
+include "quickcode::viewtemplate/lib/util.xjs";
+include "quickcode::viewtemplate/lib/common.xjs";
+/************************************************************************************************
+ * 변수 선언 영역
+ ************************************************************************************************/
+// View 여백
+this.VIEW_PADDING = "";
+// 컴포넌트 생성 방향("horizontal", "vertical")
+this.DIRECTION				= "horizontal";
+// Abstract 컴포넌트 사용여부
+this.USE_ABSTRACT_COMP	= false;
+//--------------------------------------------------------------------------------------------------------
+// TableLayoutViewTemplate 고정값(변경하지 마세요)
+//--------------------------------------------------------------------------------------------------------
+// 컴포넌트 생성 수평 정렬방식
+this.HALIGN					= "left";
+// 컴포넌트 생성 수직 정렬방식
+this.VALIGN					= "top";
+// FluidLayout Type
+this.FLUIDLAYOUT_TYPE		= "table";
+// View Resize Type
+this.VIEW_FITTOCONTENTS		= "none";
+//--------------------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------------------
+// 타이틀 객체 관련 상수
+//--------------------------------------------------------------------------------------------------------
+//타이틀 영역 전체건수 표시여부(Freeform에서는 사용안함)
+this.USE_TOT_COUNT			= "false";
+//타이틀 영역 접기/펼치기 버튼 표시여부("none", "open","close")(Freeform에서는 사용안함)
+this.USE_EXPAND_BUTTON		= "none";
+//--------------------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------------------
+//////////////////////////////상수 설정부 START ////////////////////////////////////////////////////
+// Table Column Count
+this.COLUMN_COUNT			= 4;
+
+//Label과 Comp영역 배치방식("horizontal", "vertical")
+this.FIELD_POSITION			= "horizontal";
+
+//Component Default Width
+this.COMP_WIDTH				= "100%";
+
+//Component Default Height
+this.COMP_HEIGHT			= "34px";
+
+//Label Default Size
+this.LABEL_SIZE				= 100;
+
+//Component Default Type
+this.COMP_TYPE				= "auto";
+
+//Label Default Type
+this.LABEL_TYPE				= "static";
+
+//fieldposition이 "horizontal"일때(라벨과 컴포넌트가 좌우배치) Component Padding
+this.H_COMP_PADDING_LEFT	= 5;
+this.H_COMP_PADDING_TOP		= 5;
+this.H_COMP_PADDING_RIGHT	= 5;
+this.H_COMP_PADDING_BOTTOM	= 5;
+
+//fieldposition이 "vertical"일때(라벨과 컴포넌트가 상하배치) Component Padding
+this.V_COMP_PADDING_LEFT	= 5;
+this.V_COMP_PADDING_TOP		= 5;
+this.V_COMP_PADDING_RIGHT	= 5;
+this.V_COMP_PADDING_BOTTOM	= 5;
+
+//Gap Between Components (Left and Right)
+this.COMP_SPACE				= 0;
+
+//Gap Between Components (Top and Bottom)
+this.LINE_SPACE				= 0;
+
+// Layout에서 mergelabel옵션 기본값
+this.MERGE_LABEL			= "true";
+
+//mergelabeldl "true"일때 (라벨1개 고정일때) Gap Between Components (Left and Right)
+this.MERGE_LABEL_COMP_SPACE	= 5;
+
+//mergelabeldl "true"일때 (라벨1개 고정일때) Gap Between Components (Top and Bottom)
+this.MERGE_LABEL_LINE_SPACE	= 5;
+
+// Border 겹치게 표시할지 여부
+this.BORDER_OVERLAP			= true;
+
+//Component Default CSS Class
+this.COMP_CSSCLASS			= "";
+
+//Required Component Default CSS Class
+this.COMP_REQUIRED_CSSCLASS	= "com_essential";
+
+//Background Component Default CSS Class
+this.COMP_BG_CSSCLASS		= "sta_fieldbox";
+
+//Label Default CSS Class
+this.LABEL_CSSCLASS			= "sta_labelbox";
+
+//Required Label Default CSS Class
+this.LABEL_REQUIRED_CSSCLASS	= "sta_labelbox_essential";
+
+//Background Component Use Type
+this.USE_COMP_BG			= "true";
+
+//Component Use Type
+this.USE_COMP				= "true";
+
+//Component Readonly
+this.COMP_READONLY			= "false";
+
+//Component Readonly시 Static형식으로 표시(border없고, 투명배경, 추가버튼안보이게)
+this.COMP_READONLY_LABEL_STYLE	= "true";
+
+//Component Readonly시 Static형식 CSS Class
+this.COMP_READONLY_CSSCLASS	= "com_View";
+
+//Background Component를 첫줄만 생성할지 여부
+this.MERGE_COMP_BG			= "false";
+
+// format에서 지정한 컬럼사이즈를 어떻게 지정할 지 여부("%", "px")
+this.FORMAT_SIZING_TYPE 	= "%";
+
+//FluidLayout을 Panel에 적용할지 여부(NexacroSketch에서는 View의 FluidLayout을 사용할 수 없어 Panel로 사용해야함)
+//NexacroSketch에서는 필수로 "true"값 설정
+this.USE_ROOT_PANEL			= "false";
+//////////////////////////////Constant Setting END ////////////////////////////////////////////////////
+/************************************************************************************************
+ * Nexacro Studio 호출 필수 FUNCTION 영역
+ ************************************************************************************************/
+/*---------------------------------------------------------------------------------------------*
+ * Function     : fn_InitViewAttributes
+ * Return       : 
+ * Description  : LCAP Tool에서 일부 view attribute 속성을 노출하지 않기로 결정함에 따라 각 속성값을 기본값으로 셋팅해준다.
+ *---------------------------------------------------------------------------------------------*/
+fn_InitViewAttributes = function(generationattr)
+{
+	var oTempGenAttrArray = JSON.parse(generationattr);
+	
+	// 'view generation attributes' setting
+	if (oTempGenAttrArray)
+	{
+		oTempGenAttrArray.attributes.fieldboxcssclass = this.COMP_BG_CSSCLASS;
+		oTempGenAttrArray.attributes.formatsizingtype = this.FORMAT_SIZING_TYPE;
+		
+		generationattr = JSON.stringify(oTempGenAttrArray, null, "\t");
+	}
+	
+	return generationattr;
+}
+
+ /*---------------------------------------------------------------------------------------------*
+ * Function     : fn_InitFieldAttributes
+ * Return       : 
+ * Description  : LCAP Tool에서 user attribute 속성을 제거함에 따라 각 속성값을 기본값으로 셋팅해준다.
+ *---------------------------------------------------------------------------------------------*/
+fn_InitFieldAttributes = function(fieldarray, generationattr)
+{
+	// field attributes setting
+	var oTempFieldArray = JSON.parse(fieldarray);
+	
+	// 'user attributes of field' setting
+	if (oTempFieldArray)
+	{
+		var oTempField;
+		var nFieldCount;
+		
+		nFieldCount = oTempFieldArray.fieldcount;
+		for(i=0; i<nFieldCount; i++)
+		{
+			oTempField = oTempFieldArray.fields[i];
+			
+			// 사용자에게 입력받지 않으므로 default 값으로 셋팅
+			oTempField.comptype = this.COMP_TYPE;
+			oTempField.cssclass = this.COMP_CSSCLASS;
+			oTempField.labelcssclass = this.LABEL_CSSCLASS;
+			oTempField.compreadonly = (oTempField.editable == "true") ? "false" : "true"; /*this.COMP_READONLY*/
+			oTempField.usecomp = this.USE_COMP;
+		}
+		
+		fieldarray = JSON.stringify(oTempFieldArray, null, "\t");
+		//trace(">> fieldarray : " + fieldarray);
+	}
+	
+	//var vResult = JSON.stringify(fieldarray, null, "\t");
+    //trace(">> fieldarray : " + vResult);
+		
+	return fieldarray;
+};
+
+/*---------------------------------------------------------------------------------------------*
+ * Function    : fn_GetViewGenerationResult
+ * Parameter   :
+ *               - fieldarray     : model field list
+ *               - contents       : old contents (include <View>)
+ *               - generationattr : attributes for view generation
+ * Return      : View contents (source + script) (JSON format)
+                 ex) {
+                        "View": {
+                            "tag": "View",
+                            "attribute": {
+                                "id": "View00",
+                                "viewtype": "FreeForm",
+                                "taborder": "2",
+                                "text": "search view",
+                                "left": "0",
+                                ...
+                            },
+                            "Model": [
+                                {   // with field
+                                    "fieldid": "department",
+                                    "Components": [
+                                    ...
+                                    ]
+                                },
+                                {   // without field
+                                    "fieldid": "",
+                                    "Components": [
+                                    ...
+                                    ]
+                                }
+                            ],
+                            "InitValue": [
+                            ],
+                            "Objects": [
+                            ],
+                            "Bind": [
+                            ],
+                            "Script": {
+                                "tag": "Script",
+                                "attribute": {
+                                },
+                                "value": ""
+                            }
+                        }
+                    }
+ * Description : Generate the view based on the model field and return the results.
+ *---------------------------------------------------------------------------------------------*
+ *                            !!! This is a required function. !!!                             *
+ *                            !!! Do not delete it. !!!                                        *
+ *---------------------------------------------------------------------------------------------*/
+fn_GetViewGenerationResult = function(fieldarray, contents, generationattr)
+{
+
+	//Return Value
+    var vResult = "";
+
+    //trace(">> fieldarray : " + fieldarray);
+	//trace(">> contents : " + contents);
+    //trace(">> generationattr : " + generationattr);
+	
+	if (generationattr)
+	{
+		// 일부 view attributes 속성을 노출하지 않음으로써 기본값 셋팅
+		generationattr = fn_InitViewAttributes(generationattr);
+	}
+	
+	if(fieldarray)
+	{
+		// user attribute 속성을 제거함에 따라 각 속성값을 기본값으로 셋팅
+		fieldarray = fn_InitFieldAttributes(fieldarray, generationattr);
+	}
+
+    //Make Generation Info
+	//this.oFieldArray : Model Information as JSON Object
+	//this.oContents : View Component Information as JSON Object
+	//this.oContents.View.Model : Model Information Initialization
+	//this.oGenerationAttr : Setting Information as JSON Object
+	//this.oUseFieldArray : Use Model Information as JSON Object
+	this.lfn_MakeGenerationInfo(fieldarray, contents, generationattr, true);
+	
+	// View Padding 설정
+	this.lfn_SetViewPadding();
+	
+	//Layout 설정(FluidLayout)
+	this.oLayoutRoot = this.lfn_GetLayout();
+	
+	//Load Model Information Generation Function
+	fn_GetModel();
+
+	//Load InitValue Information Generation Function
+    this.oContents.View.InitValue = fn_GetInitValue();
+
+	//Load Object Information Generation Function
+    this.oContents.View.Objects = fn_GetObjects();
+
+	//Load BindInfo Information Generation Function
+    this.oContents.View.Bind = fn_GetBind();
+
+	//Load Script Information Generation Function
+    this.oContents.View.Script = fn_GetScript();
+
+	//Convert View Component Information into String
+    vResult = JSON.stringify(this.oContents, null, "\t");
+
+    //trace(">> vResult : " + vResult);
+    //Return View Component Information
+    return vResult;
+};
+
+/*---------------------------------------------------------------------------------------------*
+ * Function     : fn_GetViewAttributeList
+ * Return       : View generation attribute list (JSON format)
+                  ex)   {
+                        "attributecount": "2",
+                        "attributes": [
+                           {
+                                "id": "use_triggerbutton",
+                                "edittype": "Boolean",              // edittype : Boolean/String/Number/Enum/ViewObjList
+                                "defaultvalue": "true",
+                                "description": "Specifies whether trigger button is auto-created or not"
+                            },
+                            {
+                                "id": "triggerbuttontext",
+                                "edittype": "String",               // edittype : Boolean/String/Number/Enum/ViewObjList
+                                "defaultvalue": "Search",
+                                "description": "Enter text for trigger button"
+                            }
+                        ]
+                    }
+ * Description : Obtain a list of custom attributes required for view generation
+ *---------------------------------------------------------------------------------------------*/
+fn_GetViewAttributeList = function()
+{
+    var sViewAttr = "";
+    var oViewAttr = {
+                        "attributes": [
+                              this.oAttrTitleText					// Title Text
+							, {
+                                "id": "columncount",
+								"displaytext": "Column Count",
+                                "edittype": "Number",
+								"defaultvalue": this.COLUMN_COUNT,
+                                "description": "Set the table column count"
+                            }
+							, {
+                                "id": "fieldheight",
+								"displaytext": "Field Height(px)",
+                                "edittype": "String",
+								"defaultvalue": this.COMP_HEIGHT,
+                                "description": "Set the field height (px or %)"
+                            }
+							, {
+                                "id": "labelsize",
+								"displaytext": "Label Width(px)",
+                                "edittype": "Number",
+								"defaultvalue": this.LABEL_SIZE,
+                                "description": "Set the label size (px)"
+												+ "\n" + " - Set to width (horizontal) and height (vertical) sizes depending on the Label Position value"
+                            }
+							, {
+                                "id": "fieldposition",
+								"displaytext": "Label Position",
+                                "edittype":  "Enum",
+								"defaultvalue": this.FIELD_POSITION,
+								"enumlist" : ["horizontal", "vertical"],
+                                "description": "Set alignment direction for Label and Field"
+												+ "\n" + " - horizontal : Horizontal alignment"
+												+ "\n" + " - vertical : Vertical alignment"
+                            }
+							, {
+                                "id": "usefieldbox",
+								"displaytext": "Field Background",
+                                "edittype": "Boolean",
+                                "defaultvalue": this.USE_COMP_BG,
+                                "description": "Set whether to draw a background box in the field area"
+                            }
+							/*, {
+                                "id": "fieldboxcssclass",
+								"displaytext": "Field Background CSS",
+                                "edittype": "String",
+                                "defaultvalue": this.COMP_BG_CSSCLASS,
+                                "description": "Set the background CSS class for the field area"
+                            }
+							, {
+                                "id": "format",
+								"displaytext": "Layout",
+                                "edittype": "layout",
+								"defaultvalue": "",
+								"userproperties" : {
+									"propertycount" : "1",
+									"properties" :
+									[
+										{
+											"id" : "mergelabel", "edittype" : "Boolean", "defaultvalue" : this.MERGE_LABEL
+											, "description" : "다중 field 설정 시 label 통합표시 여부"
+															+ "\n" + " - 첫번째 field 기준으로 생성됩니다."
+										}
+									]
+								},
+								"description": "Set the view layout"
+                            }
+							, {
+                                "id": "formatsizingtype",
+								"displaytext": "Layout Column Size Unit",
+                                "edittype":  "Enum",
+								"defaultvalue": this.FORMAT_SIZING_TYPE,
+								"enumlist" : ["%", "px"],
+                                "description": "Set the method for applying column sizes specified in the layout"
+												+ "\n" + " - % : Convert the entered value to a percentage for calculation"
+												+ "\n" + " - px : Calculate the value as is"
+                            }*/
+							, this.oAttrViewPadding
+                        ]
+                  };
+
+	oViewAttr["attributecount"] = oViewAttr["attributes"].length;
+
+	sViewAttr = JSON.stringify(oViewAttr, null, "\t");
+    return sViewAttr;
+};
+
+/*---------------------------------------------------------------------------------------------*
+ * Function     : fn_GetFieldUserAttributeList
+ * Return       : user attribute list from model field(JSON format)
+                  ex)   {
+                        "attributecount": "2",
+                        "attributes": [
+                           {
+                                "id": "use_triggerbutton",
+                                "edittype": "Boolean",              // edittype : Boolean/String/Number/Enum/ViewObjList
+                                "defaultvalue": "true",
+                                "description": "Specifies whether trigger button is auto-created or not"
+                            },
+                            {
+                                "id": "triggerbuttontext",
+                                "edittype": "String",               // edittype : Boolean/String/Number/Enum/ViewObjList
+                                "defaultvalue": "Search",
+                                "description": "Enter text for trigger button"
+                            }
+                        ]
+                    }
+ * Description  : Obtain a list of user attributes to register in model field
+ *---------------------------------------------------------------------------------------------*/
+fn_GetFieldUserAttributeList = function ()
+{
+	var sFieldAttr = "";
+	/*var oFieldAttr = {
+                        "attributes": [
+                            {
+                                "id": "comptype",
+                                "edittype": "Enum",
+								"enumlist" : this.ARR_COMP_TYPE,
+                                "defaultvalue": this.COMP_TYPE,
+                                "description": "Types of Components to be Expressed"
+                            },
+							
+							{
+                                "id": "cssclass",
+                                "edittype": "String",
+								"defaultvalue": this.COMP_CSSCLASS,
+                                "description": "Component CSS Class"
+                            },
+							{
+                                "id": "labelcssclass",
+                                "edittype": "String",
+								"defaultvalue": this.LABEL_CSSCLASS,
+                                "description": "Label CSS Class"
+                            },
+							{
+                                "id": "compreadonly",
+                                "edittype": "Boolean",
+								"defaultvalue": this.COMP_READONLY,
+                                "description": "Component Readonly"
+                            },
+							{
+                                "id": "usecomp",
+                                "edittype": "Boolean",
+								"defaultvalue": this.USE_COMP,
+                                "description": "Use Component"
+                            }
+                        ]
+                  };
+
+	oFieldAttr["attributecount"] = oFieldAttr["attributes"].length;
+
+ 	sFieldAttr = JSON.stringify(oFieldAttr, null, "\t");*/
+    return sFieldAttr;
+}
+/************************************************************************************************
+ * 사용자 FUNCTION 영역
+ ************************************************************************************************/
+
+
+/*---------------------------------------------------------------------------------------------*
+ * Function     : fn_GetModel
+ * Parameter    :
+ * Return       :
+ * Description  : Model Information Production Function
+ *---------------------------------------------------------------------------------------------*/
+fn_GetModel = function()
+{
+	//Import View Component Width Value
+	var nViewCompWidth = this.oContents.View.referenceinfo.realwidth;
+
+	//Import View Component Height Value
+	var nViewCompHeight = this.oContents.View.referenceinfo.realheight;
+	
+	var oModel = this.oContents.View.Model;
+	
+	// label위치
+	var sFieldPosition = this.oGenerationAttr.attributes.fieldposition;
+
+	//Import Label Width Information set on the current Field
+	var nLabelSize = nexacro.toNumber(this.oGenerationAttr.attributes.labelsize);
+	var sFieldHeight = this.oGenerationAttr.attributes.fieldheight;
+	
+	// View Padding 설정
+	var nTop	= this.VIEW_PADDING_TOP;
+	var nBottom	= this.VIEW_PADDING_BOTTOM;
+	var nLeft	= this.VIEW_PADDING_LEFT;
+	var nRight	= this.VIEW_PADDING_RIGHT;
+	
+	// Title 영역
+	var sTitleText			= this.oGenerationAttr.attributes.titletext;			// 타이틀 Text
+	var sUseTotalCount		= this.USE_TOT_COUNT;									// 전체건수 Static 생성
+	var sUseExpandButton	= this.USE_EXPAND_BUTTON;								// expand 토글버튼 생성
+	var bFluidLayout		= true;													// FluidLayout 여부(Title영역 width로만 설정가능)
+	
+	// 타이틀 영역생성
+	this.VIEW_PADDING_TOP = this.lfn_MakeTitleArea(sTitleText, sUseTotalCount, sUseExpandButton, bFluidLayout);
+	
+	// 타이틀영역 높이
+	var nTitleHeight = this.VIEW_PADDING_TOP - nTop;
+	
+	// View 사이즈에서 View 여백 설정
+	nViewCompWidth = nViewCompWidth - this.VIEW_PADDING_LEFT - this.VIEW_PADDING_RIGHT;
+	nViewCompHeight = nViewCompHeight - this.VIEW_PADDING_TOP - this.VIEW_PADDING_BOTTOM;
+	
+	//If format properties are set up, create components based on layout rules
+	if(this.oGenerationAttr.attributes.format)
+	{
+		//Import Layout Information
+		var oLayout = this.lfn_StringToJson(this.oGenerationAttr.attributes.format);
+		
+		// Table에 표시될 Column Field 갯수
+		var nColumnCount = oLayout.columnsize.length;
+	
+		// Table에 표시될 Row Field 갯수
+		var nRowCount = oLayout.rowsize.length;
+		
+		// TableLayout 정보(tabletemplate,tablecolcount,tablerowcount)
+		var oTableInfo = fn_GetTableInfo(this.oLayoutRoot, sFieldPosition, nColumnCount, nRowCount, nLabelSize, sFieldHeight, nTitleHeight, oLayout);
+		
+		//Load Layout Calculation Function
+		fn_CalcLayoutTable(oLayout, nViewCompWidth, nViewCompHeight, oTableInfo);
+
+		//Load Layout-based Component Production Function
+		fn_MakeCompTableByLayout(oLayout, oTableInfo);
+
+	}
+	//If the format properties are not set, create components based on default rules
+	else
+	{
+		//Import Field Information
+		var arrFieldList = this.oUseFieldArray.fields;
+		
+		// 컴포넌트 생성방향
+		var sDirection = this.DIRECTION;
+		
+		// Table에 표시될 Column Field 갯수
+		var nColumnCount = this.lfn_Nvl(this.oGenerationAttr.attributes.columncount,this.COLUMN_COUNT);
+	
+		// Table에 표시될 Row Field 갯수
+		var nRowCount = Math.ceil(arrFieldList.length/nColumnCount);				// 사용필드/컬럼갯수 (반올림)
+		
+		// TableLayout 정보(tabletemplate,tablecolcount,tablerowcount)
+		var oTableInfo = fn_GetTableInfo(this.oLayoutRoot, sFieldPosition, nColumnCount, nRowCount, nLabelSize, sFieldHeight, nTitleHeight);
+		
+		var nColIdx = 0;
+		var nRowIdx = this.bTitleArea ? 1 : 0;			// 타이틀 영역이 있는 경우 Row Index 설정
+		
+		//Load Component Location Calculation Information
+		var arrFieldPosition = fn_CalcFieldTable(sDirection, sFieldPosition, nColumnCount, nRowCount, nViewCompWidth, nViewCompHeight);
+		
+		//Load Component Production Function
+		fn_MakeCompTable(nColIdx, nRowIdx, nViewCompWidth, nViewCompHeight, oTableInfo, arrFieldPosition);
+	}
+};
+
+/*---------------------------------------------------------------------------------------------*
+ * Function     : fn_GetTableInfo
+ * Parameter    : 
+ *  				- sFieldPosition : 
+ *  				- nColumnCount : Table에 표시될 Column Field 갯수
+ *  				- nRowCount : Table에 표시될 Row Field 갯수
+ *  				- nLabelSize : Label 사이즈
+ *  				- sFieldHeight : Field 높이
+ *  				- nTitleHeight : Title Area Height
+ *  				- oLayout : Layout Setting Information
+ * Return       :
+ * Description  : tabletemplate을 반환하는 함수
+ *---------------------------------------------------------------------------------------------*/
+fn_GetTableInfo = function(oTable, sFieldPosition, nColumnCount, nRowCount, nLabelSize, sFieldHeight, nTitleHeight, oLayout)
+{
+	var sTableTemplate = "";
+	var arrColFormat = new Array();
+	var arrRowFormat = new Array();
+	var nTableCol = 0;
+	var nTableRow = 0;
+	var nRowSize = 0;
+	var nColSize= 0;
+	var sRowSize;
+	
+	if(oLayout)
+	{
+		var sFormatSizingType = this.oGenerationAttr.attributes.formatsizingtype;
+		var nMinColSize = Math.min.apply(Math, oLayout.columnsize);
+		var nMinRowSize = Math.min.apply(Math, oLayout.rowsize);
+		var nCompSize;
+		
+		// 컬럼정보 설정
+		for(var i=0; i < oLayout.columnsize.length; i++)
+		{
+			// fieldposition이 horizontal이고 라벨이 있는 경우 라벨컬럼 추가
+			if (sFieldPosition=="horizontal" && nLabelSize > 0) {
+				arrColFormat.push(nLabelSize + "px");
+			}
+				
+			nColSize = oLayout.columnsize[i];
+			
+			// 컴포넌트 컬럼 추가
+			if (sFormatSizingType == "px")
+			{
+				nCompSize = nColSize - nLabelSize;
+				arrColFormat.push(nCompSize + "px");
+			}
+			else
+			{
+				nCompSize = nexacro.round(nColSize/nMinColSize,2);
+				arrColFormat.push(nCompSize + "*");
+			}
+			
+		}
+		
+		// 로우정보 설정
+		for(var j=0; j < oLayout.rowsize.length; j++)
+		{
+			nRowSize = oLayout.rowsize[j];
+			nCompSize = nRowSize;
+			
+			// fieldposition이 vertical이고 라벨이 있는 경우 라벨로우 추가
+			if (sFieldPosition=="vertical" && nLabelSize > 0) {
+				arrRowFormat.push(nLabelSize + "px");
+				nCompSize = nRowSize - nLabelSize;
+			}
+			
+			// 줄이 겹쳐보이도록 1px줄여서 표기
+			if (this.BORDER_OVERLAP == true)	nCompSize = nCompSize -1;
+			
+			// 컴포넌트 로우 추가
+			arrRowFormat.push(nCompSize + "px");
+		}
+	}
+	else
+	{
+		// 컬럼정보 설정
+		if (nColumnCount <= 0) {
+			arrColFormat.push("1*");
+		} else {
+			for(var i=0; i < nColumnCount; i++)
+			{
+				// fieldposition이 horizontal이고 라벨이 있는 경우 라벨컬럼 추가
+				if (sFieldPosition=="horizontal" && nLabelSize > 0) {
+					arrColFormat.push(nLabelSize + "px");
+				}
+				
+				// 컴포넌트 컬럼 추가
+				nColSize = "1*";
+				arrColFormat.push(nColSize);
+			}
+		}
+		
+		// 로우정보 설정
+		if (nRowCount <= 0) {
+			arrRowFormat.push("1*");
+		} else {
+			
+			// px인 경우 1px 줄여서 표시
+			nRowSize = this.lfn_GetSize(sFieldHeight);
+			
+			if (this.BORDER_OVERLAP == true && !(nRowSize instanceof String)) {
+				nRowSize = nRowSize -1;
+				sRowSize = nRowSize + "px";
+			}
+				
+			for(var j=0; j < nRowCount; j++)
+			{
+				// fieldposition이 vertical이고 라벨이 있는 경우 라벨로우 추가
+				if (sFieldPosition=="vertical" && nLabelSize > 0) {
+					arrRowFormat.push(nLabelSize + "px");
+				}
+				
+				// 컴포넌트 로우 추가
+				arrRowFormat.push(sRowSize);
+			}
+		}
+	}
+	
+	// 타이틀이 있는 경우 타이틀 영역 설정
+	if (this.bTitleArea && nTitleHeight > 0)
+	{
+		var oModel = this.oContents.View.Model;
+		var oTitleDiv = oModel[oModel.length-1]["Components"][0];
+		
+		// 첫번째 Row로 타이틀 추가
+		arrRowFormat.unshift(nTitleHeight + "px");
+		
+		// 타이틀영역에 tablecellarea 설정
+		if(oTitleDiv) {
+			oTitleDiv.attribute["tablecellarea"] = "0 0 / 0 " + (arrColFormat.length -1);
+		}
+	}
+	
+	// tabletemplate 생성
+	sTableTemplate = arrRowFormat.join(" ") + " / " + arrColFormat.join(" ");
+	
+	// Table Layout의 tabletemplate 설정
+	if (oTable) {
+		oTable.attribute["tabletemplate"] = sTableTemplate;
+	}
+	
+	// Table 정보 설정
+	var oTableInfo = {
+		  "tabletemplate" 	: sTableTemplate
+		, "tablecolcount"	: arrColFormat.length
+		, "tablerowcount"	: arrRowFormat.length
+		, "columnsizes"		: arrColFormat
+		, "rowsizes"		: arrRowFormat
+		, "columncount"		: nColumnCount
+		, "rowcount"		: nRowCount
+	};
+	
+	return oTableInfo;
+};
+
+/*---------------------------------------------------------------------------------------------*
+ * Function     : fn_CalcLayoutTable
+ * Parameter    : obj
+ * Return       :
+				- oLayout : Layout Setting Information
+				- nViewCompWidth : View Component Real Width
+				- nViewCompHeight : View Component Real Height
+ * Description  : Layout Calculation Function
+ *---------------------------------------------------------------------------------------------*/
+fn_CalcLayoutTable = function(oLayout, nViewCompWidth, nViewCompHeight, oTableInfo)
+{
+	//CellList Information set on Layout
+	var arrCellList = oLayout.celllist;
+
+	//ColumnSize Information set on Layout
+	var arrColSize = oLayout.columnsize;
+
+	//RowSize Information set on Layout
+	var arrRowSize = oLayout.rowsize;
+
+	//CellList Quantity
+	var nCellCnt = arrCellList.length;
+
+	//The Sum of Column/Row Sizes that were not set as -1
+	var nAllColSize = 0;
+	var nAllRowSize = 0;
+
+	//Quantity of Column/Row Size set as -1
+	var nNoColSizeCnt = 0;
+	var nNoRowSizeCnt = 0;
+
+	//Replacement Size if Column/Row Size is -1
+	var nColSizeDef = 0;
+	var nRowSizeDef = 0 ;
+
+	var oCell;
+	var sDirection, sVAlign, sHAlign;
+	var nCol, nRow, nColSpan, nRowSpan;
+	var nColSize, nRowSize;
+	var nColumnCount, nRowCount;
+	var bMergeLabel;
+
+	var nCompWidth;
+	var nCompWidthType;
+	var nFiledWidthMax;
+	var nCompHeight;
+	var nCompHeightType;
+	var nCompHeightMax;
+	
+	var sFieldPosition = this.oGenerationAttr.attributes.fieldposition;
+
+	//Evaluate Sum of Column Sizes that are not set as -1
+	nAllColSize = arrColSize.reduce(function (pre, value){
+		if(value==-1)return pre;
+		else return pre + value;
+	});
+
+	//Evaluate Sum of Row Sizes that are not set as -1
+	nAllRowSize = arrRowSize.reduce(function (pre, value){
+		if(value==-1)return pre;
+		else return pre + value;
+	});
+
+	if(nAllColSize==-1)nAllColSize = 0;
+
+	if(nAllRowSize==-1)nAllRowSize = 0;
+
+	//Evaluate Quantity of Column/Rows set as -1
+	nNoColSizeCnt = arrColSize.filter(arrColSize=>arrColSize==-1).length;
+	nNoRowSizeCnt = arrRowSize.filter(arrRowSize=>arrRowSize==-1).length;
+
+	//If there are Column/Rows set as -1
+	//(View Component Size -(The Sum of Column/Row Sizes not set as -1))/Number of Column/Rows set as -1
+	if(nNoColSizeCnt>0)nColSizeDef = (nViewCompWidth - nAllColSize)/nNoColSizeCnt;
+	if(nNoRowSizeCnt>0)nRowSizeDef = (nViewCompHeight - nAllRowSize)/nNoRowSizeCnt;
+
+	//Save Default Column/Row Size on Layout
+	oLayout.colsizedef = nColSizeDef;
+	oLayout.rowsizedef = nRowSizeDef;
+
+	//Evaluate the Field Location Value of each Cell
+	for(var i=0;i<nCellCnt;i++)
+	{
+		//Import Information set on Cell
+		oCell = arrCellList[i];
+		sDirection = oCell.direction;
+		sVAlign = oCell.valign;
+		sHAlign = oCell.halign;
+		nCol = nexacro.toNumber(oCell.col);
+		nRow = nexacro.toNumber(oCell.row);
+		nColSpan = nexacro.toNumber(oCell.colspan);
+		nRowSpan = nexacro.toNumber(oCell.rowspan);
+		bMergeLabel = this.lfn_Nvl(oCell.mergelabel,this.MERGE_LABEL);
+
+		//Initialize to 1 if there are no Col/RowSpan Values
+		if(!nColSpan)nColSpan = 1;
+		if(!nRowSpan)nRowSpan = 1;
+
+		//Evaluate the Width/Height of that Cell
+		nColSize = this.lfn_GetCellSize(oLayout.columnsize, nCol, nColSpan, nColSizeDef);
+		nRowSize = this.lfn_GetCellSize(oLayout.rowsize, nRow, nRowSpan, nRowSizeDef);
+
+		//Save the Width/Height Value on that Cell
+		oCell.realcolsize = nColSize;
+		oCell.realrowsize = nRowSize;
+		
+		//If there are fields connected to that Cell
+		if(oCell.fieldlist)
+		{
+			nColumnCount = oCell.fieldlist.length;
+			nRowCount = 1;
+			
+			// Cell 위치계산
+			// MergeLabel을 설정한 경우, RootTable의 컴포넌트 셀 영역에 선택된 필드컴포넌트를 모두 생성
+			// MergeLabel을 설정하지 않은 경우, RootTable의 라벨과 컴포넌트 셀 영역에 테이블 레이아웃 Panel을 생성 후 설정
+			oCell.fieldposition = fn_CalcFieldTable(sDirection, sFieldPosition, nColumnCount, nRowCount, nColSize, nRowSize, oCell.fieldlist, bMergeLabel, nColSpan, nRowSpan);
+		}
+	}
+};
+
+/*---------------------------------------------------------------------------------------------*
+ * Function     : fn_CalcFieldTable
+ * Parameter    :
+ * Return       : arrFieldPosition : Object Array with Field Location Information
+ * Description  : Function to Evaluate the Field Location Value to be Expressed
+ *---------------------------------------------------------------------------------------------*/
+fn_CalcFieldTable = function(sDirection, sFieldPosition, nColumnCount, nRowCount, nColSize, nRowSize, arrFieldInCellList, bMergeLabel, nColSpan, nRowSpan)
+{
+	var nLeft = 0;
+	var nTop  = 0;
+	var nRowIdx = 0;
+	var nColIdx = 0;
+	var nFieldAreaWidth = 0;
+	var nFieldAreaHeight = 0;
+	var bAreaPanel = false;
+	var nAreaColSpan = nColSpan;
+	var nAreaRowSpan = nRowSpan;
+	
+	var nLabelSColIdx, nLabelEColIdx, nLabelSRowIdx, nLabelERowIdx;
+	var nCompSColIdx, nCompEColIdx, nCompSRowIdx, nCompERowIdx;
+	var nCompWidth, nCompHeight;
+	
+	var sFieldId;
+	var oField;
+	var sLabelFieldId = "";
+	var nColSizeBase, nRowSizeBase;
+	var nCompWidthBase, nCompHeightBase;
+	
+	var oViewAttr = this.oGenerationAttr.attributes;
+	
+	//Import Field List Registered to the Model
+	var arrFieldList = this.oUseFieldArray.fields;
+	
+	//Number of Fields connected to the Cell
+	var nFieldInCellCnt;
+
+	//Object Array to save the Field Location Information
+	var arrFieldPosition = [];
+	
+	//Import Label Width Information set on the current Field
+	var nLabelSize = nexacro.toNumber(oViewAttr.labelsize);
+	
+	if (this.lfn_IsNull(bMergeLabel))	bMergeLabel = "false";
+	if (this.lfn_IsNull(nColSpan))		nColSpan = 1;
+	if (this.lfn_IsNull(nRowSpan))		nRowSpan = 1;
+	
+	// format 설정하지 않은 경우
+	if (this.lfn_IsNull(arrFieldInCellList))
+	{
+		nFieldInCellCnt = arrFieldList.length;
+		
+		nColSizeBase = nColSize;
+		nRowSizeBase = nRowSize;
+		
+		nCompWidthBase = nexacro.round(nColSize/nColumnCount,0);
+		nCompHeightBase = nexacro.round(nRowSize/nRowCount,0);
+		
+		// 컴포넌트 사이즈
+		if (sFieldPosition=="horizontal")
+		{
+			nCompWidth = this.lfn_GetRealSize(this.COMP_WIDTH, 0, nCompWidthBase, this.COMP_WIDTH, 0, 0);
+			nCompHeight = this.lfn_GetRealSize(oViewAttr.fieldheight, 0, nCompHeightBase, this.COMP_HEIGHT, 0, 0);
+		}
+		else
+		{
+			nCompWidth = this.lfn_GetRealSize(this.COMP_WIDTH, 0, nCompWidthBase, this.COMP_WIDTH, 0, 0);
+			nCompHeight = this.lfn_GetRealSize(oViewAttr.fieldheight, nLabelSize, nCompHeightBase, this.COMP_HEIGHT, 0, 0);
+		}
+	}
+	// format 설정한 경우
+	else
+	{
+		nFieldInCellCnt = arrFieldInCellList.length;
+		
+		nColSizeBase = nColSize;
+		nRowSizeBase = nRowSize;
+		
+		// MergeLabel인 경우 컴포넌트 기본사이즈는 라벨사이즈 제외하고, 균등분할
+		if(bMergeLabel == "true")
+		{
+			if (sFieldPosition=="horizontal")
+			{
+				nColSizeBase = nColSizeBase-nLabelSize;
+			}
+			else
+			{
+				nRowSizeBase = nRowSizeBase-nLabelSize;
+			}
+			
+			nCompWidth = nexacro.round(nColSizeBase/nColumnCount,0);
+			nCompHeight = nexacro.round(nRowSizeBase/nRowCount,0);
+		}
+		else
+		{
+			nCompWidth = nexacro.round(nColSizeBase/nColumnCount,0);
+			nCompHeight = nexacro.round(nRowSizeBase/nRowCount,0);
+			
+			if (sFieldPosition=="horizontal")
+			{
+				nCompWidth = nCompWidth-nLabelSize;
+			}
+			else
+			{
+				nCompHeight = nCompHeight-nLabelSize;
+			}
+			
+			// 하위필드가 2개 이상일때 Table타입의 Panel 추가
+			if (nFieldInCellCnt > 1)
+			{
+				bAreaPanel = true;
+				nColSpan = 1;
+				nRowSpan = 1;
+			}
+		}
+	}
+	
+	for(var j=0;j<nFieldInCellCnt;j++)
+	{
+		//If Layout was used
+		//Import Field Information registered on the Model based on the Fields connected to the Cell
+		if (!this.lfn_IsNull(arrFieldInCellList))			// layout
+		{
+			sFieldId =  arrFieldInCellList[j];
+			oField = arrFieldList.filter(arrFieldList=>arrFieldList.id==sFieldId)[0];
+		}
+		//If Layout was not used
+		//Import Field Information registered on the Model
+		else												
+		{
+			oField = arrFieldList[j];
+			sFieldId = oField.id;
+		}
+		
+		// oField가 없거나 usecomp == "false"인 경우 포지션 정보 없음
+		if (this.lfn_IsNull(oField) || oField.usecomp == "false") {
+			arrFieldPosition[j] = { "fieldid" : sFieldId};
+			continue;
+		}
+		
+		// FieldAraea 사이즈 구함
+		if (sFieldPosition=="horizontal")
+		{
+			nFieldAreaWidth = nCompWidth + nLabelSize;
+			nFieldAreaHeight = nCompHeight;
+		}
+		else
+		{
+			nFieldAreaWidth = nCompWidth;
+			nFieldAreaHeight = nCompHeight + nLabelSize;
+		}
+		
+		//If the Component Production Direction is Horizontal
+		if(sDirection=="horizontal")
+		{
+			//Start a new line if the Field exceeds the Cell Height
+			if(nColIdx >(nColumnCount-1))
+			{
+				//Initialize the Left Coordinate
+				nLeft = 0;
+				
+				//Create the starting Left/Top Coordinates of the next Row
+				nTop = nFieldAreaHeight;
+				
+				//Initialize the Col Index
+				nColIdx = 0;
+
+				//Increase Row Index
+				nRowIdx++;
+			}
+		}
+		//If the Component Production Direction is Vertical
+		else
+		{
+			//Start a new line if the Field exceeds the Cell Height
+			if(nRowIdx>(nRowCount-1))
+			{
+				//Create the starting Left/Top Coordinates of the next Row
+				nLeft += nFieldAreaWidth;
+
+				//Initialize Top Coordinate
+				nTop  = 0;
+				
+				//Increase Col Index
+				nColIdx++;
+				
+				//Initialize the Row Index
+				nRowIdx = 0;
+			}
+		}
+		
+		// 필드배치에 따라 Index계산
+		if (sFieldPosition=="horizontal")
+		{
+			nLabelSColIdx = nColIdx * 2;
+			nLabelEColIdx = nLabelSColIdx;
+			nCompSColIdx = nLabelSColIdx + 1;
+			nCompEColIdx = nCompSColIdx + ((nColSpan-1) * 2);
+			
+			nLabelSRowIdx = nRowIdx;
+			nLabelERowIdx = nLabelSRowIdx + (nRowSpan-1);
+			nCompSRowIdx = nRowIdx;
+			nCompERowIdx = nCompSRowIdx + (nRowSpan-1);
+		}
+		else
+		{
+			nLabelSColIdx = nColIdx;
+			nLabelEColIdx = nLabelSColIdx + (nColSpan-1);
+			nCompSColIdx = nColIdx;
+			nCompEColIdx = nCompSColIdx + (nColSpan-1);
+			
+			nLabelSRowIdx = nRowIdx * 2;
+			nLabelERowIdx = nLabelSRowIdx;
+			nCompSRowIdx = nLabelSRowIdx + 1;
+			nCompERowIdx = nCompSRowIdx + ((nRowSpan-1) * 2);
+		}
+		
+		//Save the Field Location Information
+		arrFieldPosition[j] =
+		{
+			"fieldid" : sFieldId,
+			"left" : nLeft,
+			"top" : nTop,
+			"width" : nFieldAreaWidth,
+			"height" : nFieldAreaHeight,
+			"colidx" : nColIdx,
+			"rowidx" : nRowIdx,
+			"colspan" : nColSpan,
+			"rowspan" : nRowSpan,
+			"labelscolidx" : nLabelSColIdx,
+			"labelecolidx" : nLabelEColIdx,
+			"labelsrowidx" : nLabelSRowIdx,
+			"labelerowidx" : nLabelERowIdx,
+			"compscolidx" : nCompSColIdx,
+			"compecolidx" : nCompEColIdx,
+			"compsrowidx" : nCompSRowIdx,
+			"comperowidx" : nCompERowIdx,
+			"useareapanel" : bAreaPanel,
+			"areacolspan" : nAreaColSpan,
+			"arearowspan" : nAreaRowSpan,
+			"labelfieldid" : sLabelFieldId
+		};
+		
+		//this.lfn_Log(arrFieldPosition[j]);
+		
+		if(bMergeLabel == "true")
+		{
+			// 첫번째 항목만 라벨사이즈 지정. 그외 항목은 라벨필드명 설정
+			if(this.lfn_IsNull(sLabelFieldId)) {
+				sLabelFieldId = sFieldId;
+				nLabelSize = 0;
+			}
+		}
+		
+		//Set the Left/Top Location Value of the next Field
+		//Increase Col Index
+		if(sDirection=="horizontal") {
+			nLeft += nFieldAreaWidth;
+			nColIdx++;
+		} else {
+			nTop += nFieldAreaHeight;
+			nRowIdx++;
+		}
+	}
+
+	//Return Field Location Information
+	return arrFieldPosition;
+};
+/*---------------------------------------------------------------------------------------------*
+ * Function     : fn_MakeCompByLayout
+ * Parameter    :
+				- oLayout : Layout Setting Information
+ * Return       :
+ * Description  : Layout-based Component Production Function
+ *---------------------------------------------------------------------------------------------*/
+fn_MakeCompTableByLayout = function(oLayout, oTableInfo)
+{
+	//CellList Information set on Layout
+	var arrCellList = oLayout.celllist;
+
+	//ColumnSize Information set on Layout
+	var arrColSize = oLayout.columnsize;
+
+	//RowSize Information set on Layout
+	var arrRowSize = oLayout.rowsize;
+
+	//Import Column/Row Default Size
+	var nColSizeDef = oLayout.colsizedef;
+	var nRowSizeDef = oLayout.rowsizedef;
+	
+	var nCol, nRow, nColSpan, nRowSpan;
+	var sDirection, sVAlign, sHAlign;
+	var nWidth;
+	var nHeight;
+	var bMergeLabel;
+	var nCellSColIdx, nCellEColIdx, nCellSRowIdx, nCellERowIdx;
+
+	var oCell;
+	var oStatic;
+	
+	var sFieldPosition = this.oGenerationAttr.attributes.fieldposition;
+
+	for(var i=0;i<arrCellList.length;i++)
+	{
+		oCell = arrCellList[i];
+		sDirection = oCell.direction
+		nCol = nexacro.toNumber(oCell.col);
+		nRow = nexacro.toNumber(oCell.row);
+		nColSpan = nexacro.toNumber(oCell.colspan);
+		nRowSpan = nexacro.toNumber(oCell.rowspan);
+		bMergeLabel = oCell.mergelabel;
+
+		//Initialize to 1 if there are no Col/RowSpan Values
+		if(!nColSpan)nColSpan = 1;
+		if(!nRowSpan)nRowSpan = 1;
+
+		//Continue if there are no Fields on the Cell
+		if(!oCell.fieldlist)continue;
+		
+		// 필드배치에 따라 Index계산
+		if (sFieldPosition=="horizontal")
+		{
+			nCellSColIdx = nCol * 2;
+			nCellEColIdx = (nCol + (nColSpan-1)) * 2;
+			nCellSRowIdx = nRow;
+			nCellERowIdx = nRow + (nRowSpan-1);
+		}
+		else
+		{
+			nCellSColIdx = nCol;
+			nCellEColIdx = nCol + (nColSpan-1);
+			nCellSRowIdx = nRow * 2;
+			nCellERowIdx = (nRow + (nRowSpan-1)) * 2;
+		}
+		
+		// 타이틀 여부에 따라 Row Index 계산
+		if (this.bTitleArea) {
+			nCellSRowIdx = nCellSRowIdx + 1;
+			nCellERowIdx = nCellERowIdx + 1;
+		}
+		
+		// 컴포넌트 생성
+		fn_MakeCompTable(nCellSColIdx, nCellSRowIdx, oCell.realcolsize, oCell.realrowsize, oTableInfo, oCell.fieldposition, bMergeLabel, nCol, nRow);
+	}
+};
+
+/*---------------------------------------------------------------------------------------------*
+ * Function     : fn_MakeCompTable
+ * Parameter    :
+ * Return       :
+ * Description  : Component Tag Production Function
+ *---------------------------------------------------------------------------------------------*/
+fn_MakeCompTable = function(nBaseColIdx, nBaseRowIdx, nViewCompWidth, nViewCompHeight, oTableInfo, arrFields, bMergeLabel, nLayoutCol, nLayoutRow)
+{
+	var nLabelLeft, nLabelTop, nLabelWidth, nLabelHeight, sLabelTableCellArea;
+	var nCompLeft, nCompTop, nCompWidth, nCompHeight, sCompTableCellArea;
+	var nCompBgWidth, sCompBgTableCellArea;
+	var nPaddingLeft, nPaddingTop, nPaddingRight, nPaddingBottom;
+	
+	var sFieldId;
+	var oField;
+	var oFieldPosition;
+	var nColIdx, nRowIdx;
+	var nColSpan, nRowSpan;
+	var nColStartIdx, nColEndIdx, nRowStartIdx, nRowEndIdx;
+	var nLabelSColIdx, nLabelEColIdx, nLabelSRowIdx, nLabelERowIdx;
+	var nCompSColIdx, nCompEColIdx, nCompSRowIdx, nCompERowIdx;
+	
+	var oModel = this.oContents.View.Model;
+	var oViewAttr = this.oGenerationAttr.attributes;
+	
+	var sCompId;
+	var sCompClassId;
+	var oCompClass;
+	var oLabelClass			= this.lfn_GetCompClass(this.LABEL_TYPE);
+	var oCompBgClass		= this.lfn_GetCompClass(this.COMP_BG_TYPE);
+	var sCompCssClass;
+	var sLabelCssClass;
+	var sFieldBgCssClass = oViewAttr.fieldboxcssclass;
+	var sFieldPosition;
+	var sLabelFieldId;
+	var bAreaPanel;
+	var oInPanelTable;
+	
+	var bCompBgPanel = false;
+	var oCompBgPanel;
+	var oPanelAttr;
+	var arrBgPanelItem = new Array();
+	
+	// FieldBox 사용여부
+	var sUseFieldBox = oViewAttr.usefieldbox;
+	
+	var nLabelSize = nexacro.toNumber(oViewAttr.labelsize);
+	var sFieldHeight = oViewAttr.fieldheight;
+	
+	var nColumnCount = oTableInfo.columncount;
+	var nRowCount = oTableInfo.rowcount;
+	var nTableColCount = oTableInfo.tablecolcount;
+	var nTableRowCount = oTableInfo.tablerowcount;
+	
+	var arrPanelItem = new Array();
+	
+	var oLayoutRoot = this.oLayoutRoot;
+
+	if(this.lfn_IsNull(bMergeLabel))	bMergeLabel = "false";
+	
+	// Table 형식에서는 사이즈를 테이블 사이즈로 지정
+	nLabelWidth = "100%";
+	nLabelHeight = "100%";
+	nCompWidth = "100%";
+	nCompHeight = "100%";
+	nCompBgWidth = "100%";
+	
+	for(var i=0;i<arrFields.length;i++)
+	{
+		//Import Field Object
+		oFieldPosition = arrFields[i];
+		sFieldId = oFieldPosition.fieldid;
+		oField = this.oUseFieldArray.fields.filter(fields=>fields.id==sFieldId)[0];
+		
+		if (this.lfn_IsNull(oField))		continue;
+
+		//Import Component Naming Rules
+		oCompClass = this.lfn_GetCompClass(oField.comptype, oField);
+
+		//Import Component Css Class Id Value
+		sCompCssClass = this.lfn_GetCssClass(oField, "cssclass", this.COMP_CSSCLASS, this.COMP_REQUIRED_CSSCLASS);
+		
+		//Import Label Css Class Id Value
+		sLabelCssClass = this.lfn_GetCssClass(oField, "labelcssclass", this.LABEL_CSSCLASS, this.LABEL_REQUIRED_CSSCLASS);
+		
+		sFieldPosition = oViewAttr.fieldposition;
+		
+		sLabelFieldId	= oFieldPosition.labelfieldid;
+		bAreaPanel		= oFieldPosition.useareapanel;
+		
+		//Import Row/Col Index where the Field will be located
+		nColIdx = nexacro.toNumber(oFieldPosition.colidx);
+		nRowIdx = nexacro.toNumber(oFieldPosition.rowidx);
+		nColSpan = nexacro.toNumber(oFieldPosition.colspan);
+		nRowSpan = nexacro.toNumber(oFieldPosition.rowspan);
+		
+		nPosLeft = nexacro.toNumber(oFieldPosition.left);
+		nPosTop = nexacro.toNumber(oFieldPosition.top);
+		nPosWidth = nexacro.toNumber(oFieldPosition.width);
+		nPosHeight = nexacro.toNumber(oFieldPosition.height);
+		
+		nLabelSColIdx = nexacro.toNumber(oFieldPosition.labelscolidx);
+		nLabelEColIdx = nexacro.toNumber(oFieldPosition.labelecolidx);
+		nLabelSRowIdx = nexacro.toNumber(oFieldPosition.labelsrowidx);
+		nLabelERowIdx = nexacro.toNumber(oFieldPosition.labelerowidx);
+		
+		nCompSColIdx = nexacro.toNumber(oFieldPosition.compscolidx);
+		nCompEColIdx = nexacro.toNumber(oFieldPosition.compecolidx);
+		nCompSRowIdx = nexacro.toNumber(oFieldPosition.compsrowidx);
+		nCompERowIdx = nexacro.toNumber(oFieldPosition.comperowidx);
+		
+		// fieldposition에 따라 Padding값 설정
+		if (sFieldPosition=="vertical")
+		{
+			nPaddingLeft	= this.V_COMP_PADDING_LEFT;
+			nPaddingTop		= this.V_COMP_PADDING_TOP;
+			nPaddingRight	= this.V_COMP_PADDING_RIGHT;
+			nPaddingBottom	= this.V_COMP_PADDING_BOTTOM;
+		}
+		else
+		{
+			nPaddingLeft	= this.H_COMP_PADDING_LEFT;
+			nPaddingTop		= this.H_COMP_PADDING_TOP;
+			nPaddingRight	= this.H_COMP_PADDING_RIGHT;
+			nPaddingBottom	= this.H_COMP_PADDING_BOTTOM
+		}
+		
+		// 컴포넌트 여백이 있는 경우에만 Panel 생성.
+		if (nPaddingLeft + nPaddingTop + nPaddingRight + nPaddingBottom > 0)		bCompBgPanel = true;
+		
+		//FluidLayout에서는 left, top값이 필요 없으나, 기본값 셋팅을 위해 계산함.
+		//Label과 Comp를 상하배치
+		if (sFieldPosition=="vertical")
+		{
+			nLabelLeft = nPosLeft;
+			nLabelTop = nPosTop;
+			
+			nCompLeft = nLabelLeft;
+			nCompTop = nLabelTop + nLabelSize;
+			
+			// border를 겹쳐서 표시할지 여부
+			if (this.BORDER_OVERLAP)
+			{
+				nLabelHeight = nLabelSize;
+			}
+		}
+		//Label과 Comp를 좌우배치
+		else
+		{
+			nLabelLeft = nPosLeft;
+			nLabelTop = nPosTop;
+			
+			nCompLeft = nLabelLeft + nLabelSize;
+			nCompTop = nPosTop;
+			
+			// border를 겹쳐서 표시할지 여부
+			if (this.BORDER_OVERLAP)
+			{
+				nPosHeight = nPosHeight - (nRowSpan-1);
+				nLabelHeight = nPosHeight;
+			}
+		}
+		
+		// useareapanel이 true인 경우, 내부에 Panel생성 후 해당 Table에 컴포넌트 연결
+		if (bAreaPanel && this.lfn_IsNull(oInPanelTable))
+		{
+			var sInPanelTableId;
+			var sInPanelTableCellArea;
+			var nInPanelTableECol, nInPanelTableERow;
+			var oPanelClass = this.lfn_GetCompClass("panel");
+			var nAreaColSpan = nexacro.toNumber(oFieldPosition.areacolspan);
+			var nAreaRowSpan = nexacro.toNumber(oFieldPosition.arearowspan);
+			var nAreaFieldHeight = sFieldPosition=="vertical" ? nPosHeight - nLabelSize : nPosHeight;
+			
+			// 내부 Table Panel tablecellarea 계산
+			if (sFieldPosition=="horizontal")
+			{
+				nInPanelTableECol = nBaseColIdx + ((nAreaColSpan-1) * 2) + 1;
+				nInPanelTableERow = nBaseRowIdx + (nAreaRowSpan-1);
+			}
+			else
+			{
+				nInPanelTableECol = nBaseColIdx + (nAreaColSpan-1);
+				nInPanelTableERow = nBaseRowIdx + ((nAreaRowSpan-1) * 2) + 1;
+			}
+			
+			sInPanelTableCellArea = nBaseRowIdx + " " + nInPanelTableERow + "/" + nBaseColIdx + " " + nInPanelTableECol;
+			sInPanelTableId = oPanelClass.prefix + "_" + nBaseRowIdx + "_" + nInPanelTableERow + "_" + nBaseColIdx + "_" + nInPanelTableECol;
+			
+			oPanelAttr = {
+				"id" : sInPanelTableId
+				, "left" : nLabelLeft
+				, "top" : nLabelTop
+				, "width" : "100%"
+				, "height" : "100%"
+				, "type" : "table"
+				, "tablecellarea" : sInPanelTableCellArea
+			};
+			
+			oInPanelTable = { "tag" : oPanelClass.classId, "attribute" : oPanelAttr};
+			
+			// 내부 Table Panel의 Tabel정보 설정(tabletemplate)
+			var oInPanelTableInfo = fn_GetTableInfo(oInPanelTable, sFieldPosition, arrFields.length, 1, nLabelSize, nAreaFieldHeight + "px", 0);
+			
+			// Panel 컴포넌트 추가
+	 		oModel[oModel.length] ={ "fieldid" : this.VIEW_COMP_FIELD_ID, "Components" : [oInPanelTable]};
+			this.lfn_GetPanelContents(this.oLayoutRoot, [sInPanelTableId]);
+			
+			// 컴포넌트는 내부 Table Panel 기준으로 생성되기 위해 변수 설정
+			oLayoutRoot = oInPanelTable;
+			nBaseColIdx = 0;
+			nBaseRowIdx = 0;
+			nTableColCount = oInPanelTableInfo.tablecolcount;
+			nTableRowCount = oInPanelTableInfo.tablerowcount;
+		}
+		
+		// Model값 초기화
+		oModel[oModel.length] = {"fieldid" : sFieldId,"Components" : []};
+		
+		//bMergeLabel이 false인 경우 Fieldbox, label 생성, bMergeLabel이 true인 경우 첫번째 Field 경우에만 생성
+		if (bMergeLabel=="false" || i==0)
+		{
+			// Field배경 Box 생성
+			if(sUseFieldBox == "true")
+			{
+				// 첫번째 Column일때만 배경Box 생성
+				if (this.MERGE_COMP_BG == "true")
+				{
+					if (nColIdx == 0)
+					{
+						nColStartIdx = nBaseColIdx + nLabelSColIdx;
+						nColEndIdx = nTableColCount -1;
+						nRowStartIdx = nBaseRowIdx + nLabelSRowIdx;
+						nRowEndIdx = nBaseRowIdx + nCompERowIdx;
+						sCompBgTableCellArea = nRowStartIdx + " " + nRowEndIdx + "/" + nColStartIdx + " " + nColEndIdx;
+						
+						//필드 배경 Static 추가
+						sCompId = this.lfn_GetCompId(oCompBgClass.prefix + "_" + sFieldId + "_" + "Bg");
+						oComp = {
+									"tag" : oCompBgClass.classId,
+									"attribute" :
+									{
+										"id" : sCompId, "left" : nLabelLeft, "top" : nLabelTop, "width" : nCompBgWidth, "height" : nPosHeight
+										,"cssclass" : sFieldBgCssClass, "tablecellarea" : sCompBgTableCellArea
+									}
+								};
+						oModel[oModel.length-1].Components.push(oComp);
+						arrPanelItem.push(sCompId);
+					}
+				}
+				// Field마다 생성
+				else
+				{
+					nColStartIdx = nBaseColIdx + nLabelSColIdx;
+					nColEndIdx = nBaseColIdx + nCompEColIdx;
+					nRowStartIdx = nBaseRowIdx + nLabelSRowIdx;
+					nRowEndIdx = nBaseRowIdx + nCompERowIdx;
+					sCompBgTableCellArea = nRowStartIdx + " " + nRowEndIdx + "/" + nColStartIdx + " " + nColEndIdx;
+						
+					//필드 배경 Static 추가
+					sCompId = this.lfn_GetCompId(oCompBgClass.prefix + "_" + sFieldId + "_" + "Bg");
+					oComp = {
+								"tag" : oCompBgClass.classId,
+								"attribute" :
+								{
+									"id" : sCompId, "left" : nLabelLeft, "top" : nLabelTop, "width" : nCompBgWidth, "height" : nPosHeight
+									,"cssclass" : sFieldBgCssClass, "tablecellarea" : sCompBgTableCellArea
+								}
+							};
+					oModel[oModel.length-1].Components.push(oComp);
+					arrPanelItem.push(sCompId);
+				}
+			}
+			
+			//라벨 Static 추가
+			if(nLabelSize>0)
+			{
+				nColStartIdx = nBaseColIdx + nLabelSColIdx;
+				nColEndIdx = nBaseColIdx + nLabelEColIdx;
+				nRowStartIdx = nBaseRowIdx + nLabelSRowIdx;
+				nRowEndIdx = nBaseRowIdx + nLabelERowIdx;
+				sLabelTableCellArea = nRowStartIdx + " " + nRowEndIdx + "/" + nColStartIdx + " " + nColEndIdx;
+				
+				sCompId = this.lfn_GetCompId(oLabelClass.prefix + "_" + sFieldId + "_" + "Label");
+				oComp = {
+							"tag" : oLabelClass.classId,
+							"attribute" :
+							{
+								"id" : sCompId, "left" : nLabelLeft, "top" : nLabelTop, "width" : nLabelWidth, "height" : nLabelHeight
+								, "text" : oField.label, "cssclass" : sLabelCssClass , "tablecellarea" : sLabelTableCellArea
+							}
+						};
+				oModel[oModel.length-1].Components.push(oComp);
+				arrPanelItem.push(sCompId);
+			}
+		}
+
+		//Add Component Tag
+		// 컴포넌트 tablecellarea 계산
+		nColStartIdx = nBaseColIdx + nCompSColIdx;
+		nColEndIdx = nBaseColIdx + nCompEColIdx;
+		nRowStartIdx = nBaseRowIdx + nCompSRowIdx;
+		nRowEndIdx = nBaseRowIdx + nCompERowIdx;
+		sCompTableCellArea = nRowStartIdx + " " + nRowEndIdx + "/" + nColStartIdx + " " + nColEndIdx;
+		
+		sCompId = this.lfn_GetCompId(oCompClass.prefix + "_" + sFieldId);
+		sCompClassId = oCompClass.classId;
+		
+		// 여백처리용 Panel 생성여부
+		if (bCompBgPanel)
+		{
+			// MergeLabel이 설정되지 않을때 Panel 생성
+			if(this.lfn_IsNull(sLabelFieldId))
+			{
+				oPanelAttr = { "left" : nCompLeft, "top" : nCompTop, "width" : nCompWidth, "height" : nCompHeight};
+				oPanelAttr["type"] = "horizontal";
+				oPanelAttr["spacing"] = nPaddingTop + "px " + nPaddingRight + "px " + nPaddingBottom + "px " + nPaddingLeft + "px";
+				oPanelAttr["horizontalgap"] = this.MERGE_LABEL_COMP_SPACE;
+				oPanelAttr["verticalgap"] = this.MERGE_LABEL_LINE_SPACE;
+				oPanelAttr["tablecellarea"] = sCompTableCellArea;
+				
+				arrBgPanelItem = [sCompId];
+				
+				oCompBgPanel = this.lfn_GetPanelJson(sFieldId,arrBgPanelItem,oPanelAttr);
+				
+				oModel[oModel.length-1].Components.push(oCompBgPanel);
+				arrPanelItem.push(oCompBgPanel.attribute.id);
+			}
+			else
+			{
+				// MergeLable인 경우 두번째항목부터는 Panel에 Item만 추가
+				if (bMergeLabel=="true")
+				{
+					if (oCompBgPanel)
+					{
+						arrBgPanelItem.push(sCompId);
+						this.lfn_GetPanelContents(oCompBgPanel,arrBgPanelItem);
+					}
+				}
+			}
+			
+			// Panel안 컴포넌트 사이즈 조절
+			nCompLeft = 0;
+			nCompTop = 0;
+			nCompWidth = "100%";
+			nCompHeight = "100%";
+		}
+		else
+		{
+			arrPanelItem.push(sCompId);
+		}
+		
+		oComp = {
+					"tag" : sCompClassId,
+					"attribute" :
+					{
+						"id" : sCompId, "left" : nCompLeft, "top" : nCompTop, "width" : nCompWidth, "height" : nCompHeight
+						, "cssclass" : sCompCssClass, "tablecellarea" : sCompTableCellArea
+					}
+				};
+		
+		// 컴포넌트별 기본 속성 설정
+		if (!this.lfn_IsNull(oCompClass.attribute))		Object.assign(oComp.attribute, oCompClass.attribute);
+		
+		//If the Component Type is Button,Checkbox,Static, add label text to the text properties
+		if(sCompClassId=="Button" || sCompClassId=="CheckBox" || sCompClassId=="Static")
+		{
+			oComp.attribute.text = oField.label;
+		}
+		
+		// Readonly 처리
+		if(oField.compreadonly == "true")
+		{
+			// 조회모드(readonly처리, 스핀버튼,드롭다운버튼 안보이게 처리)
+			if(sCompClassId=="Calendar" || sCompClassId=="CheckBox" || sCompClassId=="Combo" || sCompClassId=="Edit"
+				|| sCompClassId=="MaskEdit" || sCompClassId=="Radio" || sCompClassId=="Spin" || sCompClassId=="TextArea"
+				|| sCompClassId=="TextField" || sCompClassId=="MultiLineTextField")
+			{
+				oComp.attribute.readonly = "true";
+				
+				// reaonly시 라벨처럼 보이게 처리 여부
+				if (this.COMP_READONLY_LABEL_STYLE == "true")
+				{
+					if (this.lfn_IsNull(sCompCssClass) || sCompCssClass == this.COMP_REQUIRED_CSSCLASS) {
+						oComp.attribute.cssclass = this.COMP_READONLY_CSSCLASS;
+					}
+					
+					// 스핀버튼, 드롭다운버튼 안보이게 처리
+					if (sCompClassId=="Spin" || sCompClassId=="Combo" || sCompClassId=="Calendar")
+					{
+						oComp.attribute.buttonsize = "0";
+					}
+				}
+			}
+		}
+		
+		if(sCompClassId!="Button")
+		{
+			//In order to process the Bind, add Id, Field Id to BindItems Array
+			this.arrBindItems[this.arrBindItems.length] = {"compid" : sCompId, "fieldid" : sFieldId, "comptype" : oField.comptype, "compclassid" : sCompClassId};
+		}
+
+		oModel[oModel.length-1].Components.push(oComp);
+	}
+	
+	// Root가 Panel인 경우 PanelItem 설정
+	if (oLayoutRoot)
+	{
+		this.lfn_GetPanelContents(oLayoutRoot, arrPanelItem);
+	}
+};
+
+/*---------------------------------------------------------------------------------------------*
+ * Function     : fn_GetInitValue
+ * Return       : initvalue contents (JSON format)
+ * Description  : Function to generate <InitValue> source
+ *---------------------------------------------------------------------------------------------*/
+fn_GetInitValue = function()
+{
+
+    var oInitValue = [];
+
+    return oInitValue;
+};
+
+/*---------------------------------------------------------------------------------------------*
+ * Function     : fn_GetObjects
+ * Return       : objects contents (JSON format)
+ * Description  : Function to generate <Objects> source
+ *---------------------------------------------------------------------------------------------*/
+fn_GetObjects = function()
+{
+	//Initialize Object
+	var oObjects = [];
+
+	var oViewDataset = this.lfn_GetDataset("viewdataset", this.oFieldArray, 1);
+
+	//Object Information Setting
+	oObjects.push(oViewDataset);
+
+	// InnerDataset 정보
+	var oInner = this.lfn_GetInnerDataset(this.oUseFieldArray);
+
+	oObjects = oObjects.concat(oInner);
+
+	//Return Object Information
+	return oObjects;
+};
+
+/*---------------------------------------------------------------------------------------------*
+ * Function     : fn_GetBind
+ * Return       : bind contents (JSON format)
+ * Description  : Function to generate <Bind> source
+ *---------------------------------------------------------------------------------------------*/
+fn_GetBind = function()
+{
+	var oBind = this.lfn_GetBindItem("viewdataset", this.arrBindItems);
+
+    return oBind;
+};
+
+/*---------------------------------------------------------------------------------------------*
+ * Function     : fn_GetScript
+ * Return       : script contents (JSON format)
+ * Description  : Function to generate <Script> source
+ *---------------------------------------------------------------------------------------------*/
+fn_GetScript = function()
+{
+    var oScript = {};
+	var sScript = "";
+	
+	var sViewNm 			= this.oContents.View.attribute.id;
+	var sTitleText			= this.oGenerationAttr.attributes.titletext;			// 타이틀 Text
+	var sUseExpandButton	= this.USE_EXPAND_BUTTON;								// expand 토글버튼 사용여부 및 초기값
+	
+	// 컴포넌트 공통 ViewScript 반환
+	sScript = this.lfn_GetCompCommonScript(sViewNm);
+	
+	// 타이틀 Expand버튼 동작 스크립트
+	if (this.lfn_IsNotNull(sTitleText))
+	{
+		sScript += this.lfn_GetTitleScript(sViewNm, sUseExpandButton);
+	}
+	
+    if (this.lfn_IsNotNull(sScript))
+	{
+		sScript = nexacro.replaceAll(sScript,"\t","");
+		
+		oScript =
+		{
+			"tag": "Script",
+			"attribute": { "type" : "xscript5.1" },
+			"value": sScript
+		}
+	};
+
+    return oScript;
+};]]></Script>
+</ViewTemplateInfo>

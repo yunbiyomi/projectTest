@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="frmMain" width="1070" height="772" titletext="MainFrame" cssclass="frm_MF_Frame">
+    <Layouts>
+      <Layout height="772" width="1070">
+        <Div id="divMain" taborder="0" left="10" top="10" maxwidth="" maxheight="" minwidth="1070" minheight="772" cssclass="div_MF_Main" text="" url="Base::frmDashboard.xfdl" right="10" bottom="10"/>
+      </Layout>
+    </Layouts>
+    <Objects/>
+    <Trigger/>
+  </Form>
+</FDL>

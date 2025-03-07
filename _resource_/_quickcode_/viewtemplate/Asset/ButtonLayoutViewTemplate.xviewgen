@@ -1,0 +1,906 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ViewTemplateInfo version="1.0">
+  <ViewTemplate id="ButtonLayoutViewTemplate" viewtype="Button" description="Button view generation (with Fluid Layout)"/>
+  <Script version="1.0" type="xscript5.1"><![CDATA[/**
+*  Button View Template
+*  @FileName 	ButtonLayoutViewTemplate.xviewgen
+*  @Creator 	Creator
+*  @CreateDate 	2022.07.11
+*  @Desction    Button view generation (with Fluid Layout)
+*  @version		1.0.0.0
+************** 소스 수정 이력 ***********************************************
+*  date          		Modifier                Description
+*******************************************************************************
+*  2022.07.11     		Creator       	    최초 생성
+*******************************************************************************
+*/
+/************************************************************************************************
+ * include 선언부
+ ************************************************************************************************/
+include "quickcode::viewtemplate/lib/util.xjs";
+include "quickcode::viewtemplate/lib/common.xjs";
+/************************************************************************************************
+ * 변수 선언 영역
+ ************************************************************************************************/
+//--------------------------------------------------------------------------------------------------------
+// View 관련 상수
+//--------------------------------------------------------------------------------------------------------
+// View 여백
+this.VIEW_PADDING			= "";
+// 컴포넌트 생성 방향
+this.DIRECTION				= "horizontal";
+// 컴포넌트 생성 수평 정렬방식
+this.HALIGN					= "left";
+// 컴포넌트 생성 수직 정렬방식
+this.VALIGN					= "top";
+//--------------------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------------------
+// Button 관련 상수
+//--------------------------------------------------------------------------------------------------------
+//Component Default Type
+this.COMP_TYPE				= "button";
+
+//Field Default Width
+this.FIELD_WIDTH			= "80px";
+
+//Field Default Height
+this.FIELD_HEIGHT			= "30px";
+
+//Gap Between Components (Left and Right)
+this.COMP_SPACE     		  = 5;
+
+//Gap Between Components (Top and Bottom)
+this.LINE_SPACE     		  = 5;
+
+//Component Default CSS Class
+this.COMP_CSSCLASS		  = "";
+
+//컴포넌트 사이즈 조정 기본값
+this.COMP_SIZING			= "none";
+/************************************************************************************************
+ * Nexacro Studio 호출 필수 FUNCTION 영역
+ ************************************************************************************************/
+/*---------------------------------------------------------------------------------------------*
+ * Function     : fn_InitFieldAttributes
+ * Return       : 
+ * Description  : LCAP Tool에서 user attribute 속성을 제거함에 따라 각 속성값을 기본값으로 셋팅해준다.
+ *---------------------------------------------------------------------------------------------*/
+fn_InitFieldAttributes = function(fieldarray, generationattr)
+{
+	// field attributes setting
+	var oTempFieldArray = JSON.parse(fieldarray);
+	var oTempGenAttrArray = JSON.parse(generationattr);
+	
+	// 변수 초기화(TODO : LCAP Tool에서 상수&변수 초기화가 되지 않아 임시로 작업)
+	//fn_InitVariable();
+	
+	var nFieldCount;
+	var oTempField;
+
+	var sLabelWidth;
+	var sLabelHeight;
+	if (oTempGenAttrArray)
+	{
+		sLabelWidth = oTempGenAttrArray.attributes.labelwidth; // px or %
+		sLabelHeight = oTempGenAttrArray.attributes.labelheight; // px or %
+	}
+		
+	if (oTempFieldArray)
+	{
+		nFieldCount = oTempFieldArray.fieldcount;
+		for(i=0; i<nFieldCount; i++)
+		{
+			oTempField = oTempFieldArray.fields[i];
+			
+			// 사용자에게 입력받지 않으므로 default 값으로 셋팅
+			oTempField.comptype = this.COMP_TYPE;
+			
+			oTempField.fieldwidth = lfn_IsNotNull(sLabelWidth) ? sLabelWidth : this.FIELD_WIDTH;
+			oTempField.fieldheight = lfn_IsNotNull(sLabelHeight) ? sLabelHeight.toString() : this.FIELD_HEIGHT;
+			oTempField.cssclass = this.COMP_CSSCLASS;
+		}
+		
+		fieldarray = JSON.stringify(oTempFieldArray, null, "\t");
+		//trace(">> fieldarray : " + fieldarray);
+	}
+	
+	//var vResult = JSON.stringify(fieldarray, null, "\t");
+    //trace(">> fieldarray : " + vResult);
+		
+	return fieldarray;
+};
+
+/*---------------------------------------------------------------------------------------------*
+ * Function    : fn_GetViewGenerationResult
+ * Parameter   :
+ *               - fieldarray     : model field list
+ *               - contents       : old contents (include <View>)
+ *               - generationattr : attributes for view generation
+ * Return      : View contents (source + script) (JSON format)
+                 ex) {
+                        "View": {
+                            "tag": "View",
+                            "attribute": {
+                                "id": "View00",
+                                "viewtype": "FreeForm",
+                                "taborder": "2",
+                                "text": "search view",
+                                "left": "0",
+                                ...
+                            },
+                            "Model": [
+                                {   // with field
+                                    "fieldid": "department",
+                                    "Components": [
+                                    ...
+                                    ]
+                                },
+                                {   // without field
+                                    "fieldid": "",
+                                    "Components": [
+                                    ...
+                                    ]
+                                }
+                            ],
+                            "InitValue": [
+                            ],
+                            "Objects": [
+                            ],
+                            "Bind": [
+                            ],
+                            "Script": {
+                                "tag": "Script",
+                                "attribute": {
+                                },
+                                "value": ""
+                            }
+                        }
+                    }
+ * Description : Generate the view based on the model field and return the results.
+ *---------------------------------------------------------------------------------------------*
+ *                            !!! This is a required function. !!!                             *
+ *                            !!! Do not delete it. !!!                                        *
+ *---------------------------------------------------------------------------------------------*/
+fn_GetViewGenerationResult = function(fieldarray, contents, generationattr) 
+{
+	//Return Value
+    var vResult = "";
+
+    //trace(">> fieldarray : " + fieldarray);
+    //trace(">> contents : " + contents);
+    //trace(">> generationattr : " + generationattr);
+	
+	if(fieldarray)
+	{
+		// user attribute 속성을 제거함에 따라 각 속성값을 기본값으로 셋팅
+		fieldarray = fn_InitFieldAttributes(fieldarray, generationattr);
+	}
+	
+	//Set Generation Info
+	//this.oFieldArray : Model Information as JSON Object
+	//this.oContents : View Component Information as JSON Object
+	//this.oContents.View.Model : Model Information Initialization
+	//this.oGenerationAttr : Setting Information as JSON Object
+	this.lfn_MakeGenerationInfo(fieldarray, contents, generationattr, false);
+
+	// View Padding 설정
+	this.lfn_SetViewPadding();
+	
+	//Layout 설정(FluidLayout)
+	fn_GetLayout();
+	
+	//Load Model Information Generation Function
+	fn_GetModel();
+
+	//Convert View Component Information into String
+    vResult = JSON.stringify(this.oContents, null, "\t");
+
+    //trace(">> vResult : " + vResult);
+	//Return View Component Information
+    return vResult;
+};
+
+/*---------------------------------------------------------------------------------------------*
+ * Function     : fn_GetViewAttributeList
+ * Return       : View generation attribute list (JSON format)
+                  ex)   {
+                        "attributecount": "2",
+                        "attributes": [
+                           {
+                                "id": "use_triggerbutton",
+                                "edittype": "Boolean",              // edittype : Boolean/String/Number/Enum/ViewObjList
+                                "defaultvalue": "true",
+                                "description": "Specifies whether trigger button is auto-created or not"
+                            },
+                            {
+                                "id": "triggerbuttontext",
+                                "edittype": "String",               // edittype : Boolean/String/Number/Enum/ViewObjList
+                                "defaultvalue": "Search",
+                                "description": "Enter text for trigger button"
+                            }
+                        ]
+                    }
+ * Description : Obtain a list of custom attributes required for view generation
+ *---------------------------------------------------------------------------------------------*/
+fn_GetViewAttributeList = function() {
+
+    var sViewAttr = "";
+    var oViewAttr = {
+                        "attributes": [
+							{
+								"id": "direction",
+								"displaytext": "Direction",
+                                "edittype": "Enum",
+								"enumlist" : ["horizontal", "vertical"],
+                                "defaultvalue": this.DIRECTION,
+                                "description": "Set the direction for fields"
+												+ "\n" + " - horizontal : Set field horizontal alignment"
+												+ "\n" + " - vertical : Set field vertical alignment"
+                            }
+							, {
+                                "id": "halign",
+								"displaytext": "Horizontal Align",
+                                "edittype": "Enum",
+                                "defaultvalue": this.HALIGN,
+								"enumlist" : ["left", "center", "right"],
+                                "description": "Set the horizontal alignment for field"
+												+ "\n" + " - left : Set field alignment based on left when direction is horizontal and top when direction is vertical"
+												+ "\n" + " - center : Set field alignment around center"
+												+ "\n" + " - right : Set field alignment based on right when direction is horizontal and bottom when direction is vertical"
+                            }
+							, {
+                                "id": "valign",
+								"displaytext": "Vertical Align",
+                                "edittype": "Enum",
+                                "defaultvalue": this.VALIGN,
+								"enumlist" : ["top", "middle", "bottom"],
+                                "description": "Set the vertical alignment for field"
+												+ "\n" + " - top : Set field alignment based on top when direction is horizontal and left when direction is vertical"	
+												+ "\n" + " - middle : Set field alignment around center"	
+												+ "\n" + " - bottom : Set field alignment based on bottom when direction is horizontal and right when direction is vertical"	
+                            }
+							, {
+                                "id": "compsizing",
+								"displaytext": "Component Size",
+                                "edittype": "Enum",
+                                "defaultvalue": this.COMP_SIZING,
+								"enumlist" : ["none", "fittocontents", "flexgrow"],
+                                "description": "Adjust the component size"
+												+ "\n" + " - none : No size adjustment"
+												+ "\n" + " - fittocontents : Automatically adjusts to the text size"
+												+ "\n" + " - flexgrow : Equal division for view size (width when direction is horizontal and height when vertical)"
+                            }
+							, {
+                                "id": "labelwidth",
+								"displaytext": "Button Width(px or %)",
+                                "edittype": "String",
+								"defaultvalue": this.FIELD_WIDTH,
+                                "description": "Width of button"
+												+ "\n" + " - Depending on the field direction value, it is applied in width(horizontal) and height(vertical) sizes."
+                            }
+							, {
+                                "id": "labelheight",
+								"displaytext": "Button Height(px or %)",
+                                "edittype": "String",
+								"defaultvalue": this.FIELD_HEIGHT,
+                                "description": "Height of button"
+												+ "\n" + " - Depending on the field direction value, it is applied in height(horizontal) and width(vertical) sizes."
+                            }
+							, this.oAttrViewPadding
+							, {
+                                "id": "horizontalgap",
+								"displaytext": "Horizontal Gap(px)",
+                                "edittype": "Number",
+                                "defaultvalue": this.COMP_SPACE,
+                                "description": "Set horizontal spacing between components (px)"
+                            }
+							, {
+                                "id": "verticalgap",
+								"displaytext": "Vertical Gap(px)",
+                                "edittype": "Number",
+                                "defaultvalue": this.LINE_SPACE,
+                                "description": "Set vertical spacing between components (px)"
+                            }
+                        ]
+                  };
+	
+	oViewAttr["attributecount"] = oViewAttr["attributes"].length;
+
+	sViewAttr = JSON.stringify(oViewAttr, null, "\t");
+    return sViewAttr;
+};
+
+/*---------------------------------------------------------------------------------------------*
+ * Function     : fn_GetFieldUserAttributeList
+ * Return       : user attribute list from model field(JSON format)
+                  ex)   {
+                        "attributecount": "2",
+                        "attributes": [
+                           {
+                                "id": "use_triggerbutton",
+                                "edittype": "Boolean",              // edittype : Boolean/String/Number/Enum/ViewObjList
+                                "defaultvalue": "true",
+                                "description": "Specifies whether trigger button is auto-created or not"
+                            },
+                            {
+                                "id": "triggerbuttontext",
+                                "edittype": "String",               // edittype : Boolean/String/Number/Enum/ViewObjList
+                                "defaultvalue": "Search",
+                                "description": "Enter text for trigger button"
+                            }
+                        ]
+                    }
+ * Description  : Obtain a list of user attributes to register in model field
+ *---------------------------------------------------------------------------------------------*/
+fn_GetFieldUserAttributeList = function ()
+{
+	var sFieldAttr = "";
+	/*var oFieldAttr = {
+                        "attributes": [
+                            {
+                                "id": "comptype",
+                                "edittype": "Enum",
+								"enumlist" : ["button", "static", "imageviewer"],
+                                "defaultvalue": this.COMP_TYPE,
+                                "description": "Types of Components to be Expressed"
+                            },
+							, {
+                                "id": "fieldwidth",
+                                "edittype": "String",
+								"defaultvalue": this.FIELD_WIDTH,
+                                "description": "Field Width(px or %)"
+                            }
+							, {
+                                "id": "fieldheight",
+                                "edittype": "String",
+								"defaultvalue": this.FIELD_HEIGHT,
+                                "description": "Field Height(px or %)"
+                            }
+							, {
+                                "id": "cssclass",
+                                "edittype": "String",
+								"defaultvalue": this.COMP_CSSCLASS,
+                                "description": "Component CSS Class"
+                            }
+                        ]
+                  };
+	
+	oFieldAttr["attributecount"] = oFieldAttr["attributes"].length;
+
+ 	sFieldAttr = JSON.stringify(oFieldAttr, null, "\t");*/
+    return sFieldAttr;
+};
+
+/************************************************************************************************
+ * 사용자 FUNCTION 영역
+ ************************************************************************************************/
+/*---------------------------------------------------------------------------------------------*
+ * Function     : fn_GetLayout
+ * Parameter    :
+ * Return       :
+ * Description  : View Layout 정보 생성 함수
+ *---------------------------------------------------------------------------------------------*/
+fn_GetLayout = function()
+{
+	var oLayouts = this.oContents.View.View[0];
+	oLayouts["tag"] = "Layouts";
+	oLayouts["Layouts"] = [];
+	
+	var sDirection		= this.oGenerationAttr.attributes.direction;
+	var sHAlign			= this.oGenerationAttr.attributes.halign;
+	var sVAlign			= this.oGenerationAttr.attributes.valign;
+	var sViewPadding	= this.oGenerationAttr.attributes.viewpadding;
+	var nHorizontalGap	= this.oGenerationAttr.attributes.horizontalgap;
+	var nVerticalGap	= this.oGenerationAttr.attributes.verticalgap;
+	
+	var sFlexCrossAxisAlign = "start";
+	var sFlexMainAxisAlign	= "start";
+	
+	// flexcrossaxisalign, flexmainaxisalign
+	if (sDirection == "horizontal")
+	{
+		sFlexCrossAxisAlign = this.lfn_Decode(sVAlign, "top", "start", "bottom", "end", "center");
+		sFlexMainAxisAlign	= this.lfn_Decode(sHAlign, "left", "start", "right", "end", "center");
+	}
+	else
+	{
+		sFlexCrossAxisAlign = this.lfn_Decode(sHAlign, "left", "start", "right", "end", "center");
+		sFlexMainAxisAlign	= this.lfn_Decode(sVAlign, "top", "start", "bottom", "end", "center");
+	}
+	
+	var oLayout = 	{
+						"tag" : "Layout",
+						"attribute" : {
+							"type" : sDirection,
+							"flexwrap" : "wrap",
+							"horizontalgap" : nHorizontalGap,
+							"verticalgap" : nVerticalGap,
+							"flexcrossaxisalign" : sFlexCrossAxisAlign,
+							"flexcrossaxiswrapalign" : sFlexCrossAxisAlign,
+							"flexmainaxisalign" : sFlexMainAxisAlign
+						}
+					};
+	
+	// spacing
+	if (this.lfn_IsNotNull(sViewPadding))
+	{
+		sViewPadding = nexacro.replaceAll(sViewPadding,"px","");
+		var aViewPadding = sViewPadding.split(" ");
+		var sSpacing = aViewPadding.join("px ") + "px";
+		
+		oLayout.attribute["spacing"] = sSpacing;
+	}			
+					
+	oLayouts["Layouts"].push(oLayout);
+};
+/*---------------------------------------------------------------------------------------------*
+ * Function     : fn_GetModel
+ * Parameter    :
+ * Return       :
+ * Description  : Function to generate a component source based on field information of the model entered by the user
+ *---------------------------------------------------------------------------------------------*/
+fn_GetModel = function()
+{
+
+	//Import View Component Width Value
+	var nViewCompWidth = this.oContents.View.referenceinfo.realwidth;
+
+	//Import View Component Height Value
+	var nViewCompHeight = this.oContents.View.referenceinfo.realheight;
+	
+	// View Padding 설정
+	var nTop = this.VIEW_PADDING_TOP;
+	var nBottom	= this.VIEW_PADDING_BOTTOM;
+	var nLeft	= this.VIEW_PADDING_LEFT;
+	var nRight	= this.VIEW_PADDING_RIGHT;
+	
+	// View 사이즈에서 View 여백 설정
+	nViewCompWidth = nViewCompWidth - this.VIEW_PADDING_LEFT - this.VIEW_PADDING_RIGHT;
+	nViewCompHeight = nViewCompHeight - this.VIEW_PADDING_TOP - this.VIEW_PADDING_BOTTOM;
+
+	//Import Field Information
+	var arrFieldList = this.oFieldArray.fields;
+
+	//Import Component Production Direction Information
+	var sDirection = this.oGenerationAttr.attributes.direction;
+
+	//Import Component Horizontal Alignment Information
+	var sHAlign = this.oGenerationAttr.attributes.halign;
+
+	//Import Component Vertical Alignment Information
+	var sVAlign = this.oGenerationAttr.attributes.valign;
+
+	//Load Component Location Calculation Information
+	var arrFieldPosition = fn_CalcFieldByFluidLayout(sDirection, sVAlign, sHAlign, nViewCompWidth, nViewCompHeight, false);
+
+	//Load Component Production Function
+	fn_MakeCompByFluidLayout(nLeft, nTop, nViewCompWidth, nViewCompHeight, sDirection, arrFieldPosition, false, true);
+};
+
+/*---------------------------------------------------------------------------------------------*
+ * Function     : fn_CalcFieldByFluidLayout
+ * Parameter    :
+				- sDirection : Component Production Direction
+				- sVAlign : Component Vertical Alignment Method(top|middle|bottom)
+				- sHAlign : Component Horizontal Alignment Method(left|center|right)
+				- nColSize : The Width of The Cell to be Expressed
+				- nRowSize : The Height of The Cell to be Expressed
+				- bUseLayout : Whether Layout was used
+				- arrFieldInCellList : Field List connect to The Cell
+ * Return       : arrFieldPosition: Object Array with Field Location Information
+ * Description  : Function to Evaluate the Field Location Value to be Expressed
+ *---------------------------------------------------------------------------------------------*/
+fn_CalcFieldByFluidLayout = function(sDirection, sVAlign, sHAlign, nColSize, nRowSize, bUseLayout, arrFieldInCellList)
+{
+	var nLeft = 0;
+	var nTop = 0;
+	var nRowIdx = 0;
+	var nColIdx = 0;
+	var nFiledWidthMax = 0;
+	var nFiledHeightMax = 0;
+
+	var nStartX, nStartY;
+	var nEndX, nEndX;
+	var nTemp;
+
+	//Import Field List Registered to the Model
+	var arrFieldList = this.oFieldArray.fields;
+
+	//Number of Fields connected to the Cell
+	var nFieldInCellCnt;
+
+	//Object Array to save the Field Location Information
+	var arrFieldPosition = [];
+
+	//If Layout was used, check the quantity via the field list connected to the cell
+	if(bUseLayout==true)nFieldInCellCnt = arrFieldInCellList.length;
+
+	//If Layout was not used, check the quantity through the number of field list registered to the model
+	else nFieldInCellCnt = arrFieldList.length;
+
+	//If the Component Production Direction is Horizontal
+	//Choose Array, as the x-coordinate for each row is different
+	//Choose Number, as the y-coordinate for each column is identical
+	if(sDirection=="horizontal")
+	{
+		var arrAlignX = [];
+		var nAlignY;
+	}
+	//If the Component Production Direction is Vertical
+	//Choose Number, as the x-coordinate for each row is identical
+	//Choose Array, as the y-coordinate for each column is different
+	else
+	{
+		var nAlignX;
+		var arrAlignY = [];
+	}
+
+	for(var j=0;j<nFieldInCellCnt;j++)
+	{
+		//If Layout was used
+		//Import Field Information registered on the Model based on the Fields connected to the Cell
+		if(bUseLayout==true)
+		{
+			sFieldId =  arrFieldInCellList[j];
+			oField = arrFieldList.filter(arrFieldList=>arrFieldList.id==sFieldId)[0];
+		}
+		//If Layout was not used
+		//Import Field Information registered on the Model
+		else
+		{
+			oField = arrFieldList[j];
+			sFieldId = oField.id;
+		}
+		
+		// oField가 없거나 usecomp == "false"인 경우 포지션 정보 없음
+		if (this.lfn_IsNull(oField) || oField.usecomp == "false") {
+			arrFieldPosition[j] = { "fieldid" : sFieldId};
+			continue;
+		}
+
+		//Evaluate the Width/Height Value where the Field will be expressed
+		nFieldWidth = this.lfn_GetRealSize(oField.fieldwidth, 0, nColSize, this.FIELD_WIDTH, 0, 0);
+		nFieldHeight = this.lfn_GetRealSize(oField.fieldheight, 0, nRowSize, this.FIELD_HEIGHT, 0, 0);
+
+		//If the Component Production Direction is Horizontal
+		if(sDirection=="horizontal")
+		{
+
+			//Calculate the difference arising from the conversion process from Padding to Comp/Line Space
+			if(nColIdx!=0)nTemp = this.lfn_CalcPaddingToSpace(nColIdx+1, 0, this.LINE_SPACE, true);
+			else nTemp = 0;
+
+			//Start a new line if the Field exceeds the Cell Width
+			if(nLeft+nFieldWidth-nTemp>nColSize)
+			{
+				//The Right value of the Field located on the last Row
+				nEndX = nLeft;
+
+				//Calculate the difference arising from the conversion process from Padding to Comp/Line Space
+				if(nColIdx!=0)nTemp = this.lfn_CalcPaddingToSpace(nColIdx, 0, this.LINE_SPACE, true);
+				else nTemp = 0;
+
+				//Evaluate the HAlign Starting Value of this Row
+				arrAlignX[nRowIdx] = this.lfn_CalcAlignPos(sHAlign, nColSize, (nEndX - nStartX - nTemp));
+
+				//Create the starting Left/Top Coordinates of the next Row
+				//Set the Bottom value of the Field with the largest Height of this Row as the Top value of the next Row
+				nTop += nFiledHeightMax;
+
+				//Initialize the Left Coordinate
+				nLeft = 0;
+
+				//Initialize the largest Height Value
+				nFiledHeightMax = 0;
+
+				//Initialize the Col Index
+				nColIdx = 0;
+
+				//Increase Row Index
+				nRowIdx++;
+
+			}
+
+			//Evaluate the largest Height Value
+			if(nFieldHeight>nFiledHeightMax)nFiledHeightMax = nFieldHeight;
+		}
+		//If the Component Production Direction is Vertical
+		else
+		{
+			//Calculate the difference arising from the conversion process from Padding to Comp/Line Space
+			if(nColIdx!=0)nTemp = this.lfn_CalcPaddingToSpace(nColIdx+1, 0, this.LINE_SPACE, true);
+			else nTemp = 0;
+
+			//Start a new line if the Field exceeds the Cell Height
+			if(nTop+nFieldHeight-nTemp>nRowSize)
+			{
+				//The Bottom Value of the last Field of this Row
+				nEndY = nTop;
+
+				//Calculate the difference arising from the conversion process from Padding to Comp/Line Space
+				if(nColIdx!=0)nTemp = this.lfn_CalcPaddingToSpace(nColIdx, 0, this.LINE_SPACE, true);
+				else nTemp = 0;
+
+				//Evaluate the VAlign Starting Location Value of this Row
+				arrAlignY[nRowIdx] = this.lfn_CalcAlignPos(sVAlign, nRowSize, (nEndY - nStartY - nTemp));
+
+				//Create the starting Left/Top Coordinates of the next Row
+				//Set the right value of the field with the largest width of this row as the left value of the next Row
+				nLeft += nFiledWidthMax;
+
+				//Initialize Top Coordinate
+				nTop = 0;
+
+				//Initialize the largest Width Value
+				nFiledWidthMax = 0;
+
+				//Initialize the Col Index
+				nColIdx = 0;
+
+				//Increase Row Index
+				nRowIdx++;
+			}
+
+			//Evaluate the largest Width Value
+			if(nFieldWidth>nFiledWidthMax)nFiledWidthMax = nFieldWidth;
+		}
+
+		//Starting Left/Top Location Value of the Field
+		if(j==0)
+		{
+			nStartX = nLeft;
+			nStartY = nTop;
+		}
+
+		//If is it the last Field
+		if(j==nFieldInCellCnt-1)
+		{
+			//If the Component Production Direction is Horizontal
+			if(sDirection=="horizontal")
+			{
+				//The Right value of the Field located on the last Row
+				nEndX = nLeft + nFieldWidth;
+
+				//Calculate the difference arising from the conversion process from Padding to Comp/Line Space
+				if(nColIdx!=0)nTemp = this.lfn_CalcPaddingToSpace(nColIdx+1, 0, this.COMP_SPACE, true);
+				else nTemp = 0;
+
+				//Evaluate the HAlign Starting Value of this Row
+				arrAlignX[nRowIdx] = this.lfn_CalcAlignPos(sHAlign, nColSize, (nEndX - nStartX - nTemp));
+
+				//The Bottom Value of the Field with the largest Height until the last Field
+				nEndY = nTop + nFiledHeightMax;
+
+				//Calculate the difference arising from the conversion process from Padding to Comp/Line Space
+				if(nRowIdx!=0)nTemp = this.lfn_CalcPaddingToSpace(nRowIdx+1, 0, this.LINE_SPACE, true);
+				else nTemp = 0;
+
+				//Evaluate the VAlign Starting Location Value
+				nAlignY = this.lfn_CalcAlignPos(sVAlign, nRowSize, (nEndY - nStartY - nTemp));
+			}
+			//If the Component Production Direction is Vertical
+			else
+			{
+				//The Bottom Value of the last Field of this Row
+				nEndY = nTop+nFieldHeight;
+
+				//Calculate the difference arising from the conversion process from Padding to Comp/Line Space
+				if(nColIdx!=0)nTemp = this.lfn_CalcPaddingToSpace(nColIdx+1, 0, this.LINE_SPACE, true);
+				else nTemp = 0;
+
+				//Evaluate the HAlign Starting Value of this Row
+				arrAlignY[nRowIdx] = this.lfn_CalcAlignPos(sVAlign, nRowSize, (nEndY - nStartY - nTemp));
+
+				//The Right Value of the Field with the largest Height until the last Field
+				nEndX = nLeft + nFiledWidthMax;
+
+				//Calculate the difference arising from the conversion process from Padding to Comp/Line Space
+				if(nRowIdx!=0)nTemp = this.lfn_CalcPaddingToSpace(nRowIdx+1, 0, this.COMP_SPACE, true);
+				else nTemp = 0;
+
+				//Evaluate the HAlign Starting Value of this Row
+				nAlignX = this.lfn_CalcAlignPos(sHAlign, nColSize, (nEndX - nStartX - nTemp));
+			}
+		}
+
+		//Save the Field Location Information
+		arrFieldPosition[j] =
+		{
+			"fieldid" : sFieldId,
+			"left" : nLeft,
+			"top" : nTop,
+			"width" : nFieldWidth,
+			"height" : nFieldHeight,
+			"rowidx" : nRowIdx,
+			"colidx" : nColIdx,
+			"alignx" : 0,
+			"aligny" : 0
+		};
+
+		//Set the Left/Top Location Value of the next Field
+		if(sDirection=="horizontal")nLeft += nFieldWidth;
+		else nTop += nFieldHeight;
+
+		//Increase Col Index
+		nColIdx++;
+	}
+
+	//Save Align X/Y Value on the Field Location Information
+	if(sDirection=="horizontal")
+	{
+		for(var i=0;i<arrFieldPosition.length;i++)
+		{
+			nRowIdx = arrFieldPosition[i].rowidx;
+			arrFieldPosition[i].alignx = arrAlignX[nRowIdx];
+			arrFieldPosition[i].aligny = nAlignY;
+		}
+	}else
+	{
+		for(var i=0;i<arrFieldPosition.length;i++)
+		{
+			nRowIdx = arrFieldPosition[i].rowidx;
+			arrFieldPosition[i].alignx = nAlignX;
+			arrFieldPosition[i].aligny = arrAlignY[nRowIdx];
+		}
+	}
+
+	//Return Field Location Information
+	return arrFieldPosition;
+};
+
+/*---------------------------------------------------------------------------------------------*
+ * Function     : fn_MakeCompByFluidLayout
+ * Parameter    :
+				- nBaseLeft : Reference Coordinate (Left) to create Component
+				- nBaseTop : Reference Coordinate (Top) to create Component
+				- nBaseWidth : Reference Coordinate (Width) to create Component
+				- nBaseHeight : Reference Coordinate (Height) to create Component
+				- sDirection : Component Production Direction
+				- arrFieldPosition: Object Array with Field Location Information
+				- bUseLayout : Whether Layout was used
+ * Return       :
+ * Description  : Component Tag Production Function
+ *---------------------------------------------------------------------------------------------*/
+fn_MakeCompByFluidLayout = function(nBaseLeft, nBaseTop, nBaseWidth, nBaseHeight, sDirection, arrFieldPosition, bUseLayout)
+{
+	var nCompLeft, nCompTop, nCompWidth, nCompHeight;
+	var nPosLeft, nPosTop, nPosWidth, nPosHeight;
+	var sCompWidth, sCompHeight;
+	
+	var oAlignPos;
+	var sFieldId;
+	var oField;
+	var oFieldPosition;
+	var nRowIdx, nColIdx;
+	var nAlignX, nAlignY;
+
+	var oModel = this.oContents.View.Model;
+	var sCompId;
+	var oCompClass;
+	
+	var sLabel;
+	var sClssClass;
+	
+	var sCompSizing = this.oGenerationAttr.attributes.compsizing;		// "none", "fittocontents", "flexgrow"
+
+	if(!bUseLayout)bUseLayout = false;
+
+	for(var i=0;i<arrFieldPosition.length;i++)
+	{
+		//Import Field Object
+		oFieldPosition = arrFieldPosition[i];
+		sFieldId = oFieldPosition.fieldid;
+		oField = this.oFieldArray.fields.filter(fields=>fields.id==sFieldId)[0];
+		
+		if (this.lfn_IsNull(oField))	continue;
+		
+		//Import Component Naming Rule Information
+		oCompClass = this.lfn_GetCompClass(oField.comptype);
+
+		//Import Row/Col Index where the Field will be located
+		nRowIdx = oFieldPosition.rowidx;
+		nColIdx = oFieldPosition.colidx;
+
+		//Import Align Location Information of the Field
+		nAlignX = oFieldPosition.alignx;
+		nAlignY = oFieldPosition.aligny;
+
+		//Import Field Location Information
+		nPosLeft = nexacro.toNumber(oFieldPosition.left);
+		nPosTop = nexacro.toNumber(oFieldPosition.top);
+		nPosWidth = nexacro.toNumber(oFieldPosition.width);
+		nPosHeight = nexacro.toNumber(oFieldPosition.height);
+		
+		sCompWidth = this.lfn_GetSize(oField.fieldwidth);
+		sCompHeight = this.lfn_GetSize(oField.fieldheight);
+
+		//Import Field Label Information
+		sLabel = oField.label;
+
+		//Import Field CSSCLASS Information
+		sCssClass = oField.cssclass;
+
+		//Calculate Left/Top Coordinate where Component will be located
+		//Evaluate actual Component Location Information reflecting Align, Padding, Comp/Line Space, etc.
+		//Component Left Coordinate = Cell Left + Field Left + Label Area Width + HAlign Starting Coordinate
+		nCompLeft = nBaseLeft + nPosLeft + nAlignX;
+
+		//Component Top Coordinate = Cell Top + Field Top + VAlign Starting Coordinate
+		nCompTop = nBaseTop + nPosTop + nAlignY;
+
+		if(sDirection=="horizontal")
+		{
+			if(nColIdx!=0)
+			{
+				//Component Left Coordinate = Component Left Coordinate - (Padding Value excluding the Left Padding of the first Component) + (Comp Space*Number of Components)
+				nCompLeft = nCompLeft + (this.COMP_SPACE *nColIdx);
+			}else
+			{
+				//Component Left Coordinate = Component Left Coordinate + Component Left Padding
+				nCompLeft = nCompLeft;
+			}
+
+
+			if(nRowIdx!=0)
+			{
+				//Component Top Coordinate = Component Top Coordinate - (Padding Value excluding the Top Padding of the first Component) + (Line Space*Number of Components)
+				nCompTop = nCompTop + (this.LINE_SPACE *nRowIdx);
+			}else
+			{
+				//Component Top Coordinate = Component Top Coordinate + Component Top Padding
+				nCompTop = nCompTop;
+			}
+		}else
+		{
+			if(nRowIdx!=0)
+			{
+				//Component Left Coordinate = Component Left Coordinate - (Padding Value excluding the Left Padding of the first Component) + (Comp Space*Number of Components)
+				nCompLeft = nCompLeft + (this.COMP_SPACE *nRowIdx);
+			}else
+			{
+				//Component Left Coordinate = Component Left Coordinate + Component Left Padding
+				nCompLeft = nCompLeft;
+			}
+
+			if(nColIdx!=0)
+			{
+				//Component Top Coordinate = Component Top Coordinate - (Padding Value excluding the Top Padding of the first Component) + (Line Space*Number of Components)
+				nCompTop = nCompTop + (this.LINE_SPACE *nColIdx);
+			}else
+			{
+				//Component Top Coordinate = Component Top Coordinate + Component Top Padding
+				nCompTop = nCompTop;
+			}
+		}
+
+		//Component Width = Field Width - Left/Right Padding
+		nCompWidth = nPosWidth;
+
+		//Component Height = Field Height - Top/Bottom Padding
+		nCompHeight = nPosHeight;
+		
+		//Add Component Tag
+		oModel[oModel.length] = {"fieldid" : sFieldId,"Components" : []};
+		sCompId = this.lfn_GetCompId(oCompClass.prefix + "_" + sFieldId);
+		
+		oComp =	{
+					"tag" : oCompClass.classId,
+					"attribute" :
+					{
+						"id" : sCompId, "left" : nCompLeft, "top" : nCompTop, "width" : sCompWidth, "height" : sCompHeight, "text" : sLabel, "cssclass" : sCssClass
+					}
+				};
+		
+		// compsizing 처리
+		if (sCompSizing == "fittocontents") {
+			oComp.attribute["fittocontents"] = "both";
+			oComp.attribute["minwidth"] = nCompWidth;
+			oComp.attribute["minheight"] = nCompHeight;
+		} else if (sCompSizing == "flexgrow") {
+			oComp.attribute["flexgrow"] = "1";
+		}
+
+		oModel[oModel.length-1].Components.push(oComp);
+	}
+};]]></Script>
+</ViewTemplateInfo>

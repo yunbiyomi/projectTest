@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<MetaInfo version="2.0">
+  <EnumInfo id="messagetype">
+    <Enum name="alert"/>
+    <Enum name="confirm"/>
+  </EnumInfo>
+  <EnumInfo id="popupstyle">
+    <Enum name="modal"/>
+    <Enum name="modeless"/>
+  </EnumInfo>
+  <EnumInfo id="ExportType">
+    <Enum name="excel" description="Worksheet 97 - 2003 Files (*.xls)"/>
+    <Enum name="excel2007" description="Worksheet Files (*.xlsx)"/>
+    <Enum name="hancell2010" description="Hancell 2010 Files (*.cell)"/>
+    <Enum name="hancell2014" description="Hancell Files (*.cell)"/>
+    <Enum name="csv" description="CSV (*.csv)"/>
+  </EnumInfo>
+  <EnumInfo id="ImportType">
+    <Enum name="excel" description="Worksheet 97 - 2003 Files (*.xls)"/>
+    <Enum name="excel2007" description="Worksheet Files (*.xlsx)"/>
+    <Enum name="hancell2014" description="Hancell Files (*.cell)"/>
+    <Enum name="csv" description="CSV (*.csv)"/>
+  </EnumInfo>
+  <EnumInfo id="PopupReturnType" description="Action 팝업 닫기 종류">
+    <Enum name="none" description="데이터 반환안함."/>
+    <Enum name="currow" description="현재 위치한 행 반환"/>
+    <Enum name="changedata" description="변경된 데이터 반환"/>
+    <Enum name="alldata" description="데이터셋 전체 데이터"/>
+  </EnumInfo>
+  <EnumInfo id="CheckMode" description="RequiredValidationAction 필수입력 체크모드">
+    <Enum name="allrow" description="모든 row에 대해서 체크"/>
+    <Enum name="modified" description="변경된 row에 대해서만 체크(default)"/>
+  </EnumInfo>
+  <EnumInfo id="DeleteType" description="데이터삭제 유형">
+    <Enum name="delete" description="전체 데이터를 삭제"/>
+    <Enum name="clear" description="전체 데이터를 초기화(reset으로 복구불가)"/>
+  </EnumInfo>
+  <EnumInfo id="ResetType">
+    <Enum name="all" description="전체 데이터"/>
+    <Enum name="row" description="현재 Row"/>
+  </EnumInfo>
+  <EnumInfo id="CopyType" description="데이터 복사유형">
+    <Enum name="replace" description="데이터를 전환"/>
+    <Enum name="append" description="기존 데이터에 추가"/>
+  </EnumInfo>
+  <EnumInfo id="PopupDataType" description="팝업데이터처리타입">
+    <Enum name="none" description="데이터를 처리하지 않음."/>
+    <Enum name="copyrow" description="반환된 첫번째 데이터를 현재 데이터에 복사"/>
+    <Enum name="adddata" description="반환된 데이터를 현재 데이터에 추가"/>
+    <Enum name="replace" description="반환된 데이터로 데이터를 교체"/>
+  </EnumInfo>
+  <EnumInfo id="MethodType" description="요청 시 처리할 메소드를 설정">
+    <Enum name="get"/>
+    <Enum name="post"/>
+    <Enum name="put"/>
+    <Enum name="delete"/>
+    <Enum name="head"/>
+    <Enum name="patch"/>
+  </EnumInfo>
+  <RefreshInfo id="targetview">
+    <Property name="targetcomp"/>
+    <Property name="targetdataset"/>
+  </RefreshInfo>
+  <RefreshInfo id="servicemodel">
+    <Property name="serviceurl"/>
+    <Property name="inputdatasets"/>
+    <Property name="outputdatasets"/>
+  </RefreshInfo>
+  <RefreshInfo id="fromview">
+    <Property name="fromdataset"/>
+  </RefreshInfo>
+  <RefreshInfo id="inputview">
+    <Property name="inputdataset"/>
+  </RefreshInfo>
+</MetaInfo>

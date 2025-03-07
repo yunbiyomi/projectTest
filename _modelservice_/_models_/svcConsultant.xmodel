@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ModelInfo version="1.1">
+  <Models>
+    <Model id="dsConsultantSearch" name="dsConsultantSearch" iotype="input">
+      <Field id="startDate" label="조회 시작일" fieldtype="Date" datatype="STRING" datasize="100" required="false" description="조회 시작일" options="{&quot;dataformat&quot;: &quot;yyyy-MM-dd&quot;}"/>
+      <Field id="endDate" label="조회 종료일" fieldtype="Date" datatype="STRING" datasize="100" required="false" description="조회 종료일" options="{&quot;dataformat&quot;: &quot;yyyy-MM-dd&quot;}"/>
+    </Model>
+    <Model id="dsConsultantList" name="dsConsultantList" iotype="output">
+      <Field id="consultantID" label="아이디" fieldtype="Text" datatype="STRING" datasize="100" required="false" description="상담원 ID" options=""/>
+      <Field id="groupName" label="그룹명" fieldtype="Text" datatype="STRING" datasize="100" required="false" description="그룹" options=""/>
+      <Field id="consultantName" label="상담원 이름" fieldtype="Text" datatype="STRING" datasize="100" required="false" description="이름" options=""/>
+      <Field id="reqTotalCount" label="문의 총합" fieldtype="Number" datatype="INT" datasize="100" required="false" description="문의 총합" options=""/>
+      <Field id="reqInProgress" label="처리된 문의" fieldtype="Number" datatype="INT" datasize="100" required="false" description="처리된 문의" options=""/>
+      <Field id="reqDelay" label="지연된 문의" fieldtype="Number" datatype="INT" datasize="100" required="false" description="지연된 문의" options=""/>
+      <Field id="reqComplete" label="완료된 문의" fieldtype="Number" datatype="INT" datasize="100" required="false" description="완료된 문의" options=""/>
+      <Field id="reqPending" label="보류된 문의" fieldtype="Number" datatype="INT" datasize="100" required="false" description="보류된 문의" options=""/>
+      <Field id="totalResponseTime" label="전체 처리 시간" fieldtype="Number" datatype="INT" datasize="100" required="false" description="전체 처리 시간" options=""/>
+      <Field id="avgResponseTime" label="평균 처리 시간" fieldtype="Number" datatype="INT" datasize="100" required="false" description="평균 처리 시간" options=""/>
+    </Model>
+  </Models>
+  <Service id="svcConsultant" name="" url="https://dev-apps.tobedevops.link/serverpart/mars-server/server/execute"/>
+</ModelInfo>

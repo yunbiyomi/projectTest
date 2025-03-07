@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<NexacroMacros version="1.0">
+  <Macros>
+    <Macro key="%(QuickCode)" value="%(ProjectDir)\_resource_\_quickcode_"/>
+  </Macros>
+</NexacroMacros>

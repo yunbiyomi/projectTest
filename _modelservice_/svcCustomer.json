@@ -1,0 +1,220 @@
+{
+  "request": {
+    "variables": [],
+    "datasets": [
+      {
+        "name": "dsCustomerSearch",
+        "description": "검색조건",
+        "items": [
+          {
+            "name": "CUSTOMERNAME",
+            "type": "STRING",
+            "datasize": 100,
+            "description": "고객 이름",
+            "tableName": "CUSTOMER"
+          },
+          {
+            "name": "CUSTOMERGENDER",
+            "type": "STRING",
+            "datasize": 100,
+            "description": "고객 성별",
+            "tableName": "CUSTOMER"
+          },
+          {
+            "name": "MEMBERTYPE",
+            "type": "STRING",
+            "datasize": 100,
+            "description": "회원 유형",
+            "tableName": "CUSTOMER"
+          }
+        ],
+        "datasource": "cs_system"
+      }
+    ]
+  },
+  "localVariables": {
+    "variables": [],
+    "datasets": []
+  },
+  "workflow": {
+    "getFilterCustomerList": {
+      "next": "end",
+      "onBeforeEvent": "",
+      "onAfterEvent": "",
+      "description": "고객 리스트 조회 SQL",
+      "onBeginEvent": "",
+      "type": "SQL",
+      "target": "",
+      "sql": "SELECT \n  CUSTOMERID, \n  CUSTOMERPROFILEIMG, \n  CUSTOMERNAME, \n  MEMBERTYPE, \n  CUSTOMERPHONE, \n  CUSTOMEREMAIL, \n  CUSTOMERGENDER, \n  CUSTOMERADDRESS \nFROM \n  CUSTOMER \nWHERE \n  (CUSTOMERNAME REGEXP #dsCustomerSearch.CUSTOMERNAME# OR #dsCustomerSearch.CUSTOMERNAME# IS NULL)\n  AND\n  (CUSTOMERGENDER=#dsCustomerSearch.CUSTOMERGENDER# OR #dsCustomerSearch.CUSTOMERGENDER# IS NULL)\n  AND\n  (MEMBERTYPE=#dsCustomerSearch.MEMBERTYPE# OR #dsCustomerSearch.MEMBERTYPE# IS NULL)",
+      "output": "dsCustomerList",
+      "sqlType": "select",
+      "datasource": "cs_system",
+      "name": "getFilterCustomerList",
+      "onEndEvent": "",
+      "alias": "getFilterCustomerList"
+    },
+    "If1": {
+      "isExpression": true,
+      "name": "If1",
+      "alias": "If",
+      "type": "If",
+      "conditions": [
+        {
+          "next": "getAllCustomerList",
+          "condition": "#dsCustomerSearch[0].get('CUSTOMERNAME')# == null \n&& #dsCustomerSearch[0].get('CUSTOMERGENDER')# == null \n&& #dsCustomerSearch[0].get('MEMBERTYPE')# == null",
+          "description": "",
+          "conditionType": "if"
+        },
+        {
+          "next": "getFilterCustomerList",
+          "condition": "",
+          "description": "",
+          "conditionType": "else"
+        }
+      ]
+    },
+    "name": "svcCustomer",
+    "start": {
+      "next": "If1",
+      "name": "start",
+      "description": "로직의 시작",
+      "alias": "start",
+      "type": "Start"
+    },
+    "project": "git_test",
+    "description": "사용자가 입력한 조건에 맞는 고객 리스트를 조회한다.",
+    "getAllCustomerList": {
+      "next": "end",
+      "onBeforeEvent": "",
+      "onAfterEvent": "",
+      "description": "고객 리스트 조회 SQL",
+      "onBeginEvent": "",
+      "type": "SQL",
+      "target": "",
+      "sql": "SELECT \n  CUSTOMERID, \n  CUSTOMERPROFILEIMG, \n  CUSTOMERNAME, \n  MEMBERTYPE, \n  CUSTOMERPHONE, \n  CUSTOMEREMAIL, \n  CUSTOMERGENDER, \n  CUSTOMERADDRESS \nFROM \n  CUSTOMER",
+      "output": "dsCustomerList",
+      "sqlType": "select",
+      "datasource": "cs_system",
+      "name": "getAllCustomerList",
+      "onEndEvent": "",
+      "alias": "getAllCustomerList"
+    },
+    "end": {
+      "name": "end",
+      "description": "로직의 종료",
+      "alias": "end",
+      "type": "End"
+    }
+  },
+  "datasources": [
+    {
+      "database": "cs_system",
+      "password": "",
+      "port": "",
+      "datasource": "cs_system",
+      "productType": "H2",
+      "url": "jdbc:h2:file:${LOCAL_DATABASE}/datasource/cs_system",
+      "username": "sa"
+    }
+  ],
+  "response": {
+    "variables": [
+      {
+        "name": "errorCode",
+        "description": "에러코드",
+        "type": "Integer"
+      },
+      {
+        "name": "errorMessage",
+        "description": "에러메시지",
+        "type": "String"
+      }
+    ],
+    "datasets": [
+      {
+        "name": "dsCustomerList",
+        "description": "고객 리스트",
+        "items": [
+          {
+            "name": "customerID",
+            "description": "고객 ID",
+            "datasize": 100,
+            "type": "STRING",
+            "insConstant": false
+          },
+          {
+            "name": "customerProfileImg",
+            "description": "프로필 이미지",
+            "datasize": 100,
+            "type": "STRING",
+            "insConstant": false
+          },
+          {
+            "name": "customerName",
+            "description": "이름",
+            "datasize": 100,
+            "type": "STRING",
+            "insConstant": false
+          },
+          {
+            "name": "memberType",
+            "description": "회원 유형",
+            "datasize": 100,
+            "type": "STRING",
+            "insConstant": false
+          },
+          {
+            "name": "customerPhone",
+            "description": "전화번호",
+            "datasize": 100,
+            "type": "STRING",
+            "insConstant": false
+          },
+          {
+            "name": "customerEmail",
+            "description": "이메일",
+            "datasize": 100,
+            "type": "STRING",
+            "insConstant": false
+          },
+          {
+            "name": "customerGender",
+            "description": "성별",
+            "datasize": 100,
+            "type": "STRING",
+            "insConstant": false
+          },
+          {
+            "name": "customerAddress",
+            "description": "주소",
+            "datasize": 100,
+            "type": "STRING",
+            "insConstant": false
+          }
+        ]
+      }
+    ]
+  },
+  "clientInfo": {
+    "getFilterCustomerList": {
+      "x": "750",
+      "y": "450"
+    },
+    "If1": {
+      "x": "600",
+      "y": "300"
+    },
+    "start": {
+      "x": "600",
+      "y": "150"
+    },
+    "getAllCustomerList": {
+      "x": "450",
+      "y": "450"
+    },
+    "end": {
+      "x": "600",
+      "y": "600"
+    }
+  }
+}

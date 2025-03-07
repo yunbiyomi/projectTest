@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ModelInfo version="1.1">
+  <Models>
+    <Model id="dsRequestCount" name="dsRequestCount" iotype="output">
+      <Field id="reqInProgress" label="처리된 문의" fieldtype="Number" datatype="INT" datasize="100" required="false" description="처리중인 문의" options=""/>
+      <Field id="reqDelay" label="지연된 문의" fieldtype="Number" datatype="INT" datasize="100" required="false" description="지연된 문의" options=""/>
+      <Field id="reqComplete" label="완료된 문의" fieldtype="Number" datatype="INT" datasize="100" required="false" description="완료된 문의" options=""/>
+      <Field id="reqPending" label="보류된 문의" fieldtype="Number" datatype="INT" datasize="100" required="false" description="보류된 문의" options=""/>
+      <Field id="reqTotalCount" label="문의 총합" fieldtype="Number" datatype="INT" datasize="100" required="false" description="접수된 문의" options=""/>
+    </Model>
+  </Models>
+  <Service id="svcRequestCount" name="" url="https://dev-apps.tobedevops.link/serverpart/mars-server/server/execute"/>
+</ModelInfo>
