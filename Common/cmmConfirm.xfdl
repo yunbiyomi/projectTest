@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <FDL version="2.1">
   <Form id="cmmConfirm" width="450" height="210" titletext="확인창" onload="form_onload">
     <Layouts>
@@ -28,6 +28,7 @@
 this.fvArrButton;
 this.fvArrRtn;
 this.fvOptSize;
+this.newnew;
 
 /********************************************************************************
  * Form Event 영역
@@ -131,6 +132,7 @@ this.btnExtend_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
 	// 버튼 명칭 사용 시
 	this.close(this.fvArrRtn[2]);
 };
-]]></Script>
+]]>
+    </Script>
   </Form>
 </FDL>
